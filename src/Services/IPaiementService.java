@@ -175,5 +175,13 @@ private Connection conn;
         return montant;
         
     }
-
+   public double MontantT(List<Integer> l)
+         
+           
+   { List<Paiement> lp= this.afficher();
+   
+      return lp.stream().filter(p -> l.contains(p.getId_reservation())).mapToDouble(p->p.getMontant()).sum();
+       
+       
+   }
 }

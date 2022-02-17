@@ -44,25 +44,28 @@ public class GetAwayvoyage {
         Paiement p = new Paiement("cheque",0,3,DateD);
     IPaiementService ps= new  IPaiementService();
 //        ps.ajouter(p);
-        Paiement p2= new Paiement();
-  
-//        ps.supprimer(p2);
-//        System.out.println(ps.afficher());
-   p.setMontant(ps.calculermontantActivite(r4));
-        ps.modifier(p,3);
+//        Paiement p2= new Paiement();
+//  
+////        ps.supprimer(p2);
+////        System.out.println(ps.afficher());
+//   p.setMontant(ps.calculermontantActivite(r4));
+//        ps.modifier(p,3);
+//
+//
+//Rs.modifiernbplaceA(1,4);
+//Rs.modifiernbplacevol(1,2);
+//Rs.modifiernbplacevoyage(1,10);
+//
+//     
+//        
+//        //Rs.ajouterVol(r7);
+//        r7.setNbr_place(12);
+//        Rs.modifiervol(r7,14);
+//        r7.setId(15);
+//        Rs.supprimer(r7);
 
-
-Rs.modifiernbplaceA(1,4);
-Rs.modifiernbplacevol(1,2);
-Rs.modifiernbplacevoyage(1,10);
-
-     
-        
-        //Rs.ajouterVol(r7);
-        r7.setNbr_place(12);
-        Rs.modifiervol(r7,14);
-        r7.setId(15);
-        Rs.supprimer(r7);
+        System.out.println(Rs.listeR(1));
+        System.out.println(ps.MontantT(Rs.listeR(1)));
     }
      
 }

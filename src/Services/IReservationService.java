@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -283,5 +284,13 @@ private Connection conn;
             Logger.getLogger(IReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+}
+    
+public List<Integer> listeR(int id)
+{
+     List<Reservation> l = this.afficher();
+     
+     return l.stream().filter(r->r.getId_client()==id).mapToInt(i->i.getId()).boxed().collect(Collectors.toList());
+    
 }
 }

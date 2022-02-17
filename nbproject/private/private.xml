@@ -5,11 +5,7 @@
         <group>
             <file>file:/D:/3eme/pidev/GetAwayvoyage/src/Services/IPaiementService.java</file>
             <file>file:/D:/3eme/pidev/GetAwayvoyage/src/getawayvoyage/GetAwayvoyage.java</file>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/Entities/Paiement.java</file>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/Entities/Reservation.java</file>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/Utilis/Datasource.java</file>
             <file>file:/D:/3eme/pidev/GetAwayvoyage/src/Services/IReservationService.java</file>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/Services/IService.java</file>
         </group>
     </open-files>
 </project-private>
