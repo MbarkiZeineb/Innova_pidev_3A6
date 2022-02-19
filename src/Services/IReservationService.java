@@ -289,7 +289,21 @@ private Connection conn;
         
 }
     
-public List<Integer> listeR(int id)
+      public boolean verifierNbplaceAct(int id , int nb)
+  {
+      
+      return  l.stream().filter(a->a.get_id()==id).tomapInt(a-> a.get_nbreplace).
+  }
+    
+    
+    
+    
+    
+    
+    
+    
+    //Recuperer la liste de reservation par client   
+public List<Integer> listeReservationparClient(int id)
 {
      List<Reservation> l = this.afficher();
      
@@ -297,7 +311,7 @@ public List<Integer> listeR(int id)
     
 }
 
-
+//Verifier la date debut d'une reservation pour un client 
   public boolean verifierDateReservation(int id ,Date dd )
    {
        
@@ -309,33 +323,37 @@ public List<Integer> listeR(int id)
        
    }
   
-//  public boolean verifierNbplaceAct(int id , int nb)
-//  {
-//      
-//      //  return  l.stream().filter(a->a.get_id()==id).tomapInt(a-> a.get_nbreplace).
-//  }
+
   
+  //verfier si il existe une reservation au meme temps 
+  public boolean  testerdisponibliteH(Date dd , Date df , int id  )
+  {
+      
+        List<Reservation> l = this.afficher();
+        
+       boolean testd= l.stream().filter(r->r.getType().equals("Hebergement")).filter(r->r.getId_hebergement()==id).anyMatch(d->d.getDate_debut()==dd);
+       boolean testf= l.stream().filter(r->r.getType().equals("Hebergement")).filter(r->r.getId_hebergement()==id).anyMatch(d->d.getDate_fin()==df);
+       return testd&&testf;
+       
+            }
   
-//  public boolean  testerdisponiblite(Date dd , Date df )
-//  {
-//      
-//        List<Reservation> l = this.afficher();
-//        
-//       boolean testd= l.stream().filter(r->r.getType().equals("Hebergement")).anyMatch(d->d.getDate_debut()==dd);
-//       boolean testf= l.stream().filter(r->r.getType().equals("Hebergement")).anyMatch(d->d.getDate_fin()==df);
-//       
-//       
-//            }
-//  
-  
+  ///Statistique sur nbre de reservation selon le type 
   
   public void  sataR()       
   {
       List<Reservation> l = this.afficher();
-        
-      Map<String,List<Reservation>> map = l.stream().collect(Collectors.groupingBy(e->e.getType()));
+       
+    Map<String,List<Reservation>> map = l.stream().collect(Collectors.groupingBy(e->e.getType()));
     
-        map.forEach((e,v)->{System.out.println("String :"+e);
-            System.out.println("liste :"+v.size());});
-  }
+        map.forEach((e,v)->{System.out.println("Type de reservation "+e);
+        
+            System.out.println(" Nbre de reservation total:"+v.stream().mapToInt(r->r.getNbr_place()).sum());
+                });
+                
+                
+                
+                
+                
+                }
+
 }
