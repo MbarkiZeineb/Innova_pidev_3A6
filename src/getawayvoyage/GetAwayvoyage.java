@@ -40,7 +40,7 @@ public class GetAwayvoyage {
   Reservation r7= new Reservation(DateR, 10, DateD, DateF,0, 0,2,0,"enA", 1, "hebergment");  
     IReservationService Rs= new IReservationService();
    //Rs.ajouterHeb(r5);
-        System.out.println(Rs.afficher());
+      
         Paiement p = new Paiement("cheque",0,3,DateD);
     IPaiementService ps= new  IPaiementService();
 //        ps.ajouter(p);
@@ -64,8 +64,12 @@ public class GetAwayvoyage {
 //        r7.setId(15);
 //        Rs.supprimer(r7);
 
-        System.out.println(Rs.listeR(1));
-        System.out.println(ps.MontantT(Rs.listeR(1)));
+//        System.out.println(Rs.listeR(1));
+//        System.out.println(ps.MontantT(Rs.listeR(1)));
+//        
+//        Rs.modifiernbplacevol(1,2);
+
+  Rs.sataR();
     }
      
 }

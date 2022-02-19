@@ -7,6 +7,7 @@ package Services;
 import Entities.Reservation;
 import Utilis.Datasource;
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -220,6 +221,7 @@ private Connection conn;
                 r.setDate_reservation(rs.getDate("date_reservation"));
                  r.setDate_debut(rs.getDate("date_debut"));
                   r.setDate_fin(rs.getDate("date_fin"));
+                  r.setType(rs.getString("type"));
                 reservations.add(r);
             }
             
@@ -233,15 +235,16 @@ private Connection conn;
     //MODIFER NBRE DES PLACES
     
     //Activite
-    public void modifiernbplaceA(int id,int nb)
+    public void modifiernbplaceA(int id,int nb ,String op)
 {
     
-    String req = "update Activite set `NbrPlace`=`NbrPlace`-? where RefAct=?";
+    String req = "update Activite set `NbrPlace`=`NbrPlace`?? where RefAct=?";
      try {
              pste = conn.prepareStatement(req);
           
                pste.setInt(1,nb);
-              pste.setInt(2,id);
+               pste.setString(2,op);
+              pste.setInt(3,id);
             pste.executeUpdate();
             System.out.println(" Nombre de place Activite modifie ");
         } catch (SQLException ex) {
@@ -254,7 +257,7 @@ private Connection conn;
     public void modifiernbplacevol(int id,int nb)
 {
     
-    String req = "update vol  set `nbr_placedispo`=`nbr_placedispo`-? where id_vol=?";
+    String req = "update vol  set `nbr_placedispo`=`nbr_placedispo`- ? where id_vol=?";
      try {
              pste = conn.prepareStatement(req);
           
@@ -293,4 +296,46 @@ public List<Integer> listeR(int id)
      return l.stream().filter(r->r.getId_client()==id).mapToInt(i->i.getId()).boxed().collect(Collectors.toList());
     
 }
+
+
+  public boolean verifierDateReservation(int id ,Date dd )
+   {
+       
+      List<Reservation> l=this.afficher();
+   return l.stream().filter(r->r.getId_client()==id).anyMatch(d->d.getDate_debut()==dd);
+    
+    
+   
+       
+   }
+  
+//  public boolean verifierNbplaceAct(int id , int nb)
+//  {
+//      
+//      //  return  l.stream().filter(a->a.get_id()==id).tomapInt(a-> a.get_nbreplace).
+//  }
+  
+  
+//  public boolean  testerdisponiblite(Date dd , Date df )
+//  {
+//      
+//        List<Reservation> l = this.afficher();
+//        
+//       boolean testd= l.stream().filter(r->r.getType().equals("Hebergement")).anyMatch(d->d.getDate_debut()==dd);
+//       boolean testf= l.stream().filter(r->r.getType().equals("Hebergement")).anyMatch(d->d.getDate_fin()==df);
+//       
+//       
+//            }
+//  
+  
+  
+  public void  sataR()       
+  {
+      List<Reservation> l = this.afficher();
+        
+      Map<String,List<Reservation>> map = l.stream().collect(Collectors.groupingBy(e->e.getType()));
+    
+        map.forEach((e,v)->{System.out.println("String :"+e);
+            System.out.println("liste :"+v.size());});
+  }
 }
