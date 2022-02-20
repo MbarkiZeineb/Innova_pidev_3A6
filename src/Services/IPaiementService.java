@@ -48,7 +48,7 @@ private Connection conn;
     }
 
     @Override
-    public void modifier(Paiement p ,int id ) {
+    public void modifier(Paiement p ) {
           String req = " update paiement set modalite_paiement=? , date=? , montant=? , id_reservation=? where id=? ";
         try {
              pste = conn.prepareStatement(req);
@@ -56,7 +56,7 @@ private Connection conn;
              pste.setDate(2,p.getDate());
              pste.setFloat(3,p.getMontant());
              pste.setInt(4,p.getId_reservation());
-            pste.setInt(5,id);
+            pste.setInt(5,p.getId());
             pste.executeUpdate();
             System.out.println(" Reservation voyage   créée");
         } catch (SQLException ex) {

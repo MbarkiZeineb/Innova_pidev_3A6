@@ -5,6 +5,7 @@
  */
 package Services;
 import Entities.Reservation;
+import Entities.Vol;
 import Utilis.Datasource;
 import java.sql.*;
 import java.sql.Date;
@@ -105,7 +106,7 @@ private Connection conn;
     }
    
     @Override
-    public void modifier(Reservation r, int id) {
+    public void modifier(Reservation r) {
        String req = "update Reservation set date_reservation=? , nbr_place=? , date_debut=? , date_fin=? , id_client=? , id_voyage=? , etat=? , type=? where id=?";
         try {
              pste = conn.prepareStatement(req);
@@ -117,7 +118,7 @@ private Connection conn;
             pste.setInt(6,r.getId_voyage());
             pste.setString(7,r.getEtat());
             pste.setString(8,r.getType());
-            pste.setInt(9,id);
+            pste.setInt(9,r.getId());
             pste.executeUpdate();
             System.out.println(" Reservation  modifie ");
         } catch (SQLException ex) {
@@ -125,7 +126,7 @@ private Connection conn;
         }
     }
 
-    public void modifiervol(Reservation r, int id) {
+    public void modifiervol(Reservation r) {
        String req = "update Reservation set date_reservation=? , nbr_place=? , date_debut=? , date_fin=? , id_client=? , id_vol=? , etat=? , type=? where id=?";
         try {
              pste = conn.prepareStatement(req);
@@ -137,7 +138,7 @@ private Connection conn;
             pste.setInt(6,r.getId_vol());
             pste.setString(7,r.getEtat());
             pste.setString(8,r.getType());
-            pste.setInt(9,id);
+            pste.setInt(9,r.getId());
             pste.executeUpdate();
             System.out.println(" Reservation  modifie ");
         } catch (SQLException ex) {
@@ -146,7 +147,7 @@ private Connection conn;
     }
     
       
-    public void modifierHeb(Reservation r, int id) {
+    public void modifierHeb(Reservation r) {
        String req = "update Reservation set date_reservation=? , nbr_place=? , date_debut=? , date_fin=? , id_client=? , id_hebergement=? , etat=? , type=? where id=?";
         try {
              pste = conn.prepareStatement(req);
@@ -158,14 +159,14 @@ private Connection conn;
             pste.setInt(6,r.getId_hebergement());
             pste.setString(7,r.getEtat());
             pste.setString(8,r.getType());
-            pste.setInt(9,id);
+            pste.setInt(9,r.getId());
             pste.executeUpdate();
             System.out.println(" Reservation  modifie ");
         } catch (SQLException ex) {
             Logger.getLogger(IReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void modifierAct(Reservation r, int id) {
+    public void modifierAct(Reservation r) {
        String req = "update Reservation set date_reservation=? , nbr_place=? , date_debut=? , date_fin=? , id_client=? , id_activite=? , etat=?  , type=? where id=?";
         try {
              pste = conn.prepareStatement(req);
@@ -177,7 +178,7 @@ private Connection conn;
             pste.setInt(6,r.getId_active());
             pste.setString(7,r.getEtat());
             pste.setString(8,r.getType());
-            pste.setInt(9,id);
+            pste.setInt(9,r.getId());
             pste.executeUpdate();
             System.out.println(" Reservation  modifie ");
         } catch (SQLException ex) {
@@ -288,14 +289,25 @@ private Connection conn;
         }
         
 }
+    //verifier si le nombre de place demande est possible 
     
-      public boolean verifierNbplaceAct(int id , int nb)
+    //Vol 
+      public boolean verifierNbplaceVol(int id , int nb)
   {
       
-      return  l.stream().filter(a->a.get_id()==id).tomapInt(a-> a.get_nbreplace).
+      VolService vs = new VolService();
+      List<Vol> lv= vs.afficher();
+      boolean test =lv.stream().filter(v->v.getId_vol()==id).anyMatch(v -> v.getNbr_placedispo() - nb >= 0);
+      return test;
   }
     
-    
+    //Activite 
+      
+      
+      
+      //voyage organise 
+      
+      
     
     
     
@@ -333,7 +345,11 @@ public List<Integer> listeReservationparClient(int id)
         
        boolean testd= l.stream().filter(r->r.getType().equals("Hebergement")).filter(r->r.getId_hebergement()==id).anyMatch(d->d.getDate_debut()==dd);
        boolean testf= l.stream().filter(r->r.getType().equals("Hebergement")).filter(r->r.getId_hebergement()==id).anyMatch(d->d.getDate_fin()==df);
+       
+      
        return testd&&testf;
+       
+       
        
             }
   
@@ -343,7 +359,7 @@ public List<Integer> listeReservationparClient(int id)
   {
       List<Reservation> l = this.afficher();
        
-    Map<String,List<Reservation>> map = l.stream().collect(Collectors.groupingBy(e->e.getType()));
+    Map<String,List<Reservation>> map = l.stream().filter(e->e.getEtat().equals("Approuve")).collect(Collectors.groupingBy(e->e.getType()));
     
         map.forEach((e,v)->{System.out.println("Type de reservation "+e);
         

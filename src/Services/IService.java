@@ -12,7 +12,7 @@ import java.util.*;
  */
 public interface IService<T> {
     void ajouter(T entity);
-    void modifier(T entity,int id);
+    void modifier(T entity);
     void supprimer(T entity);
     List<T> afficher();
 }
