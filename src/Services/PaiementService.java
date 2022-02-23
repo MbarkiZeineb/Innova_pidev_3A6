@@ -22,12 +22,12 @@ import java.util.logging.Logger;
  *
  * @author Asus
  */
-public class IPaiementService implements IService<Paiement>{
+public class PaiementService implements IService<Paiement>{
 private Connection conn;
     private Statement ste;
     private PreparedStatement pste;
 
-    public IPaiementService() {
+    public PaiementService() {
           conn = Datasource.getInstance().getCnx();
     }
     
@@ -43,7 +43,7 @@ private Connection conn;
             pste.executeUpdate();
             System.out.println(" Reservation voyage   créée");
         } catch (SQLException ex) {
-            Logger.getLogger(IReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -60,7 +60,7 @@ private Connection conn;
             pste.executeUpdate();
             System.out.println(" Reservation voyage   créée");
         } catch (SQLException ex) {
-            Logger.getLogger(IReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -73,7 +73,7 @@ private Connection conn;
             pste.executeUpdate();
             System.out.println("paiment suprime");
         } catch (SQLException ex) {
-            Logger.getLogger(IReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -99,7 +99,7 @@ private Connection conn;
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(IReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return Paiements;
@@ -123,7 +123,7 @@ private Connection conn;
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(IReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return montant;
         
@@ -146,7 +146,7 @@ private Connection conn;
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(IReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return montant;
         
@@ -171,19 +171,27 @@ private Connection conn;
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(IReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return montant;
         
     }
-   public double MontantT(List<Integer> l)
+   public void MontantTotal(List<Integer> l )
          
            
    { List<Paiement> lp= this.afficher();
    
-      return lp.stream().filter(p -> l.contains(p.getId_reservation())).mapToDouble(p->p.getMontant()).sum();
+      double montantT= lp.stream().filter(p -> l.contains(p.getId_reservation())).mapToDouble(p->p.getMontant()).sum();
+    
+       
+              
+    
+   
+      
+        }
        
        
-   }
+   
+  
  
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="761.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjouterReservationController">
+   <children>
+      <TabPane layoutX="83.0" layoutY="36.0" prefHeight="597.0" prefWidth="856.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Voyage Organise ">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="499.0" prefWidth="856.0">
+                     <children>
+                        <Label layoutX="26.0" layoutY="192.0" prefHeight="21.0" prefWidth="191.0" text="Nom de Client" />
+                        <ComboBox fx:id="NomClientCombo" layoutX="217.0" layoutY="187.0" prefWidth="150.0" />
+                        <DatePicker fx:id="dateReservationVoy" editable="false" layoutX="589.0" layoutY="40.0" />
+                        <Label layoutX="26.0" layoutY="287.0" text="Nombre de place " />
+                        <TextField layoutX="180.0" layoutY="282.0" />
+                        <Button layoutX="587.0" layoutY="446.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="225.0" text="Ajouter" />
+                        <TextField layoutX="589.0" layoutY="210.0" />
+                        <Label layoutX="589.0" layoutY="181.0" prefHeight="21.0" prefWidth="73.0" text="Prix" />
+                        <Label layoutX="51.0" layoutY="382.0" prefHeight="21.0" prefWidth="73.0" text="Prix total " />
+                        <TextField editable="false" layoutX="129.0" layoutY="377.0" />
+                        <Label layoutX="31.0" layoutY="61.0" prefHeight="21.0" prefWidth="128.0" text="Ville depart " />
+                        <TextField layoutX="190.0" layoutY="56.0" />
+                        <Label layoutX="26.0" layoutY="108.0" prefHeight="21.0" prefWidth="131.0" text="Ville Arrive" />
+                        <TextField layoutX="190.0" layoutY="103.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Vol ">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="82.0" layoutY="77.0" prefHeight="21.0" prefWidth="122.0" />
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Activite">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+          <Tab text="Hebergement">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

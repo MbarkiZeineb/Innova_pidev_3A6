@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="tableR" prefHeight="926.0" prefWidth="1419.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AfficherReservationController">
+   <children>
+      <TableView fx:id="tableRe" layoutX="87.0" layoutY="181.0" prefHeight="457.0" prefWidth="1289.0">
+        <columns>
+          <TableColumn fx:id="idR" prefWidth="74.0" text="ID" />
+          <TableColumn fx:id="dateR" prefWidth="141.0" text="Date_Reservation" />
+            <TableColumn fx:id="nbp" prefWidth="142.0" text="NBP" />
+            <TableColumn fx:id="dated" prefWidth="112.0" text="Date_debut" />
+            <TableColumn fx:id="datef" prefWidth="110.0" text="Date_fin" />
+            <TableColumn fx:id="idc" prefWidth="70.0" text="id_client" />
+            <TableColumn fx:id="idvoy" text="id_voyage" />
+            <TableColumn fx:id="idact" prefWidth="78.0" text="id_activite" />
+            <TableColumn fx:id="idvol" prefWidth="71.0" text="id_vol" />
+            <TableColumn fx:id="idh" prefWidth="171.0" text="id_hebergement" />
+            <TableColumn fx:id="etat" minWidth="14.0" prefWidth="117.0" text="etat" />
+            <TableColumn fx:id="type" prefWidth="124.0" text="type" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
