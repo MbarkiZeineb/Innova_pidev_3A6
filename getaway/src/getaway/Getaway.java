@@ -41,8 +41,7 @@ public class Getaway {
 //      String strDate6 = "23-May-2014 17:10:14";
 //      SimpleDateFormat sdf6 = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 
-        Timestamp sqlTimestamp11 = Timestamp.valueOf("2000-09-15 18:40:50");
-        Timestamp sqlTimestamp12 = Timestamp.valueOf("2000-09-15 20:16:51");
+        
         
         Timestamp sqlTimestamp111 = Timestamp.valueOf("2023-10-17 12:20:50");
         Timestamp sqlTimestamp122 = Timestamp.valueOf("2023-10-17 14:57:51");
@@ -57,8 +56,10 @@ public class Getaway {
         */
         Vol v9 = new Vol(sqlTimestamp111,sqlTimestamp122,"france",50,8, (float) 200.1) ;
        // vs.ajouter(v9);
-Vol v4 = new Vol(sqlTimestamp11,sqlTimestamp12,"Nabeul",20,3, (float) 88.2) ;
-
+       Timestamp sqlTimestamp11 = Timestamp.valueOf("2020-09-15 18:00:50");
+        Timestamp sqlTimestamp12 = Timestamp.valueOf("2020-09-15 20:00:51");
+Vol v4 = new Vol(sqlTimestamp11,sqlTimestamp12,"Allemagne",20,3, (float) 88.2) ;
+//vs.ajouter(v4);
 //v4.setPrix((float) 88.2);
 //vs.modifier1(v4,70);
 //vs.supprimer(65);
@@ -80,12 +81,14 @@ Vol v4 = new Vol(sqlTimestamp11,sqlTimestamp12,"Nabeul",20,3, (float) 88.2) ;
      //vs.supprimer(new Vol(18,DateR,DateF,TimeR,TimeR,"Nabeul",20,3, (float) 125.8));
      //supp2
       //vs.supprimer(12);
-      //System.out.println(vs.findVolParId(16));
+        
+    //System.out.println(vs.calculenbvol(8));
+    //vs.calculernbreVolparmois();
+   // System.out.println(vs.calculnbvolparjr(7,sqlTimestamp11));
+    
+      //System.out.println(vs.findVolParId(70));
      // System.out.println(vs.findVolParPrix((float) 2222.5));
-      //System.out.println(vs.tri_vol());
-     // System.out.println(vs.findVolParDate(DateR));
-       //vs.calculernbreVolparmois();
-     //System.out.println(vs.calculenbvol(7));
+     //System.out.println(vs.findVolParDest("nabeul"));
       
       
          AvionService as = new AvionService();
@@ -103,14 +106,7 @@ Vol v4 = new Vol(sqlTimestamp11,sqlTimestamp12,"Nabeul",20,3, (float) 88.2) ;
   // as.supprimer(new Avion(6,888,1));
   
          //vs.stat();
-         
-    //System.out.println(vs.calculenbvol(5));
-    //vs.calculernbreVolparmois();
-   // System.out.println(vs.calculnbvolparjr(7,sqlTimestamp11));
-    
-      //System.out.println(vs.findVolParId(70));
-     // System.out.println(vs.findVolParPrix((float) 2222.5));
-     //System.out.println(vs.findVolParDest("nabeul"));
+       
         
         
        
