@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="tableR" prefHeight="926.0" prefWidth="1419.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AffichageVol">
+   <children>
+      <TableView fx:id="tableRe" layoutX="284.0" layoutY="172.0" prefHeight="464.0" prefWidth="800.0">
+        <columns>
+          <TableColumn fx:id="idV" prefWidth="87.00003051757812" text="Id vol" />
+            <TableColumn fx:id="dated" prefWidth="130.0" text="Date_debut" />
+            <TableColumn fx:id="datef" prefWidth="125.0" text="Date_fin" />
+            <TableColumn fx:id="destination" prefWidth="127.0" text="destination" />
+            <TableColumn fx:id="prix" prefWidth="84.0" text="prix" />
+            <TableColumn fx:id="nbplace" prefWidth="121.0" text="nb place dispo" />
+            <TableColumn fx:id="idA" prefWidth="126.0" text="id_avion" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

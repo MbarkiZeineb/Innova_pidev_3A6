@@ -45,42 +45,10 @@ public class AvionService implements IService<Avion>{
             Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
         }}
     
-    @Override
-    public void modifier(Avion A) {
-        
-    String req = "UPDATE `avion` SET `nbr_place`=?,`id_agence`=?  WHERE  `avion`.`id_avion` = "+ A.getId_avion() + "";  
-    try {
-            pste = conn.prepareStatement(req);
-            pste.setInt(1, A.getNbr_place());
-            pste.setInt(2, A.getId_agence());
-            
-            pste.executeUpdate();
-            int rowsUpdated = pste.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("La modification d'avion a été éffectuée avec succès ");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    @Override
-    public void supprimer(Avion A) {
-         try {
-            String req = "DELETE FROM `avion` WHERE `avion`.`id_avion` = "+ A.getId_avion() + "";
-            pste = conn.prepareStatement(req);
-            pste.executeUpdate();
-            System.out.println("Avion supprimé");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-}
-
 //    @Override
-//    public void modifier(Avion A,int id_avion) {
+//    public void modifier(Avion A) {
 //        
-//    String req = "UPDATE `avion` SET `nbr_place`=?,`id_agence`=?  WHERE  `avion`.`id_avion` = "+ String.valueOf(id_avion) + "";  
+//    String req = "UPDATE `avion` SET `nbr_place`=?,`id_agence`=?  WHERE  `avion`.`id_avion` = "+ A.getId_avion() + "";  
 //    try {
 //            pste = conn.prepareStatement(req);
 //            pste.setInt(1, A.getNbr_place());
@@ -89,21 +57,17 @@ public class AvionService implements IService<Avion>{
 //            pste.executeUpdate();
 //            int rowsUpdated = pste.executeUpdate();
 //            if (rowsUpdated > 0) {
-//                System.out.println("La modification d'avion :" + String.valueOf(id_avion) + " a été éffectuée avec succès ");
+//                System.out.println("La modification d'avion a été éffectuée avec succès ");
 //            }
 //        } catch (SQLException ex) {
 //            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
     
-
-        
-    
-
 //    @Override
-//    public void supprimer(int id_avion) {
+//    public void supprimer(Avion A) {
 //         try {
-//            String req = "DELETE FROM `avion` WHERE `avion`.`id_avion` = "+ String.valueOf(id_avion) + "";
+//            String req = "DELETE FROM `avion` WHERE `avion`.`id_avion` = "+ A.getId_avion() + "";
 //            pste = conn.prepareStatement(req);
 //            pste.executeUpdate();
 //            System.out.println("Avion supprimé");
@@ -112,6 +76,42 @@ public class AvionService implements IService<Avion>{
 //            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //}
+
+    @Override
+    public void modifier1(Avion A,int id_avion) {
+        
+    String req = "UPDATE `avion` SET `nbr_place`=?,`id_agence`=?  WHERE  `avion`.`id_avion` = "+ String.valueOf(id_avion) + "";  
+    try {
+            pste = conn.prepareStatement(req);
+            pste.setInt(1, A.getNbr_place());
+            pste.setInt(2, A.getId_agence());
+            
+            pste.executeUpdate();
+            int rowsUpdated = pste.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("La modification d'avion :" + String.valueOf(id_avion) + " a été éffectuée avec succès ");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+
+        
+    
+
+    @Override
+    public void supprimer(int id_avion) {
+         try {
+            String req = "DELETE FROM `avion` WHERE `avion`.`id_avion` = "+ String.valueOf(id_avion) + "";
+            pste = conn.prepareStatement(req);
+            pste.executeUpdate();
+            System.out.println("Avion supprimé");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
 
     @Override
     public List<Avion> afficher() {
@@ -137,5 +137,31 @@ public class AvionService implements IService<Avion>{
         return Avions;
     }
 
+    
+    public Avion findAvionParId(int id_avion) {
+
+        String req = "SELECT * FROM `avion` WHERE `id_avion`= ? ";
+        Avion a = new Avion();
+        try {
+            
+            PreparedStatement preparedStatement = conn.prepareStatement(req);
+            preparedStatement.setInt(1, id_avion);
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while(rs.next()){
+                
+               
+                a.setId_avion(rs.getInt(1));
+                a.setNbr_place(rs.getInt(2));
+                a.setId_agence(rs.getInt(3));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return a;
+
+    }
    
 }

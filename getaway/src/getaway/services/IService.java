@@ -11,9 +11,9 @@ import java.util.List;
  * @author Malek
  */
 public interface IService<T> {
-     void ajouter(T entity);
-    void modifier(T entity);
-    void supprimer(T entity);
+     void ajouter(T entity) throws Exception;
+    void supprimer(int id);
+    void modifier1(T entity,int id) ;
     List<T> afficher();
     
 }
