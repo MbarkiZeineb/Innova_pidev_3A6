@@ -27,7 +27,29 @@ public class AvisService extends SendSms implements IService<Avis> {
         conn = Datasource.getInstance().getCnx();
     }
 
-    
+    public String NumTel(Avis av)
+    {
+        String NumTel ="";
+        
+       String req =  "Select DISTINCT NumTel from Client c JOIN Avis a ON c.id=a.Id WHERE a.Id="+ av.getId() +"";
+        try {
+            pste = conn.prepareStatement(req);
+            ResultSet rs = pste.executeQuery();
+            
+//            ste = conn.createStatement();
+//            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+                
+               NumTel= rs.getNString(1);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AvisService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return NumTel;
+    }
     
     @Override
     public void ajouter(Avis av) {
@@ -36,7 +58,8 @@ public class AvisService extends SendSms implements IService<Avis> {
             ste = conn.createStatement();
             ste.executeUpdate(req);
             System.out.println("Avis crée");
-            
+            String NumTel = this.NumTel(av);
+            sendSms(NumTel);
         } catch (SQLException ex) {
             Logger.getLogger(AvisService.class.getName()).log(Level.SEVERE, null, ex);
         }

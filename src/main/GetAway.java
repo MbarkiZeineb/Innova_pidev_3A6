@@ -1,3 +1,4 @@
+//Commit Metier
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -63,7 +64,7 @@ public class GetAway {
         System.out.println(avs.afficher());
         //System.out.println(as.recupAdrM());
         //System.out.println(as.rechercherActiviteRef(4));
-        
+        System.out.println(as.rechercherActiviteNom("Hey","sport"));
     }
     
 }
