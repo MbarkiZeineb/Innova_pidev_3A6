@@ -5,11 +5,19 @@
  */
 package GUI;
 
+import Entities.Reservation;
+import Services.ReservationService;
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -23,12 +31,29 @@ public class AjouterReservationController implements Initializable {
      */
      @FXML
     private DatePicker dateReservationVoy;
+    @FXML
+    private TextField nbrplace;
+    @FXML
+    private Button ajouterRVoyage;
+    @FXML
+    private TextField idclient;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
         
     
+    }
+
+    @FXML
+  void addVoyage(ActionEvent event) {
+
+      ReservationService rs = new ReservationService();
+      Reservation r= new Reservation(Date.valueOf(dateReservationVoy.getValue()),Integer.parseInt(nbrplace.getText()),, etat, type);
+      
+      
+      
+      
     }    
     
 }

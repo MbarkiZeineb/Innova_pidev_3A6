@@ -35,8 +35,8 @@ public class AfficherReservationController implements Initializable {
     private AnchorPane tableR;
   @FXML
     private TableView<Reservation> tableRe;
-    @FXML
-    private TableColumn<Reservation ,Integer> idR;
+
+  
 
     @FXML
     private TableColumn<Reservation, Date> dateR;
@@ -95,7 +95,6 @@ public class AfficherReservationController implements Initializable {
           List <Reservation> ls =rs.afficher();
           ls.forEach(e->oblist.add(e));
           System.out.print(oblist);
-          idR.setCellValueFactory(new PropertyValueFactory<Reservation,Integer>("id"));
           dateR.setCellValueFactory(new PropertyValueFactory<>("date_reservation"));
           nbp.setCellValueFactory(new PropertyValueFactory<>("nbr_place"));
            dated.setCellValueFactory(new PropertyValueFactory<>("Date_debut"));

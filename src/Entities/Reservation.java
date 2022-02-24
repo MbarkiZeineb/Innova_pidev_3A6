@@ -42,7 +42,18 @@ public class Reservation {
         this.etat = etat;
         this.type=type;
     }
-
+  public Reservation(Date dr , int nbr_p,int id_voyage, int id_client, String etat , String type)
+  {
+      
+      this.date_reservation=dr;
+      this.nbr_place=nbr_p;
+      this.id_voyage=id_voyage;
+      this.etat=etat;
+      this.type=type;
+      this.id_client=id_client;
+      
+      
+  }
     public String getType() {
         return type;
     }

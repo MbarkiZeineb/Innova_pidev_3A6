@@ -34,17 +34,15 @@ private Connection conn;
       
          
            
-        String req = "INSERT INTO `reservation` (`date_reservation`,`nbr_place`,`date_debut`,`date_fin`,`id_voyage`,`id_client`,`etat`,`type`) VALUE (?,?,?,?,?,?,?,?)";
+        String req = "INSERT INTO `reservation` (`date_reservation`,`nbr_place`,`id_voyage`,`id_client`,`etat`,`type`) VALUE (?,?,?,?,?,?)";
         try {
              pste = conn.prepareStatement(req);
             pste.setDate(1,r.getDate_reservation());
             pste.setInt(2,r.getNbr_place());
-            pste.setDate(3,r.getDate_debut());
-            pste.setDate(4,r.getDate_fin());
-             pste.setInt(5,r.getId_voyage());
-              pste.setInt(6,r.getId_client());
-              pste.setString(7,r.getEtat());
-             pste.setString(8,r.getType());
+             pste.setInt(3,r.getId_voyage());
+              pste.setInt(4,r.getId_client());
+              pste.setString(5,r.getEtat());
+             pste.setString(6,r.getType());
             pste.executeUpdate();
             System.out.println(" Reservation voyage   créée");
         } catch (SQLException ex) {

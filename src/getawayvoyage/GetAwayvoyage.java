@@ -52,7 +52,7 @@ public class GetAwayvoyage {
              String hDateD="2022-02-11";
       String hDateF="2022-02-12";
 //        
-            //Rs.ajouterHeb(r5);
+           // Rs.ajouterHeb(r5);
        Rs.ajouterAct(r4);
         
 //    Date h1DateD=Date.valueOf(hDateD);
