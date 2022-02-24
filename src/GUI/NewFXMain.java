@@ -23,7 +23,8 @@ public class NewFXMain extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("AfficherReservation.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("AfficherReservation.fxml"));
+          Parent root = FXMLLoader.load(getClass().getResource("StatR.fxml"));
         
         Scene scene = new Scene(root, 900, 900);
         

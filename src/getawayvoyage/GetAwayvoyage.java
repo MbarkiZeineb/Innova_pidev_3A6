@@ -41,7 +41,7 @@ public class GetAwayvoyage {
   
   Reservation r5= new Reservation(DateR, 5, DateD, DateF, 0, 0, 0,1,"enA", 1, "hebergment");
            
-  Reservation r4= new Reservation(DateR, 12, DateD, DateF, 0, 1,0 ,0,"enA", 1, "activite");  
+  Reservation r4= new Reservation(DateR,12, DateD, DateF, 0, 1,0 ,0,"enA", 1, "activite");  
   HebergementService hs = new HebergementService();
         System.out.println(hs.afficher());
              
@@ -52,8 +52,8 @@ public class GetAwayvoyage {
              String hDateD="2022-02-11";
       String hDateF="2022-02-12";
 //        
- Rs.ajouterHeb(r5);
-      
+            //Rs.ajouterHeb(r5);
+       Rs.ajouterAct(r4);
         
 //    Date h1DateD=Date.valueOf(hDateD);
 //    Date h1DateF=Date.valueOf(hDateF);
