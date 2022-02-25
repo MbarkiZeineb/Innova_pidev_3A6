@@ -9,24 +9,29 @@ import Entities.*;
 import Services.ReservationService;
 import Services.VolService;
 import java.awt.event.MouseEvent;
+import static java.lang.String.format;
+import static java.lang.String.format;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import java.text.SimpleDateFormat;
+import javafx.beans.binding.BooleanBinding;
+
 
 /**
  * FXML Controller class
@@ -66,7 +71,7 @@ public class AjouterReservationController implements Initializable {
     private TableColumn<Vol, Timestamp> datef;
 
     @FXML
-    private TableColumn<Vol, Float> prix;
+    private TableColumn<Vol, Float> prixvol;
 
     @FXML
     private TableColumn<Vol, Integer> nbplaceVol;
@@ -75,34 +80,66 @@ public class AjouterReservationController implements Initializable {
     private TextField destinationvol;
 
     @FXML
-    private DatePicker datedvol;
+    private TextField datedvol;
 
     @FXML
-    private DatePicker dateavol;
+    private TextField dateavol;
 
     @FXML
     private TextField nbplaceRvol;
 
     @FXML
     private TextField prixvolr;
+    int index= -1;
     
  ObservableList<Vol> oblist = FXCollections.observableArrayList();
+    @FXML
+    private TextField idCvol;
   
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
          loadTableVol();
+         BooleanBinding booleanBinding =(nbplaceRvol.textProperty().isEqualTo("")).or(
+        prixvolr.textProperty().isEqualTo("")).or(
+         dateavol.textProperty().isEqualTo("")).or(
+        datedvol.textProperty().isEqualTo("")).or(
+        destinationvol.textProperty().isEqualTo(""));
+         
          
           Vol v = Tablevol.getSelectionModel().getSelectedItem();
-        
+        AjouterVol.disableProperty().bind(booleanBinding);
     }
 
     @FXML
-  void addVoyage(ActionEvent event) {
+  void addVoyage(ActionEvent event)  {
       Vol v = Tablevol.getSelectionModel().getSelectedItem();
       
       ReservationService rs = new ReservationService();
-      //Reservation r= new Reservation(Date.valueOf(dateReservationVoy.getValue()),Integer.parseInt(nbrplace.getText()),, etat, type);
+     
+       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       try
+       {
+             java.util.Date parsedd = format.parse(datedvol.getText());
+              java.util.Date parseda = format.parse(dateavol.getText());
+              
+        java.sql.Date Datedv = new java.sql.Date(parsedd.getTime());
+        java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
+        v.getId_vol();
+         Reservation r= new Reservation(Datedv,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"En attente",Integer.parseInt(idCvol.getText()),"vol");
+         rs.ajouterVol(r);
+         rs.modifiernbplacevol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText()));
+       
+       }
+       
+       catch(ParseException e)
+       {
+           System.out.println(e);
+       }
+       
+     
+       
+
       
       
       
@@ -117,7 +154,7 @@ public class AjouterReservationController implements Initializable {
           dated.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
           datef.setCellValueFactory(new PropertyValueFactory<>("date_arrivee"));
            destination.setCellValueFactory(new PropertyValueFactory<>("destination"));
-            prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
+            prixvol.setCellValueFactory(new PropertyValueFactory<>("prix"));
             nbplaceVol.setCellValueFactory(new PropertyValueFactory<>("nbr_placedispo"));
           
 //          
@@ -129,33 +166,40 @@ public class AjouterReservationController implements Initializable {
         
     }
    
-       void select(MouseEvent event) {
-           
-          int  = Tablevol.getSelectionModel().getSelectedIndex();
-          destinationvol.setText(v.getDestination());
-          
-          
-         
-          try {
   
-    
-    datedvol.setValue(v.getDate_arrivee().toLocalDate());
-     dateavol.setValue(v.getDate_arrivee().toLocalDate());
-} catch (NullPointerException e) {
-
-              System.out.println(e);}
-
-    
-
-    nbplaceRvol.setText(""+v.getPrix());
-    nbplaceRvol.setText("A remplir");
-    prixvolr.setText(v.getPrix());
-    }
 
     @FXML
-    private void select(javafx.scene.input.MouseEvent event) {
-    }
-
-   
+    private void selectvol(javafx.scene.input.MouseEvent event) {
     
+   index = Tablevol.getSelectionModel().getSelectedIndex();
+         
+         
+          
+           destinationvol.setText(destination.getCellData(index));
+    datedvol.setText(""+dated.getCellData(index));
+     dateavol.setText(""+datef.getCellData(index));
+     prixvolr.setText(""+prixvol.getCellData(index));
+         
+
+}
+
+    @FXML
+    private void viderVol(javafx.scene.input.MouseEvent event) {
+        
+      
+           
+   destinationvol.clear();
+
+    datedvol.clear();
+
+  dateavol.clear();
+
+    nbplaceRvol.clear();
+
+    prixvolr.clear();
+    idCvol.clear();
+    
+     Tablevol.refresh();
+  
+    }
 }

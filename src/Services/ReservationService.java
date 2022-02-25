@@ -69,6 +69,7 @@ private Connection conn;
               pste.setString(8,r.getType());
             pste.executeUpdate();
             System.out.println(" Reservation  vol créée");
+              modifiernbplacevol(r.getId_vol(),r.getNbr_place());
         } catch (SQLException ex) {
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }}
@@ -170,6 +171,7 @@ private Connection conn;
             pste.setInt(9,r.getId());
             pste.executeUpdate();
             System.out.println(" Reservation  modifie ");
+           
         } catch (SQLException ex) {
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -225,6 +227,7 @@ private Connection conn;
             pste.setInt(9,r.getId());
             pste.executeUpdate();
             System.out.println(" Reservation  modifie ");
+           
         } catch (SQLException ex) {
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -301,8 +304,8 @@ private Connection conn;
        //Vol 
     public void modifiernbplacevol(int id,int nb)
 {
-    
-    String req = "update vol  set `nbr_placedispo`=`nbr_placedispo`- ? where id_vol=?";
+    System.out.println("test");
+    String req = "update vol  set `nbr_placedispo`= `nbr_placedispo` - ? where id_vol=?";
      try {
              pste = conn.prepareStatement(req);
           

@@ -54,6 +54,7 @@ public class Reservation {
       
       
   }
+  
     public String getType() {
         return type;
     }
