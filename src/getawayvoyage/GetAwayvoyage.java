@@ -54,7 +54,9 @@ public class GetAwayvoyage {
 //        
            // Rs.ajouterHeb(r5);
        Rs.ajouterAct(r4);
-        
+       VolService vs = new VolService();
+       
+       
 //    Date h1DateD=Date.valueOf(hDateD);
 //    Date h1DateF=Date.valueOf(hDateF);
 //        

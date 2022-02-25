@@ -43,25 +43,23 @@
                      <children>
                         <Label layoutX="82.0" layoutY="77.0" prefHeight="21.0" prefWidth="122.0" />
                         <Label layoutX="13.0" layoutY="51.0" prefHeight="21.0" prefWidth="117.0" text="Destination" />
-                        <TextField layoutX="140.0" layoutY="46.0" />
-                        <DatePicker layoutX="150.0" layoutY="114.0" />
-                        <DatePicker layoutX="140.0" layoutY="178.0" />
+                        <TextField fx:id="destinationvol" layoutX="140.0" layoutY="46.0" />
+                        <DatePicker fx:id="datedvol" layoutX="150.0" layoutY="114.0" />
+                        <DatePicker fx:id="dateavol" layoutX="140.0" layoutY="178.0" />
                         <Label layoutX="14.0" layoutY="119.0" prefHeight="21.0" prefWidth="115.0" text="Date Depart" />
                         <Label layoutX="14.0" layoutY="183.0" prefHeight="21.0" prefWidth="93.0" text="Date arrivee" />
                         <Label layoutX="21.0" layoutY="261.0" prefHeight="21.0" prefWidth="144.0" text="Nombre de place" />
-                        <TextField layoutX="156.0" layoutY="256.0" />
-                        <Label layoutX="21.0" layoutY="341.0" text="Prix total " />
-                        <TextField layoutX="140.0" layoutY="336.0" />
+                        <TextField fx:id="nbplaceRvol" layoutX="156.0" layoutY="256.0" />
+                        <Label layoutX="21.0" layoutY="341.0" text="Prix" />
+                        <TextField fx:id="prixvolr" layoutX="140.0" layoutY="336.0" />
                         <Button fx:id="AjouterVol" layoutX="107.0" layoutY="478.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="128.0" text="Ajouter" />
-                        <TableView layoutX="501.0" layoutY="83.0" prefHeight="264.0" prefWidth="520.0">
+                        <TableView fx:id="Tablevol" layoutX="498.0" layoutY="88.0" onMouseClicked="#select" onScrollStarted="#select" prefHeight="264.0" prefWidth="381.0">
                           <columns>
-                            <TableColumn fx:id="idV" prefWidth="75.0" text="id vol" />
-                            <TableColumn prefWidth="75.0" text="dated" />
+                            <TableColumn fx:id="dated" prefWidth="75.0" text="dated" />
                               <TableColumn fx:id="datef" prefWidth="75.0" text="datef" />
-                              <TableColumn prefWidth="75.0" text="destination" />
-                              <TableColumn prefWidth="75.0" text="prix" />
-                              <TableColumn prefWidth="75.0" text="nbplace" />
-                              <TableColumn prefWidth="75.0" text="idA" />
+                              <TableColumn fx:id="destination" prefWidth="98.0" text="destination" />
+                              <TableColumn fx:id="prix" prefWidth="52.0" text="prix" />
+                              <TableColumn fx:id="nbplaceVol" prefWidth="75.0" text="nbplace" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
