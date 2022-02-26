@@ -439,17 +439,35 @@ public List<Integer> listeReservationparClient(int id)
   }  
        
        
-       public void testfaza (  int id )
+       public List<LocalDate> ListeDd (  int id  )
        {
            
            
         List<Reservation> l = this.afficher();
-        
-        List<LocalDate> dated=l.stream().filter(e->e.getId_hebergement()==id).map(e->e.getDate_debut().toLocalDate()).collect(Collectors.toList());
-          List<LocalDate> datef=l.stream().filter(e->e.getId_hebergement()==id).map(e->e.getDate_fin().toLocalDate()).collect(Collectors.toList());
-          
+        List<LocalDate> dates = new ArrayList<LocalDate>();
+      List<LocalDate> dated=  l.stream().filter(e->e.getId_hebergement()==id).map(e->e.getDate_debut().toLocalDate()).collect(Collectors.toList());
+        List<LocalDate> datef=l.stream().filter(e->e.getId_hebergement()==id).map(e->e.getDate_fin().toLocalDate()).collect(Collectors.toList());
+       
+            List<LocalDate> periodes = new ArrayList<LocalDate>();
+
+
+//current = current.plusDays(1); //If you don't want to include the start date
+//toDate = toDate.plusDays(1); //If you want to include the end date
+for (int i=0; i<dated.size(); i++)
+{     LocalDate current = dated.get(i);
+      while (current.isBefore(datef.get(i))|| current.equals((datef.get(i)))) {
+   periodes.add(current);
+     current = current.plusDays(1);
            
        }
+    
+    
+}
+  
+          return periodes;
+       }
+       
+       
        
 
   

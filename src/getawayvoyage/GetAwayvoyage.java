@@ -28,8 +28,8 @@ public class GetAwayvoyage {
         // TODO code application logic here
     String SDateR="2022-03-31";  
       
-        String SDateD="2022-02-11";
-         String SDateF="2022-02-12";
+        String SDateD="2022-02-01";
+         String SDateF="2022-02-16";
         
         
         
@@ -39,9 +39,9 @@ public class GetAwayvoyage {
     Date DateD=Date.valueOf(SDateD);
     Date DateF=Date.valueOf(SDateF);
   
-  Reservation r5= new Reservation(DateR, 5, DateD, DateF, 0, 0, 0,1,"enA", 1, "hebergment");
-           
-  Reservation r4= new Reservation(DateR,12, DateD, DateF, 0, 1,0 ,0,"enA", 1, "activite");  
+//  Reservation r5= new Reservation(DateR, 5, DateD, DateF, 0, 0, 0,1,"enA", 1, "hebergment");
+//           
+//  Reservation r4= new Reservation(DateR,12, DateD, DateF, 0, 1,0 ,0,"enA", 1, "activite");  
   HebergementService hs = new HebergementService();
         System.out.println(hs.afficher());
              
@@ -49,13 +49,14 @@ public class GetAwayvoyage {
     ReservationService Rs= new ReservationService();
     
 //        System.out.println(Rs.verifierNbplaceVol(3,11));
-             String hDateD="2022-02-11";
-      String hDateF="2022-02-12";
-//        
-           // Rs.ajouterHeb(r5);
-       Rs.ajouterAct(r4);
-       VolService vs = new VolService();
-       Rs.modifiernbplacevol(1,2);
+//             String hDateD="2022-02-11";
+//      String hDateF="2022-02-12";
+////        
+//           // Rs.ajouterHeb(r5);
+//       Rs.ajouterAct(r4);
+//       VolService vs = new VolService();
+//       Rs.modifiernbplacevol(1,2);
+         
        
 //    Date h1DateD=Date.valueOf(hDateD);
 //    Date h1DateF=Date.valueOf(hDateF);

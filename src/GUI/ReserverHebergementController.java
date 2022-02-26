@@ -9,17 +9,24 @@ import Entities.Reservation;
 import Entities.Vol;
 import Services.ReservationService;
 import java.net.URL;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -52,7 +59,43 @@ public class ReserverHebergementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+        
+        String SDateD="2022-02-01";
+         String SDateF="2022-02-16";
+        LocalDate ddd= LocalDate.of(2022,02,01);
+       LocalDate fff= LocalDate.of(2022,02,16);
+
+// Setting the maximum date available in the calendar
+          
+    
+        
+    Date DateDebut=Date.valueOf(SDateD);
+    Date DateFin=Date.valueOf(SDateF);
+      List<LocalDate> listdd= rs.ListeDd(1);
+       DateD.setDayCellFactory((DatePicker param) -> new DateCell(){
+           public void updateItem(LocalDate item, boolean empty) {
+               super.updateItem(item, empty);
+               
+               if (!empty && item != null) {
+                   if(listdd.contains(item)) {
+                       this.setStyle("-fx-background-color: pink");
+                   }
+               }
+           }
+       });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          
+    }
+    
+    
 
     @FXML
     private void addHeb(ActionEvent event) {
