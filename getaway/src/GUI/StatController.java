@@ -8,6 +8,7 @@ package GUI;
 import getaway.entities.Vol;
 import getaway.services.VolService;
 import getaway.utilis.Datasource;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,11 +21,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javax.activation.DataSource;
 
 /**
@@ -32,9 +37,13 @@ import javax.activation.DataSource;
  *
  * @author Malek
  */
+
+
 public class StatController implements Initializable {
     @FXML
     private BarChart<String,Integer> barChart;
+    @FXML
+    private Button retourm;
 
     /**
      * Initializes the controller class.
@@ -43,7 +52,7 @@ public class StatController implements Initializable {
     private Connection con = Datasource.getInstance().getCnx();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      String req =" select a.id_avion , COUNT(v.destination) from vol v join avion a on v.id_avion=a.id_avion group by a.id_avion; ";
+      String req =" select a.id_avion , COUNT(v.ville_arrivee) from vol v join avion a on v.id_avion=a.id_avion group by a.id_avion; ";
         XYChart.Series<String,Integer> series = new XYChart.Series<String,Integer>();
         try {
              PreparedStatement ste = (PreparedStatement) con.prepareStatement(req);
@@ -55,11 +64,21 @@ public class StatController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(StatController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
         
-
-        
-        
-        
+@FXML
+    private void retour(ActionEvent event) {
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("AjouterVol.fxml"));
+                       Parent root ;
+        try {
+            root=loader.load();
+             retourm.getScene().setRoot(root);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.AjouterVolController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    } 
+    
+    
   
-}
 }

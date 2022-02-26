@@ -16,7 +16,8 @@ public class Vol {
      private int id_vol ;
      public Timestamp date_depart;	
      public Timestamp date_arrivee;	
-     private String destination	;
+     private String ville_depart;
+     private String ville_arrivee;
      private int nbr_placedispo;
      private int id_avion ;
      private float prix;
@@ -24,20 +25,22 @@ public class Vol {
     public Vol() {
     }
 
-    public Vol(int id_vol, Timestamp date_depart, Timestamp date_arrivee, String destination, int nbr_placedispo, int id_avion, float prix) {
+    public Vol(int id_vol, Timestamp date_depart, Timestamp date_arrivee,String ville_depart, String ville_arrivee, int nbr_placedispo, int id_avion, float prix) {
         this.id_vol = id_vol;
         this.date_depart = date_depart;
         this.date_arrivee = date_arrivee;
-        this.destination = destination;
+        this.ville_depart=ville_depart;
+        this.ville_arrivee = ville_arrivee;
         this.nbr_placedispo = nbr_placedispo;
         this.id_avion = id_avion;
         this.prix = prix;
     }
 
-    public Vol(Timestamp date_depart, Timestamp date_arrivee, String destination, int nbr_placedispo, int id_avion, float prix) {
+    public Vol(Timestamp date_depart, Timestamp date_arrivee,String ville_depart, String ville_arrivee, int nbr_placedispo, int id_avion, float prix) {
         this.date_depart = date_depart;
         this.date_arrivee = date_arrivee;
-        this.destination = destination;
+        this.ville_depart=ville_depart;
+        this.ville_arrivee = ville_arrivee;
         this.nbr_placedispo = nbr_placedispo;
         this.id_avion = id_avion;
         this.prix = prix;
@@ -56,8 +59,8 @@ public class Vol {
         return date_arrivee;
     }
 
-    public String getDestination() {
-        return destination;
+    public String getVille_arrivee() {
+        return ville_arrivee;
     }
 
     public int getNbr_placedispo() {
@@ -72,6 +75,16 @@ public class Vol {
         return prix;
     }
 
+    public String getVille_depart() {
+        return ville_depart;
+    }
+
+    public void setVille_depart(String ville_depart) {
+        this.ville_depart = ville_depart;
+    }
+    
+    
+
     public void setId_vol(int id_vol) {
         this.id_vol = id_vol;
     }
@@ -85,8 +98,8 @@ public class Vol {
     }
 
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setVille_arrivee(String ville_arrivee) {
+        this.ville_arrivee = ville_arrivee;
     }
 
     public void setNbr_placedispo(int nbr_placedispo) {
@@ -103,8 +116,10 @@ public class Vol {
 
     @Override
     public String toString() {
-        return "Vol{" + "id_vol=" + id_vol + ", date_depart=" + date_depart + ", date_arrivee=" + date_arrivee + ", destination=" + destination + ", nbr_placedispo=" + nbr_placedispo + ", id_avion=" + id_avion + ", prix=" + prix + '}';
+        return "Vol{" + "id_vol=" + id_vol + ", date_depart=" + date_depart + ", date_arrivee=" + date_arrivee + ", ville_depart=" + ville_depart + ", ville_arrivee=" + ville_arrivee + ", nbr_placedispo=" + nbr_placedispo + ", id_avion=" + id_avion + ", prix=" + prix + '}';
     }
+
+   
 
    
     

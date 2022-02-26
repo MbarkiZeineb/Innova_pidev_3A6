@@ -35,16 +35,17 @@ public class VolService implements IService<Vol> {
     boolean volIsPresent= checkVolIsBetweenDateDepartAndArriveIsPossible(listDateArrive, listDateDepart,V.getDate_arrivee(), V.getDate_depart()) ;
      if(volIsPresent==true ) throw new Exception("Vol Existe deja");
         
-     {String req = "INSERT INTO `vol` (`date_depart`,`date_arrivee`,`destination`,`nbr_placedispo`,`id_avion`,`prix`) VALUE (?,?,?,?,?,?) ";
+     {String req = "INSERT INTO `vol` (`date_depart`,`date_arrivee`,`ville_depart`,`ville_arrivee`,`nbr_placedispo`,`id_avion`,`prix`) VALUE (?,?,?,?,?,?,?) ";
          
          try {
             pste = conn.prepareStatement(req);
             pste.setTimestamp(1, V.getDate_depart());
             pste.setTimestamp(2, V.getDate_arrivee());
-            pste.setString(3, V.getDestination());
-            pste.setInt(4, V.getNbr_placedispo());
-            pste.setInt(5, V.getId_avion());
-            pste.setFloat(6, V.getPrix());
+            pste.setString(3, V.getVille_depart());
+            pste.setString(4, V.getVille_arrivee());
+            pste.setInt(5, V.getNbr_placedispo());
+            pste.setInt(6, V.getId_avion());
+            pste.setFloat(7, V.getPrix());
             
             
             pste.executeUpdate();
@@ -62,17 +63,18 @@ public class VolService implements IService<Vol> {
 //    
 //    @Override
 //    public void modifier(Vol V) {
-//       String req = "UPDATE `vol` SET `date_depart`=?,`date_arrivee`=?,`destination`=?,`nbr_placedispo`=?,`id_avion`=? ,`prix`=? WHERE  `vol`.`id_vol` = "+ V.getId_vol() + "";
+//       String req = "UPDATE `vol` SET `date_depart`=?,`date_arrivee`=?,`ville_depart`=?,`ville_arrivee`=?,`nbr_placedispo`=?,`id_avion`=? ,`prix`=? WHERE  `vol`.`id_vol` = "+ V.getId_vol() + "";
 //    
 //        try {
 //            pste = conn.prepareStatement(req);
 //
 //            pste.setTimestamp(1, V.getDate_depart());
 //            pste.setTimestamp(2, V.getDate_arrivee());
-//            pste.setString(3, V.getDestination());
-//            pste.setInt(4, V.getNbr_placedispo());
-//            pste.setInt(5, V.getId_avion());
-//            pste.setFloat(6, V.getPrix());
+            //pste.setString(3, V.getVille_depart());
+//            pste.setString(4, V.getVille_arrivee());
+//            pste.setInt(5, V.getNbr_placedispo());
+//            pste.setInt(6, V.getId_avion());
+//            pste.setFloat(7, V.getPrix());
 //
 //            pste.executeUpdate();
 //            int rowsUpdated = pste.executeUpdate();
@@ -103,21 +105,24 @@ public class VolService implements IService<Vol> {
 //        }
 //
 //    }
+    
+     
 
     
      @Override
     public void modifier1(Vol V,int id_vol) {
-      String req = "UPDATE `vol` SET `date_depart`=?,`date_arrivee`=?,`destination`=?,`nbr_placedispo`=?,`id_avion`=? ,`prix`=? WHERE  `vol`.`id_vol` = "+ String.valueOf(id_vol) + "";
+      String req = "UPDATE `vol` SET `date_depart`=?,`date_arrivee`=?,`ville_depart`=?,`ville_arrivee`=?,`nbr_placedispo`=?,`id_avion`=? ,`prix`=? WHERE  `vol`.`id_vol` = "+ String.valueOf(id_vol) + "";
     
         try {
             pste = conn.prepareStatement(req);
 
             pste.setTimestamp(1, V.getDate_depart());
             pste.setTimestamp(2, V.getDate_arrivee());
-            pste.setString(3, V.getDestination());
-            pste.setInt(4, V.getNbr_placedispo());
-            pste.setInt(5, V.getId_avion());
-            pste.setFloat(6, V.getPrix());
+            pste.setString(3, V.getVille_depart());
+            pste.setString(4, V.getVille_arrivee());
+            pste.setInt(5, V.getNbr_placedispo());
+            pste.setInt(6, V.getId_avion());
+            pste.setFloat(7, V.getPrix());
 
             pste.executeUpdate();
             int rowsUpdated = pste.executeUpdate();
@@ -132,7 +137,18 @@ public class VolService implements IService<Vol> {
       
     }
 
- 
+  public ResultSet getall() {
+         
+        try {
+            PreparedStatement req = conn.prepareStatement("SELECT * FROM vol");
+            ResultSet rs = req.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+      return null;
+    }
+  
      @Override
     public void supprimer(int id_vol) {
         try {
@@ -162,7 +178,8 @@ public class VolService implements IService<Vol> {
                 v.setId_vol(rs.getInt("id_vol"));
                 v.setDate_depart(rs.getTimestamp("date_depart"));
                 v.setDate_arrivee(rs.getTimestamp("date_arrivee"));
-                v.setDestination(rs.getString("destination"));
+                v.setVille_depart(rs.getString("ville_depart"));
+                v.setVille_arrivee(rs.getString("ville_arrivee"));
                 v.setNbr_placedispo(rs.getInt("nbr_placedispo"));
                 v.setId_avion(rs.getInt("id_avion"));
                 v.setPrix(rs.getFloat("prix"));
@@ -176,14 +193,14 @@ public class VolService implements IService<Vol> {
         return Vols;
     }
 
-    public List<Vol> findVolParDest(String destination) {
+    public List<Vol> findVolParDest(String ville_arrivee) {
          List<Vol> Vols = new ArrayList<>();
-        String req = "SELECT * FROM `vol` where `destination`= ? ";
+        String req = "SELECT * FROM `vol` where `ville_arrivee`= ? ";
         
         try {
             
             PreparedStatement preparedStatement = conn.prepareStatement(req);
-            preparedStatement.setString(1, destination);
+            preparedStatement.setString(1, ville_arrivee);
             ResultSet rs = preparedStatement.executeQuery();
             
             while(rs.next()){
@@ -191,7 +208,8 @@ public class VolService implements IService<Vol> {
                 v.setId_vol(rs.getInt("id_vol"));
                 v.setDate_depart(rs.getTimestamp("date_depart"));
                 v.setDate_arrivee(rs.getTimestamp("date_arrivee"));
-                v.setDestination(rs.getString("destination"));
+                v.setVille_depart(rs.getString("ville_depart"));
+                v.setVille_arrivee(rs.getString("ville_arrivee"));
                 v.setNbr_placedispo(rs.getInt("nbr_placedispo"));
                 v.setId_avion(rs.getInt("id_avion"));
                 v.setPrix(rs.getFloat("prix"));
@@ -204,6 +222,26 @@ public class VolService implements IService<Vol> {
         
         return Vols;
     }
+    
+    public List<Vol> getALLVolsprix(float prix) throws SQLException {
+        List<Vol> vols = new ArrayList<>();
+        String req = "SELECT *   FROM vol  WHERE (prix=" + prix + ")";
+        Statement stm = conn.createStatement();
+    //  PreparedStatement pre = connexion.prepareStatement(req);
+
+        ResultSet rst = stm.executeQuery(req);
+
+        while (rst.next()) {
+
+            Vol p = new Vol(rst.getInt("id_vol"), rst.getTimestamp("date_depart"), rst.getTimestamp("date_arrive"),rst.getString("ville_depart"), rst.getString("ville_arrivee"), rst.getInt("nbr_placedispo"),rst.getInt("id_avion"), rst.getFloat("prix"));
+            vols.add(p);
+
+        }
+        return vols;
+    }
+    
+    
+    
     
     
     public Vol findVolParId(int id_vol) {
@@ -221,10 +259,11 @@ public class VolService implements IService<Vol> {
                 v.setId_vol(rs.getInt(1));
                 v.setDate_depart(rs.getTimestamp(2));
                 v.setDate_arrivee(rs.getTimestamp(3));
-                v.setDestination(rs.getString(4));
-                v.setNbr_placedispo(rs.getInt(5));
-                v.setId_avion(rs.getInt(6));
-                v.setPrix(rs.getFloat(7));
+                v.setVille_depart(rs.getString(4));
+                v.setVille_arrivee(rs.getString(5));
+                v.setNbr_placedispo(rs.getInt(6));
+                v.setId_avion(rs.getInt(7));
+                v.setPrix(rs.getFloat(8));
             }
             
         } catch (SQLException ex) {
@@ -234,65 +273,21 @@ public class VolService implements IService<Vol> {
         return v;
 
     }
-    public List<Vol> findVolParPrix(float prix) {
-         List<Vol> Vols = new ArrayList<>();
-        String req = "SELECT * FROM `vol` where `prix`= ? ";
-        
-        try {
-            
-            PreparedStatement preparedStatement = conn.prepareStatement(req);
-            preparedStatement.setFloat(1, prix);
-            ResultSet rs = preparedStatement.executeQuery();
-            
-            while(rs.next()){
-                Vol v = new Vol();
-                v.setId_vol(rs.getInt("id_vol"));
-                v.setDate_depart(rs.getTimestamp("date_depart"));
-                v.setDate_arrivee(rs.getTimestamp("date_arrivee"));
-                v.setDestination(rs.getString("destination"));
-                v.setNbr_placedispo(rs.getInt("nbr_placedispo"));
-                v.setId_avion(rs.getInt("id_avion"));
-                v.setPrix(rs.getFloat("prix"));
-                Vols.add(v);
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return Vols;
-    }
     
-     
+  
+   
     
-    public List<Vol> tri_vol() {
+    public ResultSet tri_vol() {
          
-        List<Vol> Vols = new ArrayList<>();
-         String req = "SELECT * FROM vol ORDER BY prix";
-        
-        try {
-            
-            
-             ste = conn.createStatement();
-            ResultSet rs = ste.executeQuery(req);
-            
-            while(rs.next()){
-                Vol v = new Vol();
-                v.setId_vol(rs.getInt("id_vol"));
-                v.setDate_depart(rs.getTimestamp("date_depart"));
-                v.setDate_arrivee(rs.getTimestamp("date_arrivee"));
-                v.setDestination(rs.getString("destination"));
-                v.setNbr_placedispo(rs.getInt("nbr_placedispo"));
-                v.setId_avion(rs.getInt("id_avion"));
-                v.setPrix(rs.getFloat("prix"));
-                Vols.add(v);
-            }
-            
+       try {
+            PreparedStatement req = conn.prepareStatement("SELECT * FROM vol ORDER BY prix");
+            ResultSet rs = req.executeQuery();
+            return rs;
         } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
-        
-        return Vols;
+        return null;
+    
 }
     
    
