@@ -30,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javafx.beans.binding.BooleanBinding;
 
 
@@ -38,22 +39,8 @@ import javafx.beans.binding.BooleanBinding;
  *
  * @author Asus
  */
-public class AjouterReservationController implements Initializable {
+public class ReserverVolController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
-     @FXML
-    private DatePicker dateReservationVoy;
-
-    @FXML
-    private TextField nbrplace;
-
-    @FXML
-    private Button ajouterRVoyage;
-
-    @FXML
-    private TextField idclient;
 
     @FXML
     private Button AjouterVol;
@@ -96,6 +83,7 @@ public class AjouterReservationController implements Initializable {
     @FXML
     private TextField idCvol;
   
+     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
@@ -111,40 +99,7 @@ public class AjouterReservationController implements Initializable {
         AjouterVol.disableProperty().bind(booleanBinding);
     }
 
-    @FXML
-  void addVoyage(ActionEvent event)  {
-      Vol v = Tablevol.getSelectionModel().getSelectedItem();
-      
-      ReservationService rs = new ReservationService();
-     
-       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-       try
-       {
-             java.util.Date parsedd = format.parse(datedvol.getText());
-              java.util.Date parseda = format.parse(dateavol.getText());
-              
-        java.sql.Date Datedv = new java.sql.Date(parsedd.getTime());
-        java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
-        v.getId_vol();
-         Reservation r= new Reservation(Datedv,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"En attente",Integer.parseInt(idCvol.getText()),"vol");
-         rs.ajouterVol(r);
-         rs.modifiernbplacevol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText()));
-       
-       }
-       
-       catch(ParseException e)
-       {
-           System.out.println(e);
-       }
-       
-     
-       
 
-      
-      
-      
-      
-    }   
   
    private void loadTableVol() {
      VolService vs = new VolService();
@@ -198,8 +153,39 @@ public class AjouterReservationController implements Initializable {
 
     prixvolr.clear();
     idCvol.clear();
-    
      Tablevol.refresh();
+    
+    
   
+    }
+
+    @FXML
+    private void addVol(ActionEvent event) {
+        
+          ReservationService rs = new ReservationService();
+     
+       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       try
+       { Vol v = Tablevol.getSelectionModel().getSelectedItem();
+             java.util.Date parsedd = format.parse(datedvol.getText());
+              java.util.Date parseda = format.parse(dateavol.getText());
+              java.sql.Date datR = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        java.sql.Date Datedv = new java.sql.Date(parsedd.getTime());
+        java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
+        v.getId_vol();
+         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"En attente",Integer.parseInt(idCvol.getText()),"vol");
+      
+         rs.ajouterVol(r);
+           
+         rs.modifiernbplacevol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText()));
+    
+            Tablevol.refresh();
+       
+       }
+       
+       catch(ParseException e)
+       {
+           System.out.println(e);
+       }
     }
 }

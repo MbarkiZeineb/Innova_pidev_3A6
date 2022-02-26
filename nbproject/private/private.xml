@@ -3,15 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/getawayvoyage/GetAwayvoyage.java</file>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/GUI/StatRController.java</file>
+            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/GUI/ReserverVol.fxml</file>
             <file>file:/D:/3eme/pidev/GetAwayvoyage/src/GUI/NewFXMain.java</file>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/Services/PaiementService.java</file>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/GUI/AfficherReservationController.java</file>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/GUI/ModifierReservationController.java</file>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/Entities/Reservation.java</file>
+            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/GUI/ReserverVoyage.fxml</file>
             <file>file:/D:/3eme/pidev/GetAwayvoyage/src/Services/ReservationService.java</file>
-            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/GUI/AjouterReservationController.java</file>
+            <file>file:/D:/3eme/pidev/GetAwayvoyage/src/GUI/ReserverVolController.java</file>
             <file>file:/D:/3eme/pidev/GetAwayvoyage/src/Services/ActiviteService.java</file>
         </group>
     </open-files>
