@@ -287,7 +287,7 @@ private Connection conn;
     //MODIFER NBRE DES PLACES
     
     //Activite
-    public void modifiernbplaceA(int id,int nb ,String op)
+    public void modifiernbplaceA(int id,int nb )
 {
     
     String req = "update Activite set `NbrPlace`=`NbrPlace` - ? where RefAct=?";
@@ -439,7 +439,17 @@ public List<Integer> listeReservationparClient(int id)
   }  
        
        
-       
+       public void testfaza (  int id )
+       {
+           
+           
+        List<Reservation> l = this.afficher();
+        
+        List<LocalDate> dated=l.stream().filter(e->e.getId_hebergement()==id).map(e->e.getDate_debut().toLocalDate()).collect(Collectors.toList());
+          List<LocalDate> datef=l.stream().filter(e->e.getId_hebergement()==id).map(e->e.getDate_fin().toLocalDate()).collect(Collectors.toList());
+          
+           
+       }
        
 
   
