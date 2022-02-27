@@ -24,6 +24,7 @@ public class NewFXMain extends Application {
        
             { //Parent root = FXMLLoader.load(getClass().getResource("AffichageVol.fxml"));
             //Parent root = FXMLLoader.load(getClass().getResource("stat.fxml"));
+                
                 Parent root = FXMLLoader.load(getClass().getResource("AjouterVol.fxml"));
         
         Scene scene = new Scene(root, 600, 600);

@@ -107,6 +107,19 @@ public class VolService implements IService<Vol> {
 //    }
     
      
+     public boolean supprimer_v(Vol v) {
+         boolean ok=false;
+        try {
+            
+            PreparedStatement req = conn.prepareStatement("delete from vol where ville_depart = ? ");
+            req.setString(1, v.getVille_depart());
+            req.executeUpdate();
+ok=true;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return ok;
+    }
 
     
      @Override
