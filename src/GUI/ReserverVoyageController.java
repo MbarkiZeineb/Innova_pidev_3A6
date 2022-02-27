@@ -7,7 +7,9 @@ package GUI;
 
 import Entities.Reservation;
 import Entities.Vol;
+import Services.PaiementService;
 import Services.ReservationService;
+import static java.lang.String.valueOf;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +20,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 
 /**
  * FXML Controller class
@@ -42,18 +46,22 @@ public class ReserverVoyageController implements Initializable {
     private TextField nbp;
     @FXML
     private TextField dateF;
-
+    private TextField prixTotal;
+ ReservationService rs = new ReservationService();
+    @FXML
+    private TextField prixTotalV;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        nbp.setText("0");
     }    
 
     @FXML
     private void addVoyage(ActionEvent event) {
-              ReservationService rs = new ReservationService();
+             
      
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
        try
@@ -81,5 +89,30 @@ public class ReserverVoyageController implements Initializable {
         
         
     }
-    
+
+    private void CalculerPrixTotal(InputMethodEvent event) {
+//        
+//        PaiementService ps = new PaiementService();
+//         prixTotalV.setText(""+ps.calculermontantVoyage(1, Integer.parseInt(nbp.getText())));
+        
+    }
+
+    @FXML
+    private void CalculerPrixTotal(KeyEvent event) {
+           
+        PaiementService ps = new PaiementService();
+        try{
+            if(nbp.getText()!=null)
+        {
+        prixTotalV.setText(valueOf(ps.calculermontantVoyage(1, Integer.parseInt(nbp.getText()))));
+        
+    }
+            
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        
+    }
 }

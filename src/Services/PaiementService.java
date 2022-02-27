@@ -130,10 +130,10 @@ private Connection conn;
     }
 
 
-      public float  calculermontantVoyage(Reservation r) {
+      public float  calculermontantVoyage(int id , int nb) {
           float montant=0; 
           
-        String req = "SELECT `prix`*'"+r.getNbr_place()+"' from voyageorganise where idVoy='"+r.getId_voyage()+"'";
+        String req = "SELECT `prix`*'"+nb+"' from voyageorganise where idVoy='"+id+"'";
         
         try {
 

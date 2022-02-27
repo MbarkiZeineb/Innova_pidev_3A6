@@ -26,7 +26,7 @@ public class NewFXMain extends Application {
         //Parent root = FXMLLoader.load(getClass().getResource("AfficherReservation.fxml"));
           //Parent root = FXMLLoader.load(getClass().getResource("StatR.fxml"));
           
-                Parent root = FXMLLoader.load(getClass().getResource("ReserverHebergement.fxml"));
+               Parent root = FXMLLoader.load(getClass().getResource("ReserverHebergement.fxml"));
         
         Scene scene = new Scene(root, 900, 900);
         

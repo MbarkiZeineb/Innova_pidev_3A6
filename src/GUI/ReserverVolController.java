@@ -6,11 +6,13 @@
 package GUI;
 
 import Entities.*;
+import Services.PaiementService;
 import Services.ReservationService;
 import Services.VolService;
 import java.awt.event.MouseEvent;
 import static java.lang.String.format;
 import static java.lang.String.format;
+import static java.lang.String.valueOf;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -32,6 +34,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javafx.beans.binding.BooleanBinding;
+import javafx.geometry.Pos;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.ComboBox;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
+import org.controlsfx.control.Notifications;
 
 
 /**
@@ -45,23 +53,7 @@ public class ReserverVolController implements Initializable {
     @FXML
     private Button AjouterVol;
 
-     @FXML
-    private TableView<Vol> Tablevol;
    
-    @FXML
-    private TableColumn<Vol, String> destination;
-
-    @FXML
-    private TableColumn<Vol, Timestamp> dated;
-
-    @FXML
-    private TableColumn<Vol, Timestamp> datef;
-
-    @FXML
-    private TableColumn<Vol, Float> prixvol;
-
-    @FXML
-    private TableColumn<Vol, Integer> nbplaceVol;
 
      @FXML
     private TextField destinationvol;
@@ -82,39 +74,60 @@ public class ReserverVolController implements Initializable {
  ObservableList<Vol> oblist = FXCollections.observableArrayList();
     @FXML
     private TextField idCvol;
-  
+   @FXML
+    private TableView<Vol> tb_v;
+    @FXML
+    private TableColumn<Vol, Timestamp> tb_datedepart;
+    @FXML
+    private TableColumn<Vol, Timestamp> tb_datearrivee;
+    @FXML
+    private TableColumn<Vol, Float> tb_prix;
+    @FXML
+    private TableColumn<Vol, String> tb_villedepart;
+    @FXML
+    private TableColumn<Vol, String> tb_villearrivee;
+    
+     @FXML
+    private TableColumn<Vol, Integer> tb_place;
+    @FXML
+    private TextField villeDepart;
+    @FXML
+    private TextField prixTotalV;
+    @FXML
+    private ComboBox<String> modalite;
      @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
          loadTableVol();
-         BooleanBinding booleanBinding =(nbplaceRvol.textProperty().isEqualTo("")).or(
+         BooleanBinding booleanBinding =(nbplaceRvol.textProperty().isEqualTo("0")).or(
         prixvolr.textProperty().isEqualTo("")).or(
          dateavol.textProperty().isEqualTo("")).or(
         datedvol.textProperty().isEqualTo("")).or(
         destinationvol.textProperty().isEqualTo(""));
          
-         
-          Vol v = Tablevol.getSelectionModel().getSelectedItem();
+          nbplaceRvol.setText("0");
+          Vol v = tb_v.getSelectionModel().getSelectedItem();
         AjouterVol.disableProperty().bind(booleanBinding);
+         
+          modalite.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
     }
 
 
   
    private void loadTableVol() {
-     VolService vs = new VolService();
+      VolService vs = new VolService();
         List<Vol> ls = vs.afficher();
           ls.forEach(e->oblist.add(e));
           System.out.print(oblist);
-          dated.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
-          datef.setCellValueFactory(new PropertyValueFactory<>("date_arrivee"));
-           destination.setCellValueFactory(new PropertyValueFactory<>("destination"));
-            prixvol.setCellValueFactory(new PropertyValueFactory<>("prix"));
-            nbplaceVol.setCellValueFactory(new PropertyValueFactory<>("nbr_placedispo"));
-          
-//          
-         
-   Tablevol.setItems(oblist);
+        tb_datedepart.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
+        tb_datearrivee.setCellValueFactory(new PropertyValueFactory<>("date_arrivee"));
+        tb_prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
+        tb_villedepart.setCellValueFactory(new PropertyValueFactory<>("ville_depart"));
+        tb_villearrivee.setCellValueFactory(new PropertyValueFactory<>("ville_arrivee"));
+     
+        tb_place.setCellValueFactory(new PropertyValueFactory<>("nbr_placedispo"));
+        tb_v.setItems(oblist);
     
        
         
@@ -123,20 +136,7 @@ public class ReserverVolController implements Initializable {
    
   
 
-    @FXML
-    private void selectvol(javafx.scene.input.MouseEvent event) {
-    
-   index = Tablevol.getSelectionModel().getSelectedIndex();
-         
-         
-          
-           destinationvol.setText(destination.getCellData(index));
-    datedvol.setText(""+dated.getCellData(index));
-     dateavol.setText(""+datef.getCellData(index));
-     prixvolr.setText(""+prixvol.getCellData(index));
-         
 
-}
 
     @FXML
     private void viderVol(javafx.scene.input.MouseEvent event) {
@@ -153,33 +153,44 @@ public class ReserverVolController implements Initializable {
 
     prixvolr.clear();
     idCvol.clear();
-     Tablevol.refresh();
-    
-    
+    villeDepart.clear();
+    tb_v.getItems().clear();
+    loadTableVol();
   
     }
 
     @FXML
     private void addVol(ActionEvent event) {
-        
+       
+           
           ReservationService rs = new ReservationService();
+          PaiementService ps = new PaiementService();
      
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
        try
-       { Vol v = Tablevol.getSelectionModel().getSelectedItem();
+       { Vol v = tb_v.getSelectionModel().getSelectedItem();
              java.util.Date parsedd = format.parse(datedvol.getText());
               java.util.Date parseda = format.parse(dateavol.getText());
               java.sql.Date datR = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         java.sql.Date Datedv = new java.sql.Date(parsedd.getTime());
         java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
-        v.getId_vol();
-         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"En attente",Integer.parseInt(idCvol.getText()),"vol");
-      
-         rs.ajouterVol(r);
-           
+       
+           System.out.println(v.getId_vol());
+         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"En attente",1,"vol");
+         if(rs.verifierNbplaceVol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText())))
+         { rs.ajouterVol(r);
+        
+         Paiement p = new Paiement(modalite.getValue(),Float.valueOf(prixTotalV.getText()),rs.afficher().get(rs.afficher().size()-1).getId(),datR);
+         ps.ajouter(p);
+          Notifications.create().title("Reservation Vol").text(" Reservation est Créé ").show();
          rs.modifiernbplacevol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText()));
-    
-            Tablevol.refresh();
+        
+           tb_v.refresh();
+         
+         }
+          else
+          {     Notifications.create().title("Reservation Vol").text(" Nombre de place non valide  ").show();
+          }
        
        }
        
@@ -187,5 +198,41 @@ public class ReserverVolController implements Initializable {
        {
            System.out.println(e);
        }
+    }
+
+    @FXML
+    private void selectVOL(javafx.scene.input.MouseEvent event) {
+        
+        index = tb_v.getSelectionModel().getSelectedIndex();
+         
+         
+          
+    destinationvol.setText(tb_villedepart.getCellData(index));
+    datedvol.setText(""+  tb_datedepart.getCellData(index));
+     dateavol.setText(""+tb_datearrivee.getCellData(index));
+     prixvolr.setText(""+ tb_prix.getCellData(index));
+     villeDepart.setText(tb_villearrivee.getCellData(index));
+         
+    }
+
+   
+    @FXML
+    private void calculetPrixTotal(KeyEvent event) {
+        
+             PaiementService ps = new PaiementService();
+        try{
+            if(!nbplaceRvol.getText().contains("0"))
+        { 
+            Float prixTT=Integer.parseInt(nbplaceRvol.getText())* Float.parseFloat(prixvolr.getText());
+        prixTotalV.setText(valueOf(prixTT));
+        
+    }
+            
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        
     }
 }

@@ -11,13 +11,17 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -74,11 +78,14 @@ public class AfficherReservationController implements Initializable {
     
      ObservableList<Reservation> oblist = FXCollections.observableArrayList();
      ReservationService rs= new ReservationService();
+    @FXML
+    private Button supprimerR;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
           loadTable();
+          supprimerR.disableProperty().bind(Bindings.isEmpty(tableRe.getSelectionModel().getSelectedItems()));
         
         
     }    
@@ -113,6 +120,26 @@ public class AfficherReservationController implements Initializable {
        
         
         
+    }
+
+    @FXML
+    private void Supprimer(ActionEvent event) {
+        
+       
+      Reservation r=  tableRe.getSelectionModel().getSelectedItem();
+      
+      rs.supprimer(r);
+        
+        
+        
+    }
+
+    @FXML
+    private void UpdateTable(MouseEvent event) {
+        
+        
+       tableRe.getItems().clear();
+    loadTable();
     }
     
 }

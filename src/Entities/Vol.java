@@ -13,11 +13,10 @@ import java.util.Objects;
  */
 public class Vol {
        private int id_vol ;
-     public Date date_depart;	
-     public Date date_arrivee;	
-     private Time heure_decollage;
-     private Time heure_arrivee;
-     private String destination	;
+     public Timestamp date_depart;	
+     public Timestamp date_arrivee;	
+     private String ville_depart;
+     private String ville_arrivee;
      private int nbr_placedispo;
      private int id_avion ;
      private float prix;
@@ -25,54 +24,42 @@ public class Vol {
     public Vol() {
     }
 
-    public Vol(int id_vol, Date date_depart, Date date_arrivee, Time heure_decollage, Time heure_arrivee, String destination, int nbr_placedispo, int id_avion, float prix) {
+    public Vol(int id_vol, Timestamp date_depart, Timestamp date_arrivee,String ville_depart, String ville_arrivee, int nbr_placedispo, int id_avion, float prix) {
         this.id_vol = id_vol;
         this.date_depart = date_depart;
         this.date_arrivee = date_arrivee;
-        this.heure_decollage = heure_decollage;
-        this.heure_arrivee = heure_arrivee;
-        this.destination = destination;
+        this.ville_depart=ville_depart;
+        this.ville_arrivee = ville_arrivee;
         this.nbr_placedispo = nbr_placedispo;
         this.id_avion = id_avion;
         this.prix = prix;
     }
 
-    public Vol(Date date_depart, Date date_arrivee, Time heure_decollage, Time heure_arrivee, String destination, int nbr_placedispo, int id_avion, float prix) {
+    public Vol(Timestamp date_depart, Timestamp date_arrivee,String ville_depart, String ville_arrivee, int nbr_placedispo, int id_avion, float prix) {
         this.date_depart = date_depart;
         this.date_arrivee = date_arrivee;
-        this.heure_decollage = heure_decollage;
-        this.heure_arrivee = heure_arrivee;
-        this.destination = destination;
+        this.ville_depart=ville_depart;
+        this.ville_arrivee = ville_arrivee;
         this.nbr_placedispo = nbr_placedispo;
         this.id_avion = id_avion;
         this.prix = prix;
     }
-
     
-    
-
+   
     public int getId_vol() {
         return id_vol;
     }
 
-    public Date getDate_depart() {
+    public Timestamp getDate_depart() {
         return date_depart;
     }
 
-    public Date getDate_arrivee() {
+    public Timestamp getDate_arrivee() {
         return date_arrivee;
     }
 
-    public Time getHeure_decollage() {
-        return heure_decollage;
-    }
-
-    public Time getHeure_arrivee() {
-        return heure_arrivee;
-    }
-
-    public String getDestination() {
-        return destination;
+    public String getVille_arrivee() {
+        return ville_arrivee;
     }
 
     public int getNbr_placedispo() {
@@ -87,28 +74,31 @@ public class Vol {
         return prix;
     }
 
+    public String getVille_depart() {
+        return ville_depart;
+    }
+
+    public void setVille_depart(String ville_depart) {
+        this.ville_depart = ville_depart;
+    }
+    
+    
+
     public void setId_vol(int id_vol) {
         this.id_vol = id_vol;
     }
 
-    public void setDate_depart(Date date_depart) {
+    public void setDate_depart(Timestamp date_depart) {
         this.date_depart = date_depart;
     }
 
-    public void setDate_arrivee(Date date_arrivee) {
+    public void setDate_arrivee(Timestamp date_arrivee) {
         this.date_arrivee = date_arrivee;
     }
 
-    public void setHeure_decollage(Time heure_decollage) {
-        this.heure_decollage = heure_decollage;
-    }
 
-    public void setHeure_arrivee(Time heure_arrivee) {
-        this.heure_arrivee = heure_arrivee;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setVille_arrivee(String ville_arrivee) {
+        this.ville_arrivee = ville_arrivee;
     }
 
     public void setNbr_placedispo(int nbr_placedispo) {
@@ -124,48 +114,19 @@ public class Vol {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 73 * hash + Objects.hashCode(this.date_depart);
-        hash = 73 * hash + Objects.hashCode(this.date_arrivee);
-        hash = 73 * hash + Objects.hashCode(this.heure_decollage);
-        hash = 73 * hash + Objects.hashCode(this.heure_arrivee);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Vol other = (Vol) obj;
-        if (!Objects.equals(this.date_depart, other.date_depart)) {
-            return false;
-        }
-        if (!Objects.equals(this.date_arrivee, other.date_arrivee)) {
-            return false;
-        }
-        if (!Objects.equals(this.heure_decollage, other.heure_decollage)) {
-            return false;
-        }
-        if (!Objects.equals(this.heure_arrivee, other.heure_arrivee)) {
-            return false;
-        }
-        return true;
-    }
-
-    
-    
-    @Override
     public String toString() {
-        return "Vol{" + "id_vol=" + id_vol + ", date_depart=" + date_depart + ", date_arrivee=" + date_arrivee + ", heure_decollage=" + heure_decollage + ", heure_arrivee=" + heure_arrivee + ", destination=" + destination + ", nbr_placedispo=" + nbr_placedispo + ", id_avion=" + id_avion + ", prix=" + prix + '}';
+        return "Vol{" + "id_vol=" + id_vol + ", date_depart=" + date_depart + ", date_arrivee=" + date_arrivee + ", ville_depart=" + ville_depart + ", ville_arrivee=" + ville_arrivee + ", nbr_placedispo=" + nbr_placedispo + ", id_avion=" + id_avion + ", prix=" + prix + '}';
     }
+
+   
+
+   
+    
+
+    
+
+    
+     
     
 
     

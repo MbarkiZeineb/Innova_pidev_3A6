@@ -78,6 +78,7 @@ public class ReserverHebergementController implements Initializable {
                
                if (!empty && item != null) {
                    if(listdd.contains(item)) {
+                       setDisable(true);
                        this.setStyle("-fx-background-color: pink");
                    }
                }
@@ -85,7 +86,18 @@ public class ReserverHebergementController implements Initializable {
        });
         
         
-        
+          DateD.setDayCellFactory((DatePicker param) -> new DateCell(){
+           public void updateItem(LocalDate item, boolean empty) {
+               super.updateItem(item, empty);
+               
+               if (!empty && item != null) {
+                   if(!listdd.contains(item)) {
+                       
+                       this.setStyle("-fx-background-color:yellow");
+                   }
+               }
+           }
+       });
         
         
         

@@ -51,13 +51,11 @@ private Connection conn;
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     public void ajouterVol(Reservation r) {
+     public void ajouterVol(Reservation r){
         
          
          
-          
-        if(this.verifierNbplaceVol(r.getId_vol(),r.getNbr_place()))
-        {
+       
         String req = "INSERT INTO `reservation` (`date_reservation`,`nbr_place`,`date_debut`,`date_fin`,`id_vol`,`id_client`,`etat`,`type`) VALUE (?,?,?,?,?,?,?,?)";
         try {
              pste = conn.prepareStatement(req);
@@ -74,15 +72,8 @@ private Connection conn;
               modifiernbplacevol(r.getId_vol(),r.getNbr_place());
         } catch (SQLException ex) {
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
-        }}
-         else
-            
-        {
-            
-            System.out.println(" nbre de place non valide ");
-             System.out.println(" nbre de place non valide ");
         }
-         System.out.println(" nbre de place non valide ");
+        
     }
       public void ajouterAct(Reservation r) {
    if(this.verifierNbplaceAct(r.getId_active(),r.getNbr_place()))
@@ -111,7 +102,7 @@ private Connection conn;
       }
       
       public void ajouterHeb(Reservation r) {
-   if ( this.testerdisponibliteH(r.getDate_debut(),r.getDate_fin(),r.getId_hebergement() ) && this.verifierDateHberg(r.getId_hebergement(),r.getDate_debut(), r.getDate_fin()) ) 
+  
    {
         String req = "INSERT INTO `reservation` (`date_reservation`,`nbr_place`,`date_debut`,`date_fin`,`id_hebergement`,`id_client`,`etat`,`type`) VALUE (?,?,?,?,?,?,?,?)";
         try {
@@ -130,9 +121,7 @@ private Connection conn;
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   else
-       
-              System.out.println("echec d'ajout ");
+  
       
       
       }
@@ -349,6 +338,7 @@ private Connection conn;
       VolService vs = new VolService();
       List<Vol> lv= vs.afficher();
       boolean test =lv.stream().filter(v->v.getId_vol()==id).anyMatch(v -> v.getNbr_placedispo() - nb >= 0);
+      System.out.println(test);
       return test;
   }
     
@@ -469,7 +459,9 @@ for (int i=0; i<dated.size(); i++)
        
        
        
-
+ 
+     
+       
   
   ///Statistique sur nbre de reservation selon le type 
   
