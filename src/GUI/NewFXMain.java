@@ -23,10 +23,9 @@ public class NewFXMain extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //Parent root = FXMLLoader.load(getClass().getResource("AfficherReservation.fxml"));
+          Parent root = FXMLLoader.load(getClass().getResource("AfficherReservation.fxml"));
           //Parent root = FXMLLoader.load(getClass().getResource("StatR.fxml"));
-          
-               Parent root = FXMLLoader.load(getClass().getResource("ReserverHebergement.fxml"));
+          //Parent root = FXMLLoader.load(getClass().getResource("ReserverVol.fxml"));
         
         Scene scene = new Scene(root, 900, 900);
         
