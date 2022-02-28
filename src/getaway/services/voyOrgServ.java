@@ -183,6 +183,7 @@ List<voyageOrganise> voyageorganise = new ArrayList<>();
         List<voyageOrganise> list = new ArrayList<>();
         try{
         ste = conn.createStatement();
+        
         ResultSet res = ste.executeQuery("select distinct * FROM `voyageorganise` ORDER BY prix ASC");
         
         voyageOrganise com = null;

@@ -35,12 +35,12 @@ public class Getaway {
        // vos.ajouter(voyageOrganise1);
 
         // vos.ajouter(vo2);
-        //System.out.println(vos.afficher());
+        // System.out.println(vos.afficher());
        // vos.delete(61);
        //vos.update(61,"tunis","hand","12/2/2022","13/2/2022",20,1,14.3f,"abedzc");
        // System.out.println(vos.FindIdVoyById(1));
         //System.out.println(vos.FindVille("italy"));
-         System.out.println(vos.TrierParPrix());
+         //System.out.println(vos.TrierParPrix());
 
     
       // vos.update(vo2);
