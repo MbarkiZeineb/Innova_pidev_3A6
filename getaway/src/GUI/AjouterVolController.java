@@ -193,10 +193,22 @@ public class AjouterVolController implements Initializable {
     
 
     @FXML
-    private void modifier(MouseEvent event) {
-         Vol r=  tb_v.getSelectionModel().getSelectedItem();
+    private void modifier(ActionEvent event) {
+         Vol p=  tb_v.getSelectionModel().getSelectedItem();
       VolService vs = new VolService();
-      vs.modifier(r);
+       p.setDate_depart(Timestamp.valueOf(date_depart.getText()));
+        p.setDate_arrivee(Timestamp.valueOf(date_arrivee.getText()));
+        p.setPrix(Float.parseFloat(prix.getText()));
+        p.setVille_depart(ville_depart.getText());
+        p.setVille_arrivee(ville_arrivee.getText());
+        //p.setId_avion(Integer.parseInt(id_avion.getValue()));
+        p.setNbr_placedispo(Integer.parseInt(nbr_placedispo.getText()));
+        p.toString();
+       
+      vs.modifier(p);
+      
+    tb_v.getItems().clear();
+    afficher();
         
        
     }
