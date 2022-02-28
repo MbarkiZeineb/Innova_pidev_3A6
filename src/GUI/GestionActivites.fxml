@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="540.0" prefWidth="858.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="GUI.GestionActivitesController">
+   <children>
+      <Button fx:id="btnajouter" layoutX="758.0" layoutY="244.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="32.0" prefWidth="79.0" text="Ajouter" />
+      <Label layoutX="25.0" layoutY="83.0" prefHeight="25.0" prefWidth="79.0" text="Nom:">
+         <font>
+            <Font name="AGA Arabesque" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="530.0" layoutY="126.0" prefHeight="25.0" prefWidth="101.0" text="Description:">
+         <font>
+            <Font name="AGA Arabesque" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="126.0" prefHeight="25.0" prefWidth="79.0" text="Durée:">
+         <font>
+            <Font name="AGA Arabesque" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="22.0" layoutY="176.0" prefHeight="25.0" prefWidth="164.0" text="Nombre de Place:">
+         <font>
+            <Font name="AGA Arabesque" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtnom" layoutX="107.0" layoutY="82.0" />
+      <TextField fx:id="txtduree" layoutX="122.0" layoutY="126.0" />
+      <TextField fx:id="txtnbrp" layoutX="207.0" layoutY="171.0" prefHeight="26.0" prefWidth="59.0" />
+      <TableView fx:id="tvactivite" layoutX="41.0" layoutY="317.0" prefHeight="200.0" prefWidth="703.0">
+        <columns>
+          <TableColumn fx:id="colnom" prefWidth="104.0" text="Nom" />
+            <TableColumn fx:id="colduree" prefWidth="60.0" text="Durée" />
+            <TableColumn fx:id="colnbrp" prefWidth="132.0" text="Nombre de place" />
+            <TableColumn fx:id="coldate" prefWidth="55.0" text="Date" />
+            <TableColumn fx:id="coltype" prefWidth="47.0" text="Type" />
+            <TableColumn fx:id="colloc" prefWidth="81.0" text="Location" />
+            <TableColumn fx:id="colprix" prefWidth="46.0" text="Prix" />
+            <TableColumn fx:id="coldesc" prefWidth="77.0" text="Description" />
+        </columns>
+      </TableView>
+      <TextArea fx:id="textdescrip" layoutX="631.0" layoutY="90.0" prefHeight="98.0" prefWidth="213.0" />
+      <Label layoutX="335.0" layoutY="176.0" prefHeight="25.0" prefWidth="79.0" text="Prix:">
+         <font>
+            <Font name="AGA Arabesque" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="238.0" prefHeight="25.0" prefWidth="79.0" text="Type:">
+         <font>
+            <Font name="AGA Arabesque" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="313.0" layoutY="96.0" prefHeight="25.0" prefWidth="101.0" text="Location:">
+         <font>
+            <Font name="AGA Arabesque" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txttype" layoutX="91.0" layoutY="234.0" />
+      <DatePicker fx:id="txtdate" layoutX="491.0" layoutY="239.0" />
+      <Label layoutX="396.0" layoutY="240.0" prefHeight="25.0" prefWidth="79.0" text="Date:">
+         <font>
+            <Font name="AGA Arabesque" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtprix" layoutX="393.0" layoutY="176.0" prefHeight="26.0" prefWidth="79.0" />
+      <TextField fx:id="txtloc" layoutX="401.0" layoutY="96.0" prefHeight="26.0" prefWidth="109.0" />
+      <Button fx:id="btnmodifier" layoutX="758.0" layoutY="402.0" mnemonicParsing="false" onAction="#modifier" prefHeight="32.0" prefWidth="79.0" text="Modifier" />
+      <Button fx:id="btnsupprimer" layoutX="758.0" layoutY="449.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="32.0" prefWidth="79.0" text="Supprimer" />
+   </children>
+</AnchorPane>
