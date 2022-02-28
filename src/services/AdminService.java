@@ -99,8 +99,8 @@ private Connection conn;
         }
     }
 
-    public void supprimer(String nom) {
-       String req = "DELETE FROM `admin` WHERE nom='"+nom+"';";
+    public void supprimer(int id) {
+       String req = "DELETE FROM `admin` WHERE id="+id;
      
           try {
           ste = conn.createStatement();

@@ -55,9 +55,6 @@ public class LoginController implements Initializable {
 String nom = txtnom.getText();
 String mdp = txtmdp.getText();
 
-
-
-
 if(nom.equals("") && mdp.equals("")||nom.equals("")||mdp.equals(""))
 {
     JOptionPane.showMessageDialog(null, "veuillez remplir tous les champs vides");

@@ -7,6 +7,7 @@ package gui;
 
 import entities.Admin;
 import entities.Client;
+import entities.Offreur;
 import entities.User;
 import java.net.URL;
 import java.sql.Connection;
@@ -28,7 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.swing.JOptionPane;
-import services.AdminService;
+import services.*;
 import services.ClientService;
 import utilis.Connexion;
 /**
@@ -133,197 +134,94 @@ private Connection conn;
     @FXML
     private PasswordField txtmdpC;
     
-    
+    @FXML
+    private Button btnBloquer;
 
+    @FXML
+    private Button btnActiver;
+        @FXML
+    private TableColumn<Offreur, String> colnomOF;
+
+    @FXML
+    private TableColumn<Offreur, String> colprenomOF;
+
+    @FXML
+    private TableColumn<Offreur, String> colemailOF;
+
+    @FXML
+    private TableColumn<Offreur, Integer> colTelOF;
+
+    @FXML
+    private TextField txtrechOF;
+
+    @FXML
+    private Button btnrechOF;
+
+    @FXML
+    private Button btnajouterOF;
+
+    @FXML
+    private Button btnmodifierOF;
+
+    @FXML
+    private Button btnsuppOF;
+
+    @FXML
+    private PasswordField txtmdpOF;
+
+    @FXML
+    private TextField txtTelOF;
+        @FXML
+    private TextField txtnomOF;
+
+    @FXML
+    private TextField txtprenomOF;
+
+    @FXML
+    private TextField txtemailOF;
+    
+    @FXML
+    private TableView<Offreur> tvOffreur;
+    
+    
+    
+      @Override
+    public void initialize(URL url, ResourceBundle rb) {
+      afficherAdmin();
+      afficherClient();
+      afficherOffreur();
+    }   
+
+    public RegistrationController() {
+        
+         conn = Connexion.getInstance().getCnx();
+    }
+    
+    
+    
+    
+    //********************************admin*******************************
+   
+    ObservableList<Admin> oblist1 = FXCollections.observableArrayList();
+     AdminService as= new AdminService();
+     
+     
+     
+     private void afficherAdmin() {
+      List <Admin> ls =as.afficher();
+      ls.forEach(e->oblist1.add(e));
+      colnom.setCellValueFactory(new PropertyValueFactory<Admin,String>("nom"));
+        colprenom.setCellValueFactory(new PropertyValueFactory<Admin, String>("prenom"));
+         colemail.setCellValueFactory(new PropertyValueFactory<Admin, String>("email"));
+        coladr.setCellValueFactory(new PropertyValueFactory<Admin, String>("adresse"));
+        tvadmin.setItems(oblist1);    
+    }
+     
+     
     @FXML
     void ajouter(ActionEvent event) {
-ajout();
-    }
 
-    @FXML
-    void modifier(ActionEvent event) {
-modifier();
-    }
-
-    @FXML
-    void supprimer(ActionEvent event) {
-supprimer();
-    }
-      @FXML
-    void rechercher(ActionEvent event) {
-showAdminrech();
-    }
-   ObservableList<Client> oblist = FXCollections.observableArrayList();
-     ClientService cs= new ClientService();
-   @FXML
-    void ajouterC(ActionEvent event) {
-         Client c= new Client(txtnomC.getText(), txtprenomC.getText(), txtmdpC.getText(), txtemailC.getText());
-cs.ajouter(c);
-tvClient.getItems().clear();
-afficherClient();
-
-    }
-
-    @FXML
-    void modifierC(ActionEvent event) {
-        Client c =  tvClient.getSelectionModel().getSelectedItem();
-        System.out.println("ugbvhfvifctuyvr-tv");
-        System.out.println(txtnomC.getText());
-        c.setEmail(txtemailC.getText());
-        c.setNom( txtnomC.getText());
-        c.setPrenom(txtprenomC.getText());
-        c.toString();
-       
-cs.modifier(c);
-tvClient.getItems().clear();
-afficherClient();
-    }
-
-    @FXML
-    void supprimerC(ActionEvent event) {
-Client c =  tvClient.getSelectionModel().getSelectedItem();
-cs.supprimer(c.getId());
-tvClient.getItems().clear();
-afficherClient();
-     
-
-    }
-
-    @FXML
-    void rechercherClient(ActionEvent event) {
-
-    }
-
-    //client
-     
-         private void afficherClient() {
-
-          List <Client> ls =cs.afficher();
-          ls.forEach(e->oblist.add(e));
-         
-            colnomC.setCellValueFactory(new PropertyValueFactory<Client,String>("nom"));
-        colprenomC.setCellValueFactory(new PropertyValueFactory<Client, String>("prenom"));
-         colemailC.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
-        coletatC.setCellValueFactory(new PropertyValueFactory<Client, Integer>("etat"));
-          
-         
-    tvClient.setItems(oblist);
-    
-       
-        
-        
-    }
-        
-     @FXML
-             private void selectClient(javafx.scene.input.MouseEvent event) {
-        int index= -1;
-        index = tvClient.getSelectionModel().getSelectedIndex();
-         
-         
-          
-    txtnomC.setText(colnomC.getCellData(index));
-    txtprenomC.setText(""+  colprenomC.getCellData(index));
-     txtemailC.setText(""+colemailC.getCellData(index));
-      
-   
-         
-    }
-      
-    
-    
-    
-    
-    
-    
-    //admin
-      public ObservableList<Admin> getadminList(){
-        ObservableList<Admin> admins = FXCollections.observableArrayList();
-        conn = Connexion.getInstance().getCnx();
-        String req = "select * from admin";
-        Statement st;
-        ResultSet rs;
-        
-        try{
-            st = conn.createStatement();
-            rs = st.executeQuery(req);
-            Admin admin;
-            
-            while(rs.next()){
-                admin = new Admin(rs.getInt("id"),rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("adresse"),rs.getString("password")); // depuis bd //
-              admins.add(admin);
-                
-               
-                
-            }
-                
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-        return admins;
-        
-    }
-        public void showAdmin(){
-        ObservableList<Admin> list = getadminList();   
-        
-        colnom.setCellValueFactory(new PropertyValueFactory<Admin,String>("nom"));
-        colprenom.setCellValueFactory(new PropertyValueFactory<Admin, String>("prenom"));
-         coladr.setCellValueFactory(new PropertyValueFactory<Admin, String>("adresse"));
-        colemail.setCellValueFactory(new PropertyValueFactory<Admin, String>("email"));
-      
-        tvadmin.setItems(list);
-       
-
-    }
-         public ObservableList<Admin> getListrech(String nom){
-        ObservableList<Admin> admins = FXCollections.observableArrayList();
-        conn = Connexion.getInstance().getCnx();
-        String req = "select * from admin where nom='"+nom+"';";
-        Statement st;
-        ResultSet rs;
-        
-        try{
-            st = conn.createStatement();
-            rs = st.executeQuery(req);
-            Admin admin;
-            
-            while(rs.next()){
-                admin = new Admin(rs.getInt("id"),rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("adresse"),rs.getString("password")); // depuis bd //
-              admins.add(admin);
-                
-               
-                
-            }
-                
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-        return admins;
-        
-    }
-    public void showAdminrech(){
-        ObservableList<Admin> list = getListrech(txtrech.getText());   
-        
-        colnom.setCellValueFactory(new PropertyValueFactory<Admin,String>("nom"));
-        colprenom.setCellValueFactory(new PropertyValueFactory<Admin, String>("prenom"));
-         coladr.setCellValueFactory(new PropertyValueFactory<Admin, String>("adresse"));
-        colemail.setCellValueFactory(new PropertyValueFactory<Admin, String>("email"));
-      
-        tvadmin.setItems(list);
-       
-
-    }
-        
-             private void ajout(){
-      conn = Connexion.getInstance().getCnx();
-        PreparedStatement stm;
-        try{
-            
-            
-         
-            stm = conn.prepareStatement("INSERT INTO `admin` (`nom`,`prenom`,`email`,`adresse`,`password`)values(?,?,?,?,?)");
-            
-          
-            if(!(txtnom.getText().matches("^[a-zA-Z]+$"))||(txtnom.getText().length()==0)) {
+   if(!(txtnom.getText().matches("^[a-zA-Z]+$"))||(txtnom.getText().length()==0)) {
 
             JOptionPane.showMessageDialog(null, "verifier votre nom");
              }
@@ -340,85 +238,271 @@ afficherClient();
             JOptionPane.showMessageDialog(null, "verifier votre email");
              }
               
-             else if  (txtmdp.getText().length()<8||(txtmdp.getText().length()==0)) {
+             if  (txtmdp.getText().length()<4||(txtmdp.getText().length()==0)) {
 
-            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 8 characteres");
+            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres");
              }
-            else{
-            stm.setString(1, txtnom.getText());
-            stm.setString(2, txtprenom.getText());
-            stm.setString(4, txtadr.getText());
-          stm.setString(3, txtemail.getText());
-           stm.setString(5, txtmdp.getText());
-int i = stm.executeUpdate();
-            System.out.println(i);
-       
- 
-             }
-
-            
-            
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-       showAdmin();
-       
-    }
-    private void supprimer() {
-        conn = Connexion.getInstance().getCnx();
-        PreparedStatement stm;
-
-       try {
-           stm=conn.prepareStatement("delete from admin where nom=?");
-           stm.setString(1, txtnom.getText());
-           
-           int i=stm.executeUpdate();
-           
-       }catch (Exception e){
-           e.printStackTrace();
-       }
-       showAdmin();
-    }
-        
-         
-        private void modifier() {
-         conn = Connexion.getInstance().getCnx();
-        PreparedStatement stm;
-
-        try {
-            stm = conn.prepareStatement("UPDATE admin SET prenom=?,email=?,adresse=?,password=? WHERE nom=?");
-               stm.setString(5, txtnom.getText());
-            stm.setString(1, txtprenom.getText());
-            stm.setString(3, txtadr.getText());
-          stm.setString(2, txtemail.getText());
-           stm.setString(4, txtmdp.getText());
-              int i = stm.executeUpdate();
-
-            System.out.println(i);
-            
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        showAdmin();
+             else{
+      Admin a= new Admin(txtnom.getText(), txtprenom.getText(), txtemail.getText(), txtadr.getText(), txtmdp.getText());
+as.ajouter(a);
+tvadmin.getItems().clear();
+afficherAdmin();}
     }
     
+    
+
+    @FXML
+    void modifier(ActionEvent event) {
+
+       Admin a =  tvadmin.getSelectionModel().getSelectedItem();
+        a.setEmail(txtemail.getText());
+        a.setNom( txtnom.getText());
+        a.setPrenom(txtprenom.getText());
+        a.setAdresse(txtadr.getText());
+        a.setPwd(txtmdp.getText());
+        as.modifier(a);
+        tvadmin.getItems().clear();
+        afficherAdmin();
+    }
+    
+    
+
+    @FXML
+    void supprimer(ActionEvent event) {
+
+Admin a =  tvadmin.getSelectionModel().getSelectedItem();
+as.supprimer(a.getId());
+tvadmin.getItems().clear();
+afficherAdmin();
+    }
+    
+    
+      @FXML
+    void rechercher(ActionEvent event) {
+
+List <Admin> ls =as.rechercher(txtrech.getText());
+tvadmin.getItems().clear();
+  tvadmin.getItems().addAll(ls);
+    }
+       
+    
+    @FXML
+   private void selectAdmin(javafx.scene.input.MouseEvent event) {
+     int index= -1;
+     index = tvadmin.getSelectionModel().getSelectedIndex();
+     txtnom.setText(colnom.getCellData(index));
+     txtprenom.setText(""+  colprenom.getCellData(index));
+     txtemail.setText(""+colemail.getCellData(index));
+    txtadr.setText(""+coladr.getCellData(index));
+    txtmdp.setText("");
+      
+    }
+    
+    
+   
+    //***********************client**************************** 
+   
+   
+   ObservableList<Client> oblist = FXCollections.observableArrayList();
+     ClientService cs= new ClientService();
+        @FXML
+    void Activer(ActionEvent event) {
+        Client c =  tvClient.getSelectionModel().getSelectedItem();
+        int idCB=c.getId();
+as.activerCompteParAdmin(idCB);
+tvClient.getItems().clear();
+afficherClient();
+    }
+
+    @FXML
+    void Bloquer(ActionEvent event) {
+           Client c =  tvClient.getSelectionModel().getSelectedItem();
+        int idCB=c.getId();
+as.BanirCompteParAdmin(idCB);
+tvClient.getItems().clear();
+afficherClient();
+    } 
+     
+   @FXML
+    void ajouterC(ActionEvent event) { 
+        if(!(txtnomC.getText().matches("^[a-zA-Z]+$"))||(txtnomC.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre nom");
+             }
+            if(!(txtprenomC.getText().matches("^[a-zA-Z]+$"))||(txtprenomC.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre prenom");
+             }
+              
+              if(!(txtemailC.getText().matches("^[a-zA-Z@.]+$"))||(txtemailC.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre email");
+             }
+              
+             if  (txtmdpC.getText().length()<4||(txtmdpC.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres");
+             }
+             else{
+         Client c= new Client(txtnomC.getText(), txtprenomC.getText(), txtmdpC.getText(), txtemailC.getText());
+cs.ajouter(c);
+tvClient.getItems().clear();
+afficherClient();
+             }
+}
+
+    
+    @FXML
+    void modifierC(ActionEvent event) {
+        Client c =  tvClient.getSelectionModel().getSelectedItem();
+        c.setEmail(txtemailC.getText());
+        c.setNom( txtnomC.getText());
+        c.setPrenom(txtprenomC.getText());    
+cs.modifier(c);
+tvClient.getItems().clear();
+afficherClient();
+    }
+    
+    
+
+    @FXML
+    void supprimerC(ActionEvent event) {
+Client c =  tvClient.getSelectionModel().getSelectedItem();
+cs.supprimer(c.getId());
+tvClient.getItems().clear();
+afficherClient();
+}
+    
+    
+
+    @FXML
+    void rechercherClient(ActionEvent event) {
+List <Client> ls =cs.rechercherclient(txtrechClient.getText());
+tvClient.getItems().clear();
+  tvClient.getItems().addAll(ls);
+  }
+
+ 
+     
+   private void afficherClient() {
+      List <Client> ls =cs.afficher();
+      ls.forEach(e->oblist.add(e));
+      colnomC.setCellValueFactory(new PropertyValueFactory<Client,String>("nom"));
+        colprenomC.setCellValueFactory(new PropertyValueFactory<Client, String>("prenom"));
+         colemailC.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
+        coletatC.setCellValueFactory(new PropertyValueFactory<Client, Integer>("etat"));
+        tvClient.setItems(oblist);    
+    }
+       
+   
+     @FXML
+   private void selectClient(javafx.scene.input.MouseEvent event) {
+     int index= -1;
+     index = tvClient.getSelectionModel().getSelectedIndex();
+     txtnomC.setText(colnomC.getCellData(index));
+     txtprenomC.setText(""+  colprenomC.getCellData(index));
+     txtemailC.setText(""+colemailC.getCellData(index));
+     txtmdpC.setText("");
+      
+    }
+      //***************Offreur*****************************
+   
+ObservableList<Offreur> oblist2 = FXCollections.observableArrayList();
+     OffreurService os= new OffreurService();
+   
+    @FXML
+   private void selectOffreur(javafx.scene.input.MouseEvent event) {
+     int index= -1;
+     index = tvOffreur.getSelectionModel().getSelectedIndex();
+     txtnomOF.setText(colnomOF.getCellData(index));
+     txtprenomOF.setText(""+  colprenomOF.getCellData(index));
+     txtemailOF.setText(""+colemailOF.getCellData(index));
+     txtTelOF.setText(""+colTelOF.getCellData(index));
+     txtmdpC.setText("");
+      
+    }
+    
+       private void afficherOffreur() {
+      List <Offreur> ls =os.afficher();
+      ls.forEach(e->oblist2.add(e));
+      colnomOF.setCellValueFactory(new PropertyValueFactory<Offreur,String>("nom"));
+        colprenomOF.setCellValueFactory(new PropertyValueFactory<Offreur, String>("prenom"));
+         colemailOF.setCellValueFactory(new PropertyValueFactory<Offreur, String>("email"));
+        colTelOF.setCellValueFactory(new PropertyValueFactory<Offreur, Integer>("numtl"));
+        tvOffreur.setItems(oblist2);    
+    }
+    
+   
+       @FXML
+    void ajouterO(ActionEvent event) {
+
+        
+        
+        if(!(txtnomOF.getText().matches("^[a-zA-Z]+$"))||(txtnomOF.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre nom");
+             }
+            if(!(txtprenomOF.getText().matches("^[a-zA-Z]+$"))||(txtprenomOF.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre prenom");
+             }
+              
+              if(!(txtemailOF.getText().matches("^[a-zA-Z@.]+$"))||(txtemailOF.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre email");
+             }
+              
+             if  (txtmdpOF.getText().length()<4||(txtmdpOF.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres");
+             }
+              if  (txtTelOF.getText().length()<8||(txtTelOF.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre numero de telephone");
+             }
+             else{
+                
+         //Offreur o = new Offreur(txtnomOF.getText(), txtprenomOF.getText(), txtmdpOF.getText(), txtemailOF.getText(),txtTelOF.getText());
+//os.ajouter(o);
+tvOffreur.getItems().clear();
+afficherOffreur();
+             }
+        
+        
+        
+    }
+    
+    @FXML
+    void modifierO(ActionEvent event) {
+
+    }
+       @FXML
+    void supprimerO(ActionEvent event) {
+
+    }
+        @FXML
+    void rechercherO(ActionEvent event) {
+
+    }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+ 
     
   
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-     
-        showAdmin();
-        afficherClient();
-    }   
-
-    public RegistrationController() {
-        
-         conn = Connexion.getInstance().getCnx();
-    }
+  
     
     
     
