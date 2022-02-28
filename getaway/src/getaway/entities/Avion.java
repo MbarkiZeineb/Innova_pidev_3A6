@@ -13,20 +13,25 @@ public class Avion {
     private int id_avion;
     private int nbr_place;
     private int id_agence;
+    private String nom_avion;
 
     public Avion() {
     }
 
-    public Avion(int id_avion, int nbr_place, int id_agence) {
+    public Avion(int id_avion, int nbr_place, int id_agence, String nom_agence) {
         this.id_avion = id_avion;
         this.nbr_place = nbr_place;
         this.id_agence = id_agence;
+        this.nom_avion = nom_agence;
     }
 
-    public Avion(int nbr_place, int id_agence) {
+    public Avion(int nbr_place, int id_agence, String nom_agence) {
         this.nbr_place = nbr_place;
         this.id_agence = id_agence;
+        this.nom_avion = nom_agence;
     }
+
+   
 
     public int getId_avion() {
         return id_avion;
@@ -52,10 +57,20 @@ public class Avion {
         this.id_agence = id_agence;
     }
 
+    public String getNom_avion() {
+        return nom_avion;
+    }
+
+    public void setNom_avion(String nom_avion) {
+        this.nom_avion = nom_avion;
+    }
+
     @Override
     public String toString() {
-        return "Avion{" + "id_avion=" + id_avion + ", nbr_place=" + nbr_place + ", id_agence=" + id_agence + '}';
+        return "Avion{" + "id_avion=" + id_avion + ", nbr_place=" + nbr_place + ", id_agence=" + id_agence + ", nom_avion=" + nom_avion + '}';
     }
+
+   
     
     
     

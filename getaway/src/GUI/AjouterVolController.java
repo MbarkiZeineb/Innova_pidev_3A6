@@ -6,6 +6,7 @@
 package GUI;
 import getaway.entities.Avion;
 import getaway.entities.Vol;
+import getaway.services.AvionService;
 import getaway.services.VolService;
 import java.io.IOException;
 import java.net.URL;
@@ -18,24 +19,28 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import org.controlsfx.control.Notifications;
 
 
 
@@ -46,6 +51,7 @@ import org.controlsfx.control.Notifications;
  */
 public class AjouterVolController implements Initializable {
    
+    //tabVol
 
     @FXML
     private Button id_button;
@@ -82,7 +88,7 @@ public class AjouterVolController implements Initializable {
      @FXML
     private TableColumn<Vol, Integer> tb_place;
     @FXML
-    private TextField id_supp;
+    private TextField id_rech;
     @FXML
     private Button supp;
     @FXML
@@ -91,20 +97,60 @@ public class AjouterVolController implements Initializable {
     private Button r_id;
     @FXML
     private Button stat;
+   
+    
+    //tabavion
+    @FXML
+    private Button id_button1;
+
+    @FXML
+    private TextField nom_avion;
+
+    @FXML
+    private TextField nbr_place;
+
+    @FXML
+    private TableView<Avion> tb_a;
+
+    @FXML
+    private TableColumn<Vol, String> tb_nomavion;
+
+    @FXML
+    private TableColumn<Vol, Integer> tb_nbrplace;
+
+    @FXML
+    private TextField id_rech1;
+
+    @FXML
+    private Button supp1;
+
+    @FXML
+    private Button modifier1;
+
+    @FXML
+    private Button r_id1;
+
+    @FXML
+    private ComboBox<String> id_agence;
+   
     
     int index= -1;
   ObservableList<Vol> oblist = FXCollections.observableArrayList();
+    ObservableList<Avion> oblist1 = FXCollections.observableArrayList();
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+      afficher1();
      afficher();
+     getidagence();
      getida();
      Vol v = tb_v.getSelectionModel().getSelectedItem();
     }    
     
+    //****************************************tabVol******************************************************
     public void getida()
     {
         
@@ -151,14 +197,23 @@ public class AjouterVolController implements Initializable {
         // Vol v = tb_v.getSelectionModel().getSelectedItem();
         //p.setId(Integer.parseInt(id.getText()) );
         
-         List<Timestamp> listDateDepart = ps.getListDateDepartByIdAvion( p.getId_avion(), p.getDate_depart());
-         List<Timestamp> listDateArrive= ps.getListDateArriveByIdAvion( p.getId_avion(), p.getDate_arrivee());
-        boolean volIsPresent= ps.checkVolIsBetweenDateDepartAndArriveIsPossible(listDateArrive, listDateDepart,p.getDate_arrivee(), p.getDate_depart()) ;
-         if(volIsPresent==true) {
+//         List<Timestamp> listDateDepart = ps.getListDateDepartByIdAvion( p.getId_avion(), p.getDate_depart());
+//         List<Timestamp> listDateArrive= ps.getListDateArriveByIdAvion( p.getId_avion(), p.getDate_arrivee());
+//        boolean volIsPresent= ps.checkVolIsBetweenDateDepartAndArriveIsPossible(listDateArrive, listDateDepart,p.getDate_arrivee(), p.getDate_depart()) ;
+//         if(volIsPresent==true) {
+//             Alert alert = new Alert(AlertType.WARNING);
+//        
+//        alert.setTitle("information");
+//        alert.setHeaderText(null);
+//        alert.setContentText("vol existe déjà!");
+//        alert.showAndWait();
+         
              //Notifications.create().title("Vol").text(" Vol existe déjà ").show();}
-         System.out.println("vol existe déjà");}
-         else{
-       
+//         System.out.println("vol existe déjà");}
+//         else {
+       if(isEmpty())
+       {return;
+        } else {
         p.setDate_depart(Timestamp.valueOf(date_depart.getText()));
         p.setDate_arrivee(Timestamp.valueOf(date_arrivee.getText()));
         p.setPrix(Float.parseFloat(prix.getText()));
@@ -172,9 +227,15 @@ public class AjouterVolController implements Initializable {
          
        //tb_v.getItems().clear();
        afficher();
+//       Alert alert = new Alert(AlertType.INFORMATION);
+//        
+//    alert.setTitle("information");
+//    alert.setHeaderText(null);
+//    alert.setContentText("ajout avec succes!");
+//    alert.showAndWait();
     }  }
        
-      
+
     
     @FXML
     private void supprimer(ActionEvent event) {
@@ -185,6 +246,12 @@ public class AjouterVolController implements Initializable {
       vs.supprimer(r);
       tb_v.getItems().clear();
        afficher();
+       Alert alert = new Alert(AlertType.INFORMATION);
+        
+alert.setTitle("intformation");
+alert.setHeaderText(null);
+alert.setContentText("suppression avec succes!");
+alert.showAndWait();
         
         
         
@@ -209,21 +276,17 @@ public class AjouterVolController implements Initializable {
       
     tb_v.getItems().clear();
     afficher();
+    Alert alert = new Alert(AlertType.INFORMATION);
+        
+alert.setTitle("intformation");
+alert.setHeaderText(null);
+alert.setContentText("modification avec succes!");
+alert.showAndWait();
         
        
     }
     
 
-// private void handleButtonAction(ActionEvent event) throws IOException, SQLException, Exception {
-//        
-//         if(event.getSource() == supp){
-//            supprimer();
-//        }
-//        else if(event.getSource() == modifier){
-//            modifier();
-//        }
-//        
-//    }
 
     
      public Connection getConnection(){
@@ -250,35 +313,14 @@ public class AjouterVolController implements Initializable {
         
     }
 
-//    @FXML
-//    private void modifier(ActionEvent event) {
-//        VolService ps= new VolService();
-//        Vol p =new Vol();
-//        p.setDate_depart(date_depart.getText());
-//        p.setGenre(genre.getText());
-//        p.setAge_recommande(Integer.parseInt(age.getText()) );
-//        p.setDuree(duree.getText());
-//     
-//       ps.modifier(p);
-//       System.out.println("projection modifier avec succés");
-//       afficher();
-//    }
-//    @FXML
-//    private void modifier(){
-//    String query = "UPDATE vol SET date_depart = '" + date_depart.getText() + "' , date_arrivee = '" + date_arrivee.getText()+
-//                "', prix = '" + prix.getText() +"', ville_depart = '" + ville_depart.getText()+"', ville_arrivee = '" + ville_arrivee.getText()+
-//                "', nbr_placedispo = '" + nbr_placedispo.getText() + "' WHERE id_vol = " + id_vol.getText() +"" ;
-//            
-//    executeQuery(query);
-//    afficher();
-//    }
+
 
     @FXML
     private void recherche(ActionEvent event) {
          VolService ps = new VolService();
         ResultSet resultset=ps.getall();
         
-        ObservableList<Vol> listvol = FXCollections.observableArrayList(ps.findVolParDest((id_supp.getText())));
+        ObservableList<Vol> listvol = FXCollections.observableArrayList(ps.findVolParDest((id_rech.getText())));
 //        tb_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         tb_datedepart.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
         tb_datearrivee.setCellValueFactory(new PropertyValueFactory<>("date_arrivee"));
@@ -367,12 +409,245 @@ public class AjouterVolController implements Initializable {
   date_depart.clear();
     date_arrivee.clear();
     prix.clear();
-    //id_avion.clear();
     nbr_placedispo.clear();
     tb_v.getItems().clear();
     afficher();
   
     }
+    
+     private void warning(String txt) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(txt);
+        Optional<ButtonType> action = alert.showAndWait();
+    }
+
+     private boolean isEmpty() {
+        
+        if (date_depart.getText() == null || date_depart.getText().trim().isEmpty()) {
+            warning("Veuillez saisir la date de départ!");
+            return true;
+        }
+        else if (date_arrivee.getText() == null || date_arrivee.getText().trim().isEmpty()) {
+            warning("Veuillez saisir la description de la date d'arrivee!");
+        }
+        else if (prix.getText() == null || prix.getText().trim().isEmpty()) {
+            warning("Veuillez saisir le prix du vol!");
+            return true;
+        }
+        else if (ville_depart.getText() == null || ville_depart.getText().trim().isEmpty()) {
+            warning("Veuillez saisir la ville de depart!");
+            return true;
+        }
+        
+        else if (ville_arrivee.getText() == null || ville_arrivee.getText().trim().isEmpty()) {
+            warning("Veuillez saisir la ville d'arrivee!");
+            return true;
+        }else if (id_avion.getValue() == null ||id_avion.getValue().trim().isEmpty()) {
+            warning("Veuillez saisir l'id de l'avion!");
+            return true;
+        }
+        else if (nbr_placedispo.getText() == null || nbr_placedispo.getText().trim().isEmpty()) {
+            warning("Veuillez saisir le nombre de place !");
+            return true;
+        }
+ 
+        else return false;
+        return false;
+        
+    }
+     
+        //****************************************tabavion******************************************************
+
+    public void afficher1()
+    {
+         AvionService as = new AvionService();
+        List<Avion> ls = as.afficher();
+         ls.forEach(e->oblist1.add(e));
+          System.out.print(oblist1);
+        tb_nomavion.setCellValueFactory(new PropertyValueFactory<>("nom_avion"));
+        tb_nbrplace.setCellValueFactory(new PropertyValueFactory<>("nbr_place"));
+        tb_a.setItems(oblist1);
+      
+       
+    }   
+    
+     public void getidagence()
+    {
+        
+        String req ="SELECT id FROM `agent-aerien` ";
+         try {
+            Connection conn = getConnection();
+             Statement ste;
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+        
+            id_agence.getItems().addAll(rs.getString("id"));
+            }}
+         catch (SQLException ex) {
+            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        
+    }
+     
+     @FXML
+    void ajouter1(ActionEvent event)  {
+        AvionService as = new AvionService();
+        Avion p =new Avion();
+       
+       if(isEmpty1())
+       {return;
+        } else {
+        p.setNom_avion(nom_avion.getText());
+        p.setId_agence(Integer.parseInt(id_agence.getValue()));
+        p.setNbr_place(Integer.parseInt(nbr_place.getText()));
+       as.ajouter(p);
+         
+       //tb_v.getItems().clear();
+       afficher1();
+       Alert alert = new Alert(AlertType.INFORMATION);
+        
+    alert.setTitle("information");
+    alert.setHeaderText(null);
+    alert.setContentText("ajout avec succes!");
+    alert.showAndWait();
+    }  }
+    
+    
+     
+
+     private boolean isEmpty1() {
+        
+        if (nom_avion.getText() == null || nom_avion.getText().trim().isEmpty()) {
+            warning("Veuillez saisir le nom de l'avion!");
+            return true;
+        }
+        else if (id_agence.getValue() == null ||id_agence.getValue().trim().isEmpty()) {
+            warning("Veuillez saisir l'id de l'agence!");
+        }
+        else if (nbr_place.getText() == null || nbr_place.getText().trim().isEmpty()) {
+            warning("Veuillez saisir le nombre de place!");
+            return true;
+        
+        }
+ 
+        else return false;
+        return false;
+        
+    }
+     
+     @FXML
+    private void supprimer1(ActionEvent event) {
+        
+       
+      Avion r=  tb_a.getSelectionModel().getSelectedItem();
+      AvionService as = new AvionService();
+      as.supprimer(r);
+      tb_a.getItems().clear();
+       afficher1();
+       Alert alert = new Alert(AlertType.INFORMATION);
+        
+alert.setTitle("intformation");
+alert.setHeaderText(null);
+alert.setContentText("suppression avec succes!");
+alert.showAndWait();
+        
+        
+        
+    }
+    
+    
+
+    @FXML
+    private void modifier1(ActionEvent event) {
+         Avion p=  tb_a.getSelectionModel().getSelectedItem();
+      AvionService vs = new AvionService();
+        p.setNom_avion(nom_avion.getText());
+        p.setNbr_place(Integer.parseInt(nbr_place.getText()));
+        p.toString();
+       
+      vs.modifier(p);
+      
+    tb_a.getItems().clear();
+    afficher1();
+    Alert alert = new Alert(AlertType.INFORMATION);
+        
+alert.setTitle("intformation");
+alert.setHeaderText(null);
+alert.setContentText("modification avec succes!");
+alert.showAndWait();
+        
+       
+    }
+    
+     @FXML
+    private void recherche1(ActionEvent event) {
+         AvionService ps = new AvionService();
+        ResultSet resultset=ps.getall();
+        
+        ObservableList<Avion> listavion = FXCollections.observableArrayList(ps.findAvionParnom((id_rech1.getText())));
+//        tb_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+       
+        tb_nomavion.setCellValueFactory(new PropertyValueFactory<>("nom_avion"));
+        tb_nbrplace.setCellValueFactory(new PropertyValueFactory<>("nbr_place"));
+        tb_a.setItems(listavion);
+    }   
 
     
+
+    @FXML
+    private void trier1(ActionEvent event) {
+        AvionService ps = new AvionService();
+        ResultSet resultset=ps.tri_avion();
+        List<Avion> pl = new ArrayList<Avion>();
+        try {
+            while(resultset.next()){
+                Avion p1 = new Avion();
+                p1.setNom_avion(resultset.getString("nom_avion"));
+                p1.setNbr_place(resultset.getInt("nbr_place"));
+               
+                pl.add(p1);
+                
+               
+                }
+            ObservableList<Avion> listavion = FXCollections.observableArrayList(pl);
+//        tb_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tb_datedepart.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
+        tb_datearrivee.setCellValueFactory(new PropertyValueFactory<>("date_arrivee"));
+      
+        tb_a.setItems(listavion);
+        } catch (SQLException ex) {
+            Logger.getLogger(AjouterVolController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } 
+    
+    @FXML
+    private void selectAVION(javafx.scene.input.MouseEvent event) {
+        
+        index = tb_a.getSelectionModel().getSelectedIndex();
+         
+         
+          
+    nom_avion.setText(tb_nomavion.getCellData(index));
+     nbr_place.setText(""+tb_nbrplace.getCellData(index));
+         
+    }
+    
+     @FXML
+    private void viderAvion(javafx.scene.input.MouseEvent event) {
+        
+      
+           
+   nom_avion.clear();
+    nbr_place.clear();
+    afficher();
+  
+    }
+     
+     
+     
     }

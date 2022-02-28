@@ -3,14 +3,22 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjouterVolController">
-   <children>
-      <Button fx:id="id_button" layoutX="16.0" layoutY="430.0" mnemonicParsing="false" onAction="#ajouter" onMouseReleased="#viderVol" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjouterVolController">
+<children>
+      <TabPane layoutX="-40.0" layoutY="-117.0" prefHeight="600.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="tabVol">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">  
+    <children>
+      <Button fx:id="id_button" layoutX="17.0" layoutY="443.0" mnemonicParsing="false" onAction="#ajouter" onMouseReleased="#viderVol" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
       <TextField fx:id="date_depart" layoutX="104.0" layoutY="124.0" prefHeight="25.0" prefWidth="114.0" promptText="date_depart" />
       <TextField fx:id="date_arrivee" layoutX="104.0" layoutY="165.0" prefHeight="25.0" prefWidth="114.0" promptText="date_arrivee" />
       <TextField fx:id="prix" layoutX="104.0" layoutY="207.0" prefHeight="25.0" prefWidth="114.0" promptText="prix" />
@@ -35,14 +43,45 @@
          </columns>
       </TableView>
       
-      <TextField fx:id="id_supp" layoutX="282.0" layoutY="27.0" />
-      <Button fx:id="supp" layoutX="16.0" layoutY="467.0" mnemonicParsing="false" onAction="#supprimer" text="supprimer" />
-      <Button fx:id="modifier" layoutX="109.0" layoutY="430.0" mnemonicParsing="false" onAction="#modifier" prefHeight="25.0" prefWidth="70.0" text="modifier" />
-      <Button fx:id="r_id" layoutX="466.0" layoutY="27.0" mnemonicParsing="false" onAction="#recherche" text="rechercher" />  
-      <Button layoutX="558.0" layoutY="27.0" mnemonicParsing="false" onAction="#trier" text="trier" />
-       <Button fx:id="stat" layoutX="109.0" layoutY="467.0" mnemonicParsing="false" onAction="#statistique" text="statistique" />
+      <TextField fx:id="id_rech" layoutX="416.0" layoutY="27.0" />
+      <Button fx:id="supp" layoutX="109.0" layoutY="443.0" mnemonicParsing="false" onAction="#supprimer" onMouseReleased="#viderVol" text="supprimer" />
+      <Button fx:id="modifier" layoutX="197.0" layoutY="443.0" mnemonicParsing="false" onAction="#modifier" onMouseReleased="#viderVol" prefHeight="25.0" prefWidth="70.0" text="modifier" />
+      <Button fx:id="r_id" layoutX="587.0" layoutY="27.0" mnemonicParsing="false" onAction="#recherche" text="rechercher" />  
+      <Button layoutX="678.0" layoutY="27.0" mnemonicParsing="false" onAction="#trier" prefHeight="25.0" prefWidth="70.0" text="trier" />
+       <Button fx:id="stat" layoutX="713.0" layoutY="430.0" mnemonicParsing="false" onAction="#statistique" text="statistique" />
       <ComboBox fx:id="id_avion" layoutX="109.0" layoutY="326.0" prefHeight="25.0" prefWidth="102.0" />
       
-      
+   </children>
+    </AnchorPane>
+   </content>
+   </Tab>
+            <Tab text="tabAvion">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="id_button1" layoutX="17.0" layoutY="443.0" mnemonicParsing="false" onAction="#ajouter1" onMouseReleased="#viderAvion" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
+                        <TextField fx:id="nom_avion" layoutX="104.0" layoutY="124.0" prefHeight="25.0" prefWidth="114.0" promptText="nom_avion" />
+                        <TextField fx:id="nbr_place" layoutX="104.0" layoutY="210.0" prefHeight="25.0" prefWidth="114.0" promptText="nbr_place" />
+                        <Label layoutX="24.0" layoutY="128.0" text="nom avion" />
+                        <Label layoutX="31.0" layoutY="169.0" text="id agence" />
+                        <Label layoutX="24.0" layoutY="214.0" text="nbr place " />
+                        <TableView fx:id="tb_a" layoutX="448.0" layoutY="82.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#selectAVION" prefHeight="321.0" prefWidth="279.0">
+                           <columns>
+                              <TableColumn fx:id="tb_nomavion" prefWidth="146.0" text="Nom avion" />
+                              <TableColumn fx:id="tb_nbrplace" prefWidth="132.0" text="Nbr place" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="id_rech1" layoutX="416.0" layoutY="27.0" />
+                        <Button fx:id="supp1" layoutX="109.0" layoutY="443.0" mnemonicParsing="false" onAction="#supprimer1" onMouseReleased="#viderAvion" text="supprimer" />
+                        <Button fx:id="modifier1" layoutX="197.0" layoutY="443.0" mnemonicParsing="false" onAction="#modifier1" onMouseReleased="#viderAvion" prefHeight="25.0" prefWidth="70.0" text="modifier" />
+                        <Button fx:id="r_id1" layoutX="587.0" layoutY="27.0" mnemonicParsing="false" onAction="#recherche1" text="rechercher" />
+                        <Button layoutX="678.0" layoutY="27.0" mnemonicParsing="false" onAction="#trier1" prefHeight="25.0" prefWidth="70.0" text="trier" />
+                        <ComboBox fx:id="id_agence" layoutX="104.0" layoutY="165.0" prefHeight="25.0" prefWidth="113.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+   </tabs>
+   </TabPane>
    </children>
 </AnchorPane>

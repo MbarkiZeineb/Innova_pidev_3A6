@@ -96,9 +96,9 @@ public class Getaway {
       
       
          AvionService as = new AvionService();
-         Avion a=new Avion(12,1);
-         Avion a1=new Avion(13,1);
-         Avion a2=new Avion(80,3);
+//         Avion a=new Avion(12,1);
+//         Avion a1=new Avion(13,1);
+//         Avion a2=new Avion(80,3);
         // System.out.println(as.findAvionParId(3));
         // as.ajouter(a2);
  //         as.ajouter(a1);

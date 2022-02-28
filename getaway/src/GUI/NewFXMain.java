@@ -22,8 +22,7 @@ public class NewFXMain extends Application {
     @Override
             public void start(Stage primaryStage) throws Exception
        
-            { //Parent root = FXMLLoader.load(getClass().getResource("AffichageVol.fxml"));
-            //Parent root = FXMLLoader.load(getClass().getResource("stat.fxml"));
+            { 
                 
                 Parent root = FXMLLoader.load(getClass().getResource("AjouterVol.fxml"));
         

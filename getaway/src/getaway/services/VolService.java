@@ -36,7 +36,8 @@ public class VolService implements IService<Vol> {
      if(volIsPresent==true ) {System.out.println("Vol Existe deja");}
      else{
         
-     {String req = "INSERT INTO `vol` (`date_depart`,`date_arrivee`,`ville_depart`,`ville_arrivee`,`nbr_placedispo`,`id_avion`,`prix`) VALUE (?,?,?,?,?,?,?) ";
+     {
+         String req = "INSERT INTO `vol` (`date_depart`,`date_arrivee`,`ville_depart`,`ville_arrivee`,`nbr_placedispo`,`id_avion`,`prix`) VALUE (?,?,?,?,?,?,?) ";
          
          try {
             pste = conn.prepareStatement(req);
@@ -58,7 +59,8 @@ public class VolService implements IService<Vol> {
             
             }}
  
-        }}
+        }
+}
     
    
     
