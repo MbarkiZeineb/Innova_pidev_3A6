@@ -33,7 +33,8 @@ public class VolService implements IService<Vol> {
      List<Timestamp> listDateDepart = getListDateDepartByIdAvion( V.getId_avion(), V.getDate_depart());
      List<Timestamp> listDateArrive= getListDateArriveByIdAvion( V.getId_avion(), V.getDate_arrivee());
     boolean volIsPresent= checkVolIsBetweenDateDepartAndArriveIsPossible(listDateArrive, listDateDepart,V.getDate_arrivee(), V.getDate_depart()) ;
-     if(volIsPresent==true ) throw new Exception("Vol Existe deja");
+     if(volIsPresent==true ) {System.out.println("Vol Existe deja");}
+     else{
         
      {String req = "INSERT INTO `vol` (`date_depart`,`date_arrivee`,`ville_depart`,`ville_arrivee`,`nbr_placedispo`,`id_avion`,`prix`) VALUE (?,?,?,?,?,?,?) ";
          
@@ -57,7 +58,7 @@ public class VolService implements IService<Vol> {
             
             }}
  
-        }
+        }}
     
    
     

@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -28,11 +29,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import org.controlsfx.control.Notifications;
 
 
 
@@ -57,7 +60,7 @@ public class AjouterVolController implements Initializable {
     @FXML
     private TextField ville_arrivee;
     @FXML
-    private TextField id_avion;
+    private ComboBox<String> id_avion;
      @FXML
     private TextField nbr_placedispo;
       
@@ -98,9 +101,30 @@ public class AjouterVolController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
      afficher();
+     getida();
      Vol v = tb_v.getSelectionModel().getSelectedItem();
     }    
     
+    public void getida()
+    {
+        
+        String req ="SELECT id_avion from avion";
+         try {
+            Connection conn = getConnection();
+             Statement ste;
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+        
+            id_avion.getItems().addAll(rs.getString("id_avion"));
+            }}
+         catch (SQLException ex) {
+            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        
+    }
     
     public void afficher()
     {
@@ -126,20 +150,31 @@ public class AjouterVolController implements Initializable {
         Vol p =new Vol();
         // Vol v = tb_v.getSelectionModel().getSelectedItem();
         //p.setId(Integer.parseInt(id.getText()) );
+        
+         List<Timestamp> listDateDepart = ps.getListDateDepartByIdAvion( p.getId_avion(), p.getDate_depart());
+         List<Timestamp> listDateArrive= ps.getListDateArriveByIdAvion( p.getId_avion(), p.getDate_arrivee());
+        boolean volIsPresent= ps.checkVolIsBetweenDateDepartAndArriveIsPossible(listDateArrive, listDateDepart,p.getDate_arrivee(), p.getDate_depart()) ;
+         if(volIsPresent==true) {
+             //Notifications.create().title("Vol").text(" Vol existe déjà ").show();}
+         System.out.println("vol existe déjà");}
+         else{
        
         p.setDate_depart(Timestamp.valueOf(date_depart.getText()));
         p.setDate_arrivee(Timestamp.valueOf(date_arrivee.getText()));
         p.setPrix(Float.parseFloat(prix.getText()));
         p.setVille_depart(ville_depart.getText());
         p.setVille_arrivee(ville_arrivee.getText());
-        p.setId_avion(Integer.parseInt(id_avion.getText()));
+        p.setId_avion(Integer.parseInt(id_avion.getValue()));
         p.setNbr_placedispo(Integer.parseInt(nbr_placedispo.getText()));
        ps.ajouter(p);
-       System.out.println("ajout avec succés");
+       //System.out.println("ajout avec succés");
        //Notifications.create().title("Vol").text(" Vol est Créé ").show();
-       tb_v.refresh();
+         
+       //tb_v.getItems().clear();
        afficher();
-    }
+    }  }
+       
+      
     
     @FXML
     private void supprimer(ActionEvent event) {
@@ -148,10 +183,14 @@ public class AjouterVolController implements Initializable {
       Vol r=  tb_v.getSelectionModel().getSelectedItem();
       VolService vs = new VolService();
       vs.supprimer(r);
+      tb_v.getItems().clear();
+       afficher();
         
         
         
     }
+    
+    
 
     @FXML
     private void modifier(MouseEvent event) {
@@ -316,7 +355,7 @@ public class AjouterVolController implements Initializable {
   date_depart.clear();
     date_arrivee.clear();
     prix.clear();
-    id_avion.clear();
+    //id_avion.clear();
     nbr_placedispo.clear();
     tb_v.getItems().clear();
     afficher();
