@@ -18,6 +18,10 @@ public class Client extends User{
         this.etat = etat;
     }
 
+    public Client(String nom, String prenom, String email) {
+        super(nom, prenom, email);
+    }
+
     public Client(String nom, String prenom, String pwd, String email, int etat) {
     super(nom, prenom, pwd, email);
         this.etat = etat;

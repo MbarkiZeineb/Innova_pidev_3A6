@@ -77,7 +77,7 @@ private Connection conn;
     }
     
          public void supprimer(int id) {
-       String req = "DELETE FROM `client` WHERE id = "+id;
+       String req = "DELETE FROM `client` WHERE id="+id;
      
           try {
           ste = conn.createStatement();

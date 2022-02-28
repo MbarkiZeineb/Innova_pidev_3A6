@@ -11,10 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import entities.Admin;
 import javax.mail.Authenticator;
-import java.net.PasswordAuthentication;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -99,8 +99,8 @@ private Connection conn;
         }
     }
 
-    public void supprimer(int id) {
-       String req = "DELETE FROM `admin` WHERE id = "+id;
+    public void supprimer(String nom) {
+       String req = "DELETE FROM `admin` WHERE nom='"+nom+"';";
      
           try {
           ste = conn.createStatement();
@@ -196,20 +196,23 @@ private Connection conn;
         }    
     }    
     
-  /*public static void sendMail(String recepteur) throws Exception
+ public static void sendMail(String recepteur) throws Exception
     {
     Properties p =new Properties();
     p.put("mail.smtp.auth","true");
    p.put("mail.smtp.starttls.enable","true");
    p.put("mail.smtp.host","smtp.gmail.com");
    p.put("mail.smtp.port","587");
-   
-   String myaccount="omayma.djebali@esprit.tn";
+      String myaccount="omayma.djebali@esprit.tn";
    String pwd = "191JFT1449";
-Session session;
-    session = Session.getInstance(p, new Authenticator() {
+        System.out.println("HEHI 1");
+
+  Session session = Session.getInstance(p, new Authenticator() {
         protected PasswordAuthentication getpPasswordAuthentication()
         {
+                    System.out.println("HEHI 2");
+
+            System.out.println("my acc: "+myaccount +" PWD : "+pwd);
             return new PasswordAuthentication(myaccount,pwd);
         }
     });
@@ -231,7 +234,7 @@ Transport.send(m);
         Logger.getLogger(AdminService.class.getName()).log(Level.SEVERE, null, ex);
     }
     return null;
- }*/
+ }
   
            
            
