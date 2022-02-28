@@ -32,6 +32,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 
 
@@ -59,8 +60,7 @@ public class AjouterVolController implements Initializable {
     private TextField id_avion;
      @FXML
     private TextField nbr_placedispo;
-      @FXML
-    private TextField id_vol;
+      
     @FXML
     private TableView<Vol> tb_v;
     @FXML
@@ -88,6 +88,8 @@ public class AjouterVolController implements Initializable {
     private Button r_id;
     @FXML
     private Button stat;
+    
+    int index= -1;
   ObservableList<Vol> oblist = FXCollections.observableArrayList();
     /**
      * Initializes the controller class.
@@ -96,6 +98,7 @@ public class AjouterVolController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
      afficher();
+     Vol v = tb_v.getSelectionModel().getSelectedItem();
     }    
     
     
@@ -121,6 +124,7 @@ public class AjouterVolController implements Initializable {
     void ajouter(ActionEvent event) throws Exception {
        VolService ps= new VolService();
         Vol p =new Vol();
+        // Vol v = tb_v.getSelectionModel().getSelectedItem();
         //p.setId(Integer.parseInt(id.getText()) );
        
         p.setDate_depart(Timestamp.valueOf(date_depart.getText()));
@@ -132,25 +136,44 @@ public class AjouterVolController implements Initializable {
         p.setNbr_placedispo(Integer.parseInt(nbr_placedispo.getText()));
        ps.ajouter(p);
        System.out.println("ajout avec succés");
+       //Notifications.create().title("Vol").text(" Vol est Créé ").show();
+       tb_v.refresh();
        afficher();
     }
- private void handleButtonAction(ActionEvent event) throws IOException, SQLException, Exception {
-        
-         if(event.getSource() == supp){
-            supprimer();
-        }
-        else if(event.getSource() == modifier){
-            modifier();
-        }
-        
-    }
+    
     @FXML
-    private void supprimer() {
-        String query = "DELETE FROM vol WHERE id_vol =" + id_vol.getText()+ "";
-    executeQuery(query);
-    afficher();
-
+    private void supprimer(ActionEvent event) {
+        
+       
+      Vol r=  tb_v.getSelectionModel().getSelectedItem();
+      VolService vs = new VolService();
+      vs.supprimer(r);
+        
+        
+        
     }
+
+    @FXML
+    private void modifier(MouseEvent event) {
+         Vol r=  tb_v.getSelectionModel().getSelectedItem();
+      VolService vs = new VolService();
+      vs.modifier(r);
+        
+       
+    }
+    
+
+// private void handleButtonAction(ActionEvent event) throws IOException, SQLException, Exception {
+//        
+//         if(event.getSource() == supp){
+//            supprimer();
+//        }
+//        else if(event.getSource() == modifier){
+//            modifier();
+//        }
+//        
+//    }
+
     
      public Connection getConnection(){
     Connection conn;
@@ -178,26 +201,26 @@ public class AjouterVolController implements Initializable {
 
 //    @FXML
 //    private void modifier(ActionEvent event) {
-//        Service_projection ps= new Service_projection();
-//        projection p =new projection();
+//        VolService ps= new VolService();
+//        Vol p =new Vol();
 //        p.setDate_depart(date_depart.getText());
 //        p.setGenre(genre.getText());
 //        p.setAge_recommande(Integer.parseInt(age.getText()) );
 //        p.setDuree(duree.getText());
 //     
-//       ps.modifier_projection(p, (nom.getText() ));
+//       ps.modifier(p);
 //       System.out.println("projection modifier avec succés");
-//       afficher_projection();
+//       afficher();
 //    }
-    @FXML
-    private void modifier(){
-    String query = "UPDATE vol SET date_depart = '" + date_depart.getText() + "' , date_arrivee = '" + date_arrivee.getText()+
-                "', prix = '" + prix.getText() +"', ville_depart = '" + ville_depart.getText()+"', ville_arrivee = '" + ville_arrivee.getText()+
-                "', nbr_placedispo = '" + nbr_placedispo.getText() + "' WHERE id_vol = " + id_vol.getText() +"" ;
-            
-    executeQuery(query);
-    afficher();
-    }
+//    @FXML
+//    private void modifier(){
+//    String query = "UPDATE vol SET date_depart = '" + date_depart.getText() + "' , date_arrivee = '" + date_arrivee.getText()+
+//                "', prix = '" + prix.getText() +"', ville_depart = '" + ville_depart.getText()+"', ville_arrivee = '" + ville_arrivee.getText()+
+//                "', nbr_placedispo = '" + nbr_placedispo.getText() + "' WHERE id_vol = " + id_vol.getText() +"" ;
+//            
+//    executeQuery(query);
+//    afficher();
+//    }
 
     @FXML
     private void recherche(ActionEvent event) {
@@ -226,7 +249,6 @@ public class AjouterVolController implements Initializable {
         try {
             while(resultset.next()){
                 Vol p1 = new Vol();
-                p1.setId_vol(resultset.getInt("id_vol"));
                 p1.setDate_depart(resultset.getTimestamp("date_depart"));
                 p1.setDate_arrivee(resultset.getTimestamp("date_arrivee"));
                 p1.setPrix(resultset.getFloat("prix"));
@@ -268,5 +290,38 @@ public class AjouterVolController implements Initializable {
        
     }
     
+    @FXML
+    private void selectVOL(javafx.scene.input.MouseEvent event) {
+        
+        index = tb_v.getSelectionModel().getSelectedIndex();
+         
+         
+          
+    ville_depart.setText(tb_villedepart.getCellData(index));
+    ville_arrivee.setText(tb_villearrivee.getCellData(index));
+    date_depart.setText(""+ tb_datedepart.getCellData(index));
+     date_arrivee.setText(""+ tb_datearrivee.getCellData(index));
+     prix.setText(""+ tb_prix.getCellData(index));
+     nbr_placedispo.setText(""+tb_place.getCellData(index));
+         
+    }
+    
+     @FXML
+    private void viderVol(javafx.scene.input.MouseEvent event) {
+        
+      
+           
+   ville_depart.clear();
+    ville_arrivee.clear();
+  date_depart.clear();
+    date_arrivee.clear();
+    prix.clear();
+    id_avion.clear();
+    nbr_placedispo.clear();
+    tb_v.getItems().clear();
+    afficher();
+  
+    }
+
     
     }

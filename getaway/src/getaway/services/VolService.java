@@ -60,71 +60,10 @@ public class VolService implements IService<Vol> {
         }
     
    
-//    
-//    @Override
-//    public void modifier(Vol V) {
-//       String req = "UPDATE `vol` SET `date_depart`=?,`date_arrivee`=?,`ville_depart`=?,`ville_arrivee`=?,`nbr_placedispo`=?,`id_avion`=? ,`prix`=? WHERE  `vol`.`id_vol` = "+ V.getId_vol() + "";
-//    
-//        try {
-//            pste = conn.prepareStatement(req);
-//
-//            pste.setTimestamp(1, V.getDate_depart());
-//            pste.setTimestamp(2, V.getDate_arrivee());
-            //pste.setString(3, V.getVille_depart());
-//            pste.setString(4, V.getVille_arrivee());
-//            pste.setInt(5, V.getNbr_placedispo());
-//            pste.setInt(6, V.getId_avion());
-//            pste.setFloat(7, V.getPrix());
-//
-//            pste.executeUpdate();
-//            int rowsUpdated = pste.executeUpdate();
-//            if (rowsUpdated > 0) {
-//                System.out.println("La modification du vol a été éffectuée avec succès ");
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//      
-//      
-//    }
-    
-//    @Override
-//    public void supprimer(Vol V) {
-//        try {
-//            String req = "DELETE FROM `vol` WHERE `vol`.`id_vol` =?";
-//            pste = conn.prepareStatement(req);
-//            pste.setInt(1,V.getId_vol());
-//            pste.executeUpdate();
-//            int rowsUpdated = pste.executeUpdate();
-//            if (rowsUpdated > 0) {
-//            System.out.println("Vol supprimé");
-//            }
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//    }
-    
-     
-     public boolean supprimer_v(Vol v) {
-         boolean ok=false;
-        try {
-            
-            PreparedStatement req = conn.prepareStatement("delete from vol where ville_depart = ? ");
-            req.setString(1, v.getVille_depart());
-            req.executeUpdate();
-ok=true;
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return ok;
-    }
-
     
      @Override
-    public void modifier1(Vol V,int id_vol) {
-      String req = "UPDATE `vol` SET `date_depart`=?,`date_arrivee`=?,`ville_depart`=?,`ville_arrivee`=?,`nbr_placedispo`=?,`id_avion`=? ,`prix`=? WHERE  `vol`.`id_vol` = "+ String.valueOf(id_vol) + "";
+    public void modifier(Vol V) {
+       String req = "UPDATE `vol` SET `date_depart`=?,`date_arrivee`=?,`ville_depart`=?,`ville_arrivee`=?,`nbr_placedispo`=?,`id_avion`=? ,`prix`=? WHERE  `id_vol` = "+ V.getId_vol() + "";
     
         try {
             pste = conn.prepareStatement(req);
@@ -140,15 +79,35 @@ ok=true;
             pste.executeUpdate();
             int rowsUpdated = pste.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("La modification du vol :" + String.valueOf(id_vol) + " a été éffectuée avec succès ");
+                System.out.println("La modification du vol a été éffectuée avec succès ");
             }
         } catch (SQLException ex) {
             Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
         }
       
       
-      
     }
+    
+    @Override
+    public void supprimer(Vol V) {
+        try {
+            String req = "DELETE FROM `vol` WHERE  `id_vol` =?";
+            pste = conn.prepareStatement(req);
+            pste.setInt(1,V.getId_vol());
+            pste.executeUpdate();
+            int rowsUpdated = pste.executeUpdate();
+            if (rowsUpdated > 0) {
+            System.out.println("Vol supprimé");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+     
+   
 
   public ResultSet getall() {
          
@@ -162,19 +121,7 @@ ok=true;
       return null;
     }
   
-     @Override
-    public void supprimer(int id_vol) {
-        try {
-            String req = "DELETE FROM `vol` WHERE `vol`.`id_vol` = " + String.valueOf(id_vol) + "";
-            pste = conn.prepareStatement(req);
-            pste.executeUpdate();
-            System.out.println("Vol supprimé");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+   
 
     @Override
     public List<Vol> afficher() {

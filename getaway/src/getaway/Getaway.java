@@ -87,10 +87,10 @@ public class Getaway {
        //System.out.println(vs.afficher());
        //vs.modifier(v);
      //  v.setId_vol(14);
-     //sup1
-     //vs.supprimer(new Vol(18,DateR,DateF,TimeR,TimeR,"Nabeul",20,3, (float) 125.8));
-     //supp2
-      //vs.supprimer(12);
+    
+    //v4.setId_vol(81);
+    //v4.setVille_depart("tunisie");
+    //vs.modifier(v4);
         
     
       

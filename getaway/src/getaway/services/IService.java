@@ -12,8 +12,8 @@ import java.util.List;
  */
 public interface IService<T> {
      void ajouter(T entity) throws Exception;
-    void supprimer(int id);
-    void modifier1(T entity,int id) ;
+    void supprimer(T entity);
+    void modifier(T entity) ;
     List<T> afficher();
     
 }

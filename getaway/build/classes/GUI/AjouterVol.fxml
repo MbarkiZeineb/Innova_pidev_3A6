@@ -9,8 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AjouterVolController">
    <children>
-      <Button fx:id="id_button" layoutX="16.0" layoutY="430.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
-      <TextField fx:id="id_vol" layoutX="105.0" layoutY="89.0" prefHeight="25.0" prefWidth="114.0" promptText="id_vol" />
+      <Button fx:id="id_button" layoutX="16.0" layoutY="430.0" mnemonicParsing="false" onAction="#ajouter" onMouseReleased="#viderVol" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
       <TextField fx:id="date_depart" layoutX="104.0" layoutY="124.0" prefHeight="25.0" prefWidth="114.0" promptText="date_depart" />
       <TextField fx:id="date_arrivee" layoutX="104.0" layoutY="165.0" prefHeight="25.0" prefWidth="114.0" promptText="date_arrivee" />
       <TextField fx:id="prix" layoutX="104.0" layoutY="207.0" prefHeight="25.0" prefWidth="114.0" promptText="prix" />
@@ -18,7 +17,6 @@
       <TextField fx:id="ville_arrivee" layoutX="105.0" layoutY="287.0" prefHeight="25.0" prefWidth="114.0" promptText="ville_arrivee" />
       <TextField fx:id="id_avion" layoutX="105.0" layoutY="326.0" prefHeight="25.0" prefWidth="114.0" promptText="id_avion" />
       <TextField fx:id="nbr_placedispo" layoutX="105.0" layoutY="367.0" prefHeight="25.0" prefWidth="114.0" promptText="nbr_placedispo" />
-      <Label layoutX="37.0" layoutY="93.0" prefHeight="17.0" prefWidth="42.0" text="id vol" />
       <Label layoutX="24.0" layoutY="128.0" text="date depart" />
       <Label layoutX="28.0" layoutY="169.0" text="date arrivee" />
       <Label layoutX="39.0" layoutY="211.0" text="prix" />
@@ -26,7 +24,7 @@
       <Label layoutX="25.0" layoutY="291.0" text="ville arrivee" />
       <Label layoutX="27.0" layoutY="330.0" text="id avion" />
       <Label layoutX="18.0" layoutY="371.0" text="nbr place dispo" />
-      <TableView fx:id="tb_v" layoutX="232.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="632.0">
+      <TableView fx:id="tb_v" layoutX="232.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#selectVOL" prefHeight="339.0" prefWidth="632.0">
          <columns>
             <TableColumn fx:id="tb_datedepart" prefWidth="146.0" text="date depart" />
             <TableColumn fx:id="tb_datearrivee" prefWidth="132.0" text="date arrivée" />
@@ -38,8 +36,8 @@
       </TableView>
       
       <TextField fx:id="id_supp" layoutX="282.0" layoutY="27.0" />
-      <Button fx:id="supp" layoutX="16.0" layoutY="467.0" mnemonicParsing="false" onAction="#supprimer" text="supprimer" />
-      <Button fx:id="modifier" layoutX="109.0" layoutY="430.0" mnemonicParsing="false" onAction="#modifier" prefHeight="25.0" prefWidth="70.0" text="modifier" />
+      <Button fx:id="supp" layoutX="16.0" layoutY="467.0" mnemonicParsing="false" onAction="#supprimer" onMouseReleased="#viderVol" text="supprimer" />
+      <Button fx:id="modifier" layoutX="109.0" layoutY="430.0" mnemonicParsing="false" onAction="#modifier" onMouseReleased="#viderVol" prefHeight="25.0" prefWidth="70.0" text="modifier" />
       <Button fx:id="r_id" layoutX="466.0" layoutY="27.0" mnemonicParsing="false" onAction="#recherche" text="rechercher" />  
       <Button layoutX="558.0" layoutY="27.0" mnemonicParsing="false" onAction="#trier" text="trier" />
        <Button fx:id="stat" layoutX="109.0" layoutY="467.0" mnemonicParsing="false" onAction="#statistique" text="statistique" />
