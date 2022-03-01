@@ -59,7 +59,7 @@ public class Getaway {
        Timestamp sqlTimestamp11 = Timestamp.valueOf("2021-09-15 21:00:50");
         Timestamp sqlTimestamp12 = Timestamp.valueOf("2021-09-15 22:00:51");
      Vol v4 = new Vol(sqlTimestamp11,sqlTimestamp12,"Allemagne","Tunisie",20,9, (float) 111.2) ;
-     vs.ajouter(v4);
+    // vs.ajouter(v4);
 
    //System.out.println(vs.calculenbvol(8));
     //vs.calculernbreVolparmois();
@@ -68,7 +68,7 @@ public class Getaway {
       //System.out.println(vs.findVolParId(72));
     //System.out.println(vs.findVolParPrix((88.2)));
      //System.out.println(vs.findVolParDest("nabeul"));
-      System.out.println(vs.getALLVolsprix((float) 88.2));
+     // System.out.println(vs.findVolsprix((float) 888));
 
 //v4.setPrix((float) 88.2);
 //vs.modifier1(v4,70);

@@ -16,7 +16,7 @@
         <tabs>
           <Tab text="tabVol">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">  
+              <AnchorPane blendMode="DIFFERENCE" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">  
     <children>
       <Button fx:id="id_button" layoutX="17.0" layoutY="443.0" mnemonicParsing="false" onAction="#ajouter" onMouseReleased="#viderVol" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
       <TextField fx:id="date_depart" layoutX="104.0" layoutY="124.0" prefHeight="25.0" prefWidth="114.0" promptText="date_depart" />
@@ -25,14 +25,14 @@
       <TextField fx:id="ville_depart" layoutX="105.0" layoutY="246.0" prefHeight="25.0" prefWidth="114.0" promptText="ville_depart" />
       <TextField fx:id="ville_arrivee" layoutX="105.0" layoutY="287.0" prefHeight="25.0" prefWidth="114.0" promptText="ville_arrivee" />
       <TextField fx:id="nbr_placedispo" layoutX="105.0" layoutY="367.0" prefHeight="25.0" prefWidth="114.0" promptText="nbr_placedispo" />
-      <Label layoutX="24.0" layoutY="128.0" text="date depart" />
-      <Label layoutX="28.0" layoutY="169.0" text="date arrivee" />
-      <Label layoutX="39.0" layoutY="211.0" text="prix" />
-      <Label layoutX="22.0" layoutY="250.0" text="ville depart" />
-      <Label layoutX="25.0" layoutY="291.0" text="ville arrivee" />
-      <Label layoutX="27.0" layoutY="330.0" text="id avion" />
-      <Label layoutX="18.0" layoutY="371.0" text="nbr place dispo" />
-      <TableView fx:id="tb_v" layoutX="232.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#selectVOL" prefHeight="339.0" prefWidth="632.0">
+      <Label layoutX="24.0" layoutY="128.0" text="date depart" textFill="#eaff00" />
+      <Label layoutX="28.0" layoutY="169.0" text="date arrivee" textFill="#eaff00" />
+      <Label layoutX="39.0" layoutY="211.0" text="prix" textFill="#eaff00" />
+      <Label layoutX="22.0" layoutY="250.0" text="ville depart" textFill="#eaff00" />
+      <Label layoutX="25.0" layoutY="291.0" text="ville arrivee" textFill="#eaff00" />
+      <Label layoutX="27.0" layoutY="330.0" text="id avion" textFill="#eaff00" />
+      <Label layoutX="18.0" layoutY="371.0" text="nbr place dispo" textFill="#eaff00" />
+      <TableView fx:id="tb_v" blendMode="EXCLUSION" layoutX="232.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#selectVOL" prefHeight="339.0" prefWidth="632.0">
          <columns>
             <TableColumn fx:id="tb_datedepart" prefWidth="146.0" text="date depart" />
             <TableColumn fx:id="tb_datearrivee" prefWidth="132.0" text="date arrivée" />
@@ -50,6 +50,7 @@
       <Button layoutX="678.0" layoutY="27.0" mnemonicParsing="false" onAction="#trier" prefHeight="25.0" prefWidth="70.0" text="trier" />
        <Button fx:id="stat" layoutX="713.0" layoutY="430.0" mnemonicParsing="false" onAction="#statistique" text="statistique" />
       <ComboBox fx:id="id_avion" layoutX="109.0" layoutY="326.0" prefHeight="25.0" prefWidth="102.0" />
+                        <Button fx:id="pdf" layoutX="625.0" layoutY="430.0" mnemonicParsing="false" onAction="#telechargerVol" prefHeight="25.0" prefWidth="61.0" text="PDF" />
       
    </children>
     </AnchorPane>
@@ -57,14 +58,14 @@
    </Tab>
             <Tab text="tabAvion">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane blendMode="EXCLUSION" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="id_button1" layoutX="17.0" layoutY="443.0" mnemonicParsing="false" onAction="#ajouter1" onMouseReleased="#viderAvion" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
                         <TextField fx:id="nom_avion" layoutX="104.0" layoutY="124.0" prefHeight="25.0" prefWidth="114.0" promptText="nom_avion" />
                         <TextField fx:id="nbr_place" layoutX="104.0" layoutY="210.0" prefHeight="25.0" prefWidth="114.0" promptText="nbr_place" />
-                        <Label layoutX="24.0" layoutY="128.0" text="nom avion" />
-                        <Label layoutX="31.0" layoutY="169.0" text="id agence" />
-                        <Label layoutX="24.0" layoutY="214.0" text="nbr place " />
+                        <Label layoutX="24.0" layoutY="128.0" text="nom avion" textFill="#ffe570" />
+                        <Label layoutX="31.0" layoutY="169.0" text="id agence" textFill="#ffe570" />
+                        <Label layoutX="24.0" layoutY="214.0" text="nbr place " textFill="#ffe570" />
                         <TableView fx:id="tb_a" layoutX="448.0" layoutY="82.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#selectAVION" prefHeight="321.0" prefWidth="279.0">
                            <columns>
                               <TableColumn fx:id="tb_nomavion" prefWidth="146.0" text="Nom avion" />
@@ -76,7 +77,7 @@
                         <Button fx:id="modifier1" layoutX="197.0" layoutY="443.0" mnemonicParsing="false" onAction="#modifier1" onMouseReleased="#viderAvion" prefHeight="25.0" prefWidth="70.0" text="modifier" />
                         <Button fx:id="r_id1" layoutX="587.0" layoutY="27.0" mnemonicParsing="false" onAction="#recherche1" text="rechercher" />
                         <Button layoutX="678.0" layoutY="27.0" mnemonicParsing="false" onAction="#trier1" prefHeight="25.0" prefWidth="70.0" text="trier" />
-                        <ComboBox fx:id="id_agence" layoutX="104.0" layoutY="165.0" prefHeight="25.0" prefWidth="113.0" />
+                        <ComboBox fx:id="id_agence" layoutX="104.0" layoutY="165.0" prefHeight="25.0" prefWidth="113.0" promptText="id_agence" />
                      </children>
                   </AnchorPane>
                </content>

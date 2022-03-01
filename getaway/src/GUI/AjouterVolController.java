@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 package GUI;
+import com.itextpdf.text.Chunk;
 import getaway.entities.Avion;
 import getaway.entities.Vol;
 import getaway.services.AvionService;
 import getaway.services.VolService;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -41,7 +44,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-
+import javax.swing.JOptionPane;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import javafx.scene.input.KeyEvent;
 
 
 /**
@@ -120,7 +131,7 @@ public class AjouterVolController implements Initializable {
 
     @FXML
     private TextField id_rech1;
-
+    
     @FXML
     private Button supp1;
 
@@ -194,46 +205,54 @@ public class AjouterVolController implements Initializable {
     void ajouter(ActionEvent event) throws Exception {
        VolService ps= new VolService();
         Vol p =new Vol();
-        // Vol v = tb_v.getSelectionModel().getSelectedItem();
-        //p.setId(Integer.parseInt(id.getText()) );
-        
-//         List<Timestamp> listDateDepart = ps.getListDateDepartByIdAvion( p.getId_avion(), p.getDate_depart());
-//         List<Timestamp> listDateArrive= ps.getListDateArriveByIdAvion( p.getId_avion(), p.getDate_arrivee());
-//        boolean volIsPresent= ps.checkVolIsBetweenDateDepartAndArriveIsPossible(listDateArrive, listDateDepart,p.getDate_arrivee(), p.getDate_depart()) ;
-//         if(volIsPresent==true) {
-//             Alert alert = new Alert(AlertType.WARNING);
-//        
-//        alert.setTitle("information");
-//        alert.setHeaderText(null);
-//        alert.setContentText("vol existe déjà!");
-//        alert.showAndWait();
+         Vol v = tb_v.getSelectionModel().getSelectedItem();
          
-             //Notifications.create().title("Vol").text(" Vol existe déjà ").show();}
-//         System.out.println("vol existe déjà");}
-//         else {
        if(isEmpty())
        {return;
         } else {
-        p.setDate_depart(Timestamp.valueOf(date_depart.getText()));
+       // p.setId(Integer.parseInt(id.getText()) );
+          p.setDate_depart(Timestamp.valueOf(date_depart.getText()));
         p.setDate_arrivee(Timestamp.valueOf(date_arrivee.getText()));
         p.setPrix(Float.parseFloat(prix.getText()));
         p.setVille_depart(ville_depart.getText());
         p.setVille_arrivee(ville_arrivee.getText());
         p.setId_avion(Integer.parseInt(id_avion.getValue()));
         p.setNbr_placedispo(Integer.parseInt(nbr_placedispo.getText()));
+         List<Timestamp> listDateDepart = ps.getListDateDepartByIdAvion( p.getId_avion(), p.getDate_depart());
+         List<Timestamp> listDateArrive= ps.getListDateArriveByIdAvion( p.getId_avion(), p.getDate_arrivee());
+        boolean volIsPresent= ps.checkVolIsBetweenDateDepartAndArriveIsPossible(listDateArrive, listDateDepart,p.getDate_arrivee(), p.getDate_depart()) ;
+         if(volIsPresent==true) {
+             System.out.println("vol existe déjà");
+             Alert alert = new Alert(AlertType.WARNING);
+        
+        alert.setTitle("information");
+        alert.setHeaderText(null);
+        alert.setContentText("vol existe déjà!");
+        alert.showAndWait();
+//             }
+         System.out.println("vol existe déjà");
+         }
+         else {
+       
+      
        ps.ajouter(p);
+       tb_v.getItems().clear();
+       afficher();
        //System.out.println("ajout avec succés");
        //Notifications.create().title("Vol").text(" Vol est Créé ").show();
          
        //tb_v.getItems().clear();
-       afficher();
-//       Alert alert = new Alert(AlertType.INFORMATION);
-//        
-//    alert.setTitle("information");
-//    alert.setHeaderText(null);
-//    alert.setContentText("ajout avec succes!");
-//    alert.showAndWait();
-    }  }
+       
+       
+       Alert alert = new Alert(AlertType.INFORMATION);
+        
+    alert.setTitle("information");
+    alert.setHeaderText(null);
+    alert.setContentText("ajout avec succes!");
+    alert.showAndWait();
+    } }
+       }
+    
        
 
     
@@ -317,19 +336,33 @@ alert.showAndWait();
 
     @FXML
     private void recherche(ActionEvent event) {
-         VolService ps = new VolService();
-        ResultSet resultset=ps.getall();
+//         VolService ps = new VolService();
+//        ResultSet resultset=ps.getall();
+//        
+//        ObservableList<Vol> listvol = FXCollections.observableArrayList(ps.findVolParDest((id_rech.getText())));
+////        tb_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        tb_datedepart.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
+//        tb_datearrivee.setCellValueFactory(new PropertyValueFactory<>("date_arrivee"));
+//        tb_prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
+//        tb_villedepart.setCellValueFactory(new PropertyValueFactory<>("ville_depart"));
+//        tb_villearrivee.setCellValueFactory(new PropertyValueFactory<>("ville_arrivee"));
+//        //tb_avion.setCellValueFactory(new PropertyValueFactory<>("id_avion"));
+//        tb_place.setCellValueFactory(new PropertyValueFactory<>("nbr_placedispo"));
+//        tb_v.setItems(listvol);
+           VolService as = new VolService();
+         Vol a=new Vol ();
         
-        ObservableList<Vol> listvol = FXCollections.observableArrayList(ps.findVolParDest((id_rech.getText())));
-//        tb_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        ObservableList<Vol> Vol = as.rechercherVol(id_rech.getText());
+        
         tb_datedepart.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
         tb_datearrivee.setCellValueFactory(new PropertyValueFactory<>("date_arrivee"));
         tb_prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
         tb_villedepart.setCellValueFactory(new PropertyValueFactory<>("ville_depart"));
         tb_villearrivee.setCellValueFactory(new PropertyValueFactory<>("ville_arrivee"));
-        //tb_avion.setCellValueFactory(new PropertyValueFactory<>("id_avion"));
         tb_place.setCellValueFactory(new PropertyValueFactory<>("nbr_placedispo"));
-        tb_v.setItems(listvol);
+
+        tb_v.setItems(Vol);
+
     }   
 
     
@@ -457,6 +490,62 @@ alert.showAndWait();
         return false;
         
     }
+     
+      
+    @FXML
+    private void telechargerVol() throws IOException,FileNotFoundException, SQLException {
+   
+        try {
+            String file_name="C:\\Users\\Malek\\Desktop\\Gestion_Vol.pdf";
+            Document document = new Document();
+                
+           
+            PdfWriter.getInstance((com.itextpdf.text.Document) document, new FileOutputStream(file_name));
+           
+            document.open();
+            document.add(new Chunk(""));
+            Connection conn = getConnection();
+            
+            String query = "SELECT * from vol";
+            Statement st = conn.createStatement();
+            ResultSet rs=st.executeQuery(query);
+
+            PdfPTable t = new PdfPTable(6);
+            PdfPCell c1 = new PdfPCell(new Phrase("date_depart"));
+            t.addCell(c1);
+            PdfPCell c2 = new PdfPCell(new Phrase("date_arrivee"));
+            t.addCell(c2);
+            PdfPCell c3 = new PdfPCell(new Phrase("ville_depart"));
+            t.addCell(c3);
+            PdfPCell c4 = new PdfPCell(new Phrase("ville_arrivee"));
+            t.addCell(c4);
+              PdfPCell c5 = new PdfPCell(new Phrase("prix"));
+            t.addCell(c5);
+              PdfPCell c6 = new PdfPCell(new Phrase("nbr_placedispo"));
+            t.addCell(c6);
+           
+             
+            t.setHeaderRows(6);
+            while(rs.next()){
+                t.addCell(rs.getString(1));
+                t.addCell(rs.getString(2));
+                t.addCell(rs.getString(3));
+                t.addCell(rs.getString(4));
+                t.addCell(rs.getString(5));
+                t.addCell(rs.getString(6));
+                 
+                document.add(t);
+            }
+            document.close();
+            System.out.println("finished");
+        } catch (DocumentException ex) {
+            System.out.println(ex);
+        }
+        JOptionPane.showMessageDialog(null,"PDF téléchargé ");
+
+}
+     
+    
      
         //****************************************tabavion******************************************************
 
@@ -647,7 +736,10 @@ alert.showAndWait();
     afficher();
   
     }
-     
+    
+   
+    
+    
      
      
     }

@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 /**
  *
@@ -30,13 +33,13 @@ public class VolService implements IService<Vol> {
 
     @Override
     public void ajouter(Vol V) throws Exception{
-     List<Timestamp> listDateDepart = getListDateDepartByIdAvion( V.getId_avion(), V.getDate_depart());
-     List<Timestamp> listDateArrive= getListDateArriveByIdAvion( V.getId_avion(), V.getDate_arrivee());
-    boolean volIsPresent= checkVolIsBetweenDateDepartAndArriveIsPossible(listDateArrive, listDateDepart,V.getDate_arrivee(), V.getDate_depart()) ;
-     if(volIsPresent==true ) {System.out.println("Vol Existe deja");}
-     else{
-        
-     {
+//     List<Timestamp> listDateDepart = getListDateDepartByIdAvion( V.getId_avion(), V.getDate_depart());
+//     List<Timestamp> listDateArrive= getListDateArriveByIdAvion( V.getId_avion(), V.getDate_arrivee());
+//    boolean volIsPresent= checkVolIsBetweenDateDepartAndArriveIsPossible(listDateArrive, listDateDepart,V.getDate_arrivee(), V.getDate_depart()) ;
+//     if(volIsPresent==true ) {System.out.println("Vol Existe deja");}
+//     else{
+//        
+//     {
          String req = "INSERT INTO `vol` (`date_depart`,`date_arrivee`,`ville_depart`,`ville_arrivee`,`nbr_placedispo`,`id_avion`,`prix`) VALUE (?,?,?,?,?,?,?) ";
          
          try {
@@ -59,8 +62,7 @@ public class VolService implements IService<Vol> {
             
             }}
  
-        }
-}
+      
     
    
     
@@ -186,7 +188,7 @@ public class VolService implements IService<Vol> {
         return Vols;
     }
     
-    public List<Vol> getALLVolsprix(float prix) throws SQLException {
+    public List<Vol> findVolsprix(float prix) throws SQLException {
         List<Vol> vols = new ArrayList<>();
         String req = "SELECT *   FROM vol  WHERE (prix=" + prix + ")";
         Statement stm = conn.createStatement();
@@ -196,7 +198,7 @@ public class VolService implements IService<Vol> {
 
         while (rst.next()) {
 
-            Vol p = new Vol(rst.getInt("id_vol"), rst.getTimestamp("date_depart"), rst.getTimestamp("date_arrive"),rst.getString("ville_depart"), rst.getString("ville_arrivee"), rst.getInt("nbr_placedispo"),rst.getInt("id_avion"), rst.getFloat("prix"));
+            Vol p = new Vol(rst.getInt("id_vol"), rst.getTimestamp("date_depart"), rst.getTimestamp("date_arrivee"),rst.getString("ville_depart"), rst.getString("ville_arrivee"), rst.getInt("nbr_placedispo"),rst.getInt("id_avion"), rst.getFloat("prix"));
             vols.add(p);
 
         }
@@ -205,37 +207,6 @@ public class VolService implements IService<Vol> {
     
     
     
-    
-    
-    public Vol findVolParId(int id_vol) {
-
-        String req = "SELECT * FROM `vol` WHERE `id_vol`= ? ";
-        Vol v = new Vol();
-        try {
-            
-            PreparedStatement preparedStatement = conn.prepareStatement(req);
-            preparedStatement.setInt(1, id_vol);
-            ResultSet rs = preparedStatement.executeQuery();
-            
-            while(rs.next()){
-                
-                v.setId_vol(rs.getInt(1));
-                v.setDate_depart(rs.getTimestamp(2));
-                v.setDate_arrivee(rs.getTimestamp(3));
-                v.setVille_depart(rs.getString(4));
-                v.setVille_arrivee(rs.getString(5));
-                v.setNbr_placedispo(rs.getInt(6));
-                v.setId_avion(rs.getInt(7));
-                v.setPrix(rs.getFloat(8));
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return v;
-
-    }
     
   
    
@@ -493,5 +464,38 @@ public class VolService implements IService<Vol> {
 
   return( endDateTime.equals(endDateTimeBD) || endDateTime.after(endDateTimeBD));
 }
-   
+             
+    public ObservableList<Vol> rechercherVol(String input) {//Rechercher le contenu du input
+        
+        ObservableList<Vol> OVol = FXCollections.observableArrayList();
+        
+        String req = "SELECT * FROM `vol` Where prix LIKE '%"+input+"%'";
+        try {
+            pste = conn.prepareStatement(req);
+            ResultSet rs = pste.executeQuery();
+            
+            System.out.println("Resultat du recherche:");
+            
+            while(rs.next()){
+                Vol v = new Vol();
+                 v.setId_vol(rs.getInt("id_vol"));
+                v.setDate_depart(rs.getTimestamp("date_depart"));
+                v.setDate_arrivee(rs.getTimestamp("date_arrivee"));
+                v.setVille_depart(rs.getString("ville_depart"));
+                v.setVille_arrivee(rs.getString("ville_arrivee"));
+                v.setNbr_placedispo(rs.getInt("nbr_placedispo"));
+                v.setId_avion(rs.getInt("id_avion"));
+                v.setPrix(rs.getFloat("prix"));
+                
+                OVol.add(v);
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return OVol;
+}
+             
+     
 }

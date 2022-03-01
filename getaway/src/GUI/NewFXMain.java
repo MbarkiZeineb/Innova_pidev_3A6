@@ -26,7 +26,7 @@ public class NewFXMain extends Application {
                 
                 Parent root = FXMLLoader.load(getClass().getResource("AjouterVol.fxml"));
         
-        Scene scene = new Scene(root, 600, 600);
+        Scene scene = new Scene(root, 1000, 600);
         
         primaryStage.setTitle("Affichage Vol");
         primaryStage.setScene(scene);
