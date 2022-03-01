@@ -13,6 +13,8 @@ import GetAway.entities.Activite;
 import GetAway.utilis.Datasource;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -120,11 +122,11 @@ public class ActiviteService implements IService<Activite> {
         } catch (SQLException ex) {
             Logger.getLogger(ActiviteService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            this.envoyerMail("Hey", "Aymenultras123",this.recupAdrM() ,"Détails:"+a.toString()+"" ,"Nouvelle activite: "+a.getNom()+"");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(ActiviteService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            this.envoyerMail("Hey", "Aymenultras123",this.recupAdrM() ,"Détails:"+a.toString()+"" ,"Nouvelle activite: "+a.getNom()+"");
+//        } catch (UnsupportedEncodingException ex) {
+//            Logger.getLogger(ActiviteService.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
     
     @Override
@@ -260,4 +262,73 @@ public class ActiviteService implements IService<Activite> {
         return activites;
 
     }
+    
+     public ObservableList<Activite> rechercherActivite(String input) {//Rechercher le contenu du input
+        
+        ObservableList<Activite> OActivite = FXCollections.observableArrayList();
+        
+        String req = "SELECT * FROM `Activite` Where Nom LIKE '%"+input+"%' OR Type LIKE '%"+input+"%' OR NbrPlace LIKE '%"+input+"%' OR Date LIKE '%"+input+"%' OR Descrip LIKE '%"+input+"%' OR Duree LIKE '%"+input+"%' OR Date LIKE '%"+input+"%' OR Location LIKE '%"+input+"%' OR Prix LIKE '%"+input+"%'";
+        try {
+            pste = conn.prepareStatement(req);
+            ResultSet rs = pste.executeQuery();
+            
+            System.out.println("Resultat du recherche:");
+            
+            while(rs.next()){
+                Activite a = new Activite();
+                a.setRefAct(rs.getInt(1));
+                a.setNom(rs.getString(2));
+                a.setDescrip(rs.getString(3));
+                a.setDuree(rs.getString(4));
+                a.setNbrPlace(rs.getInt(5));
+                a.setDate(rs.getString(6));
+                a.setType(rs.getString(7));
+                a.setLocation(rs.getString(8));
+                a.setPrix(rs.getFloat(9));
+                
+                OActivite.add(a);
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ActiviteService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return OActivite;
 }
+     
+     
+     public ObservableList<Activite> trierActiviteNbrplace() {
+       ObservableList<Activite> OActivite = FXCollections.observableArrayList();
+        String req = "SELECT * FROM `Activite` ORDER BY NbrPlace";
+        try {
+            pste = conn.prepareStatement(req);
+            ResultSet rs = pste.executeQuery();
+            
+            
+
+            while (rs.next()) {
+                Activite a = new Activite();
+                a.setRefAct(rs.getInt(1));
+                a.setNom(rs.getString(2));
+                a.setDescrip(rs.getString(3));
+                a.setDuree(rs.getString(4));
+                a.setNbrPlace(rs.getInt(5));
+                a.setDate(rs.getString(6));
+                a.setType(rs.getString(7));
+                a.setLocation(rs.getString(8));
+                a.setPrix(rs.getFloat(9));
+                
+                OActivite.add(a);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ActiviteService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return OActivite;
+
+    }
+    }
+    
+     
+
