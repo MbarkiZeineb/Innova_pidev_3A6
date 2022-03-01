@@ -5,7 +5,9 @@
  */
 package GUI;
 
+import Entities.Paiement;
 import Entities.Reservation;
+import Services.PaiementService;
 import Services.ReservationService;
 import java.net.URL;
 import java.sql.Date;
@@ -40,9 +42,6 @@ public class AfficherReservationController implements Initializable {
     private AnchorPane tableR;
   @FXML
     private TableView<Reservation> tableRe;
-
-  
-
     @FXML
     private TableColumn<Reservation, Date> dateR;
 
@@ -55,19 +54,8 @@ public class AfficherReservationController implements Initializable {
     @FXML
     private TableColumn<Reservation, Date> datef;
 
-    @FXML
-    private TableColumn<Reservation, Integer> idc;
+   
 
-    @FXML
-    private TableColumn<Reservation, Integer> idvoy;
-
-    @FXML
-    private TableColumn<Reservation, Integer> idact;
-
-    @FXML
-    private TableColumn<Reservation, Integer> idvol;
-
-    @FXML
     private TableColumn<Reservation, Integer> idh;
 
     @FXML
@@ -78,14 +66,27 @@ public class AfficherReservationController implements Initializable {
     
     
      ObservableList<Reservation> oblist = FXCollections.observableArrayList();
+     
+     ObservableList<Paiement> oblistp = FXCollections.observableArrayList();
      ReservationService rs= new ReservationService();
+     PaiementService ps = new  PaiementService();
     @FXML
     private Button supprimerR;
+
+    @FXML
+    private TableView<Paiement> paiment;
+    @FXML
+    private TableColumn<Paiement,Date> dateP;
+    @FXML
+    private TableColumn<Paiement, String> modalite;
+    @FXML
+    private TableColumn<Paiement, Float> montant;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
           loadTable();
+          loadTableP();
           supprimerR.disableProperty().bind(Bindings.isEmpty(tableRe.getSelectionModel().getSelectedItems()));
         
         
@@ -101,19 +102,18 @@ public class AfficherReservationController implements Initializable {
        
      
           List <Reservation> ls =rs.afficher();
-          ls.forEach(e->oblist.add(e));
-          System.out.print(oblist);
+          List <Paiement> lp =ps.afficher();
+          ls.forEach(e->{oblist.add(e);
+         // System.out.print(oblist);
           dateR.setCellValueFactory(new PropertyValueFactory<>("date_reservation"));
           nbp.setCellValueFactory(new PropertyValueFactory<>("nbr_place"));
            dated.setCellValueFactory(new PropertyValueFactory<>("Date_debut"));
             datef.setCellValueFactory(new PropertyValueFactory<>("Date_fin"));
-            idc.setCellValueFactory(new PropertyValueFactory<>("id_client"));
-            idvoy.setCellValueFactory(new PropertyValueFactory<>("id_voyage"));
-            idact.setCellValueFactory(new PropertyValueFactory<>("id_active"));
-            idvol.setCellValueFactory(new PropertyValueFactory<>("id_vol"));
-            idh.setCellValueFactory(new PropertyValueFactory<>("id_hebergement"));
-           etat.setCellValueFactory(new PropertyValueFactory<>("etat"));
-           type.setCellValueFactory(new PropertyValueFactory<>("type"));
+                  etat.setCellValueFactory(new PropertyValueFactory<>("etat"));
+           type.setCellValueFactory(new PropertyValueFactory<>("type")); 
+           
+          });
+          
 //          
          
     tableRe.setItems(oblist);
@@ -122,13 +122,46 @@ public class AfficherReservationController implements Initializable {
         
         
     }
+    
+    
+    
+    private void loadTableP() {
+     
+       
+         
 
+
+            // TODO
+       
+    
+        
+          List <Paiement> lp =ps.afficher();
+         
+          lp.forEach(e->{oblistp.add(e);
+         System.out.print(oblistp);
+           dateP.setCellValueFactory(new PropertyValueFactory<>("date"));
+          modalite.setCellValueFactory(new PropertyValueFactory<>("modalite"));
+           montant.setCellValueFactory(new PropertyValueFactory<>("montant"));
+            
+           
+          });
+          
+//          
+         
+    paiment.setItems(oblistp);
+    
+       
+        
+        
+    }
     @FXML
     private void Supprimer(ActionEvent event) {
         
        
       Reservation r=  tableRe.getSelectionModel().getSelectedItem();
-      
+      Paiement p = new Paiement();
+      p.setId_reservation(r.getId());
+      ps.supprimer(p);
       rs.supprimer(r);
         
         
@@ -141,6 +174,9 @@ public class AfficherReservationController implements Initializable {
         
        tableRe.getItems().clear();
     loadTable();
+     paiment.getItems().clear();
+     loadTableP();
+     
     }
 
 }

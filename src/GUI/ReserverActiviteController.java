@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Entities.Paiement;
 import Entities.Reservation;
 import GetAway.entities.Activite;
 import Services.ActiviteService;
@@ -24,6 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -74,6 +76,8 @@ public class ReserverActiviteController implements Initializable {
       ActiviteService as = new ActiviteService();
         ObservableList<Activite> oblist = FXCollections.observableArrayList();
         int index;
+    @FXML
+    private ComboBox<String> modalite;
     /**
      * Initializes the controller class.
      */
@@ -84,7 +88,7 @@ public class ReserverActiviteController implements Initializable {
         prixA.textProperty().isEqualTo("")).or(
          DateA.textProperty().isEqualTo("")).or(
        nomA.textProperty().isEqualTo("").or(nbpA.textProperty().isEqualTo("")));
-         
+             modalite.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
           nbpA.setText("0");
            affichage();
            ReserverA.disableProperty().bind(booleanBinding);
@@ -95,7 +99,7 @@ public class ReserverActiviteController implements Initializable {
         
         
                ReservationService rs = new ReservationService();
-     ///test
+       PaiementService ps = new PaiementService();
      
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
        try
@@ -105,11 +109,13 @@ public class ReserverActiviteController implements Initializable {
               java.sql.Date datR = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         java.sql.Date Datedv = new java.sql.Date(parsedd.getTime());
         java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
-         if(rs.verifierNbplaceAct(A.getRefAct(),A.getNbrPlace())==false)
+         if(rs.verifierNbplaceAct(A.getRefAct(),A.getNbrPlace()))
         {
         Reservation r= new Reservation(datR,Integer.parseInt(nbpA.getText()), Datedv, Dateav,0,A.getRefAct(),0,0,"Approuve",Integer.parseInt(idc.getText()),"vol");
       
          rs.ajouterAct(r);
+          Paiement p = new Paiement(modalite.getValue(),Float.valueOf(prixtotal.getText()),rs.afficher().get(rs.afficher().size()-1).getId(),datR);
+         ps.ajouter(p);
          rs.modifiernbplaceA(A.getRefAct(),Integer.parseInt(nbpA.getText()));
           Notifications.create().title("Reservation Activite ").text(" Reservation est Créé ").show();
         }
@@ -179,6 +185,31 @@ public class ReserverActiviteController implements Initializable {
      nbpA.setText("0");
     tvactivite.getItems().clear();
     affichage();
+    }
+
+    @FXML
+    private void calculerPT(KeyEvent event) {
+        
+           
+        try{
+            
+          
+            
+            if(!nbpA.getText().equals("0") && !nbpA.getText().equals("") )
+        { 
+            Float prixTT=Integer.parseInt(nbpA.getText())* Float.parseFloat(prixA.getText());
+            
+            prixtotal.setText(prixTT.toString());
+           
+            
+        
+    }
+            
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
     }
     
     

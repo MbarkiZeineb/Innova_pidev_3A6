@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Entities.Paiement;
 import Entities.Reservation;
 import Entities.Vol;
 import Entities.voyageOrganise;
@@ -18,12 +19,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -31,6 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import org.controlsfx.control.Notifications;
 
 /**
  * FXML Controller class
@@ -88,6 +92,10 @@ public class ReserverVoyageController implements Initializable {
     private TextField prixTTV;
     @FXML
     private TextField aaaa;
+    @FXML
+    private ComboBox<String> modaliteV;
+     PaiementService ps = new PaiementService();
+               
    
     /**
      * Initializes the controller class.
@@ -97,28 +105,46 @@ public class ReserverVoyageController implements Initializable {
         // TODO
         nbp.setText("0");
         
+          BooleanBinding booleanBinding =(nbp.textProperty().isEqualTo("0")).or(
+        prixVoy.textProperty().isEqualTo("")).or(
+         villeDvoy.textProperty().isEqualTo("")).or(
+      VilleDestVoy.textProperty().isEqualTo("").or(nbp.textProperty().isEqualTo("")).or(dateD.textProperty().isEqualTo("")).or(dateF.textProperty().isEqualTo("")).or(prixTTV.textProperty().isEqualTo("")));
+            modaliteV.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
+            Reservervoyage.disableProperty().bind(booleanBinding);
         loadTable();
     }    
 
     @FXML
     private void addVoyage(ActionEvent event) {
              
-     
+     ReservationService rs = new ReservationService();
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
        try
-       { //Vol v = Tablevol.getSelectionModel().getSelectedItem();
+       { voyageOrganise v = tableviewVO.getSelectionModel().getSelectedItem();
              java.util.Date parsedd = format.parse(dateD.getText());
               java.util.Date parseda = format.parse(dateF.getText());
               java.sql.Date datR = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         java.sql.Date Datedv = new java.sql.Date(parsedd.getTime());
         java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
-        //v.getId_vol();
-        // Reservation r= new Reservation(datR,Integer.parseInt(nbp.getText()), Datedv, Dateav,,v,0,0,0,"En attente",Integer.parseInt(idc.getText()),"vol");
-      
-         //rs.ajouter(r);
+       
+        Reservation r= new Reservation(datR,Integer.parseInt(nbp.getText()), Datedv, Dateav,v.getIdVoy(),0,0,0,"En attente",Integer.parseInt(idc.getText()),"voyage");
+        if(rs. verifierNbplaceVoyage(v.getIdVoy(), Integer.parseInt(nbp.getText())))
+        {rs.ajouter(r);
            
-         //rs.modifiernbplacevoyage(v.getId_vol(),Integer.parseInt(nbp.getText()));
-    
+         rs.modifiernbplacevoyage(v.getIdVoy(),Integer.parseInt(nbp.getText()));
+          Paiement p = new Paiement(modaliteV.getValue(),Float.valueOf(prixTTV.getText()),rs.afficher().get(rs.afficher().size()-1).getId(),datR);
+         ps.ajouter(p);
+          Notifications.create().title("Reservation voyage organise ").text(" Reservation est Créé ").show();
+         rs.modifiernbplacevol(v.getIdVoy(),Integer.parseInt(nbp.getText()));
+        }
+        
+        else
+        {
+            
+             Notifications.create().title("Reservation voyage organise ").text(" Nombre de place non valide  ").show();
+            
+        }
+       
             
        
        }
@@ -158,7 +184,7 @@ public class ReserverVoyageController implements Initializable {
      VilleDestVoy.setText(villeDest.getCellData(index));
     dateD.setText(DateDeb.getCellData(index));
     dateF.setText(DateDeb.getCellData(index));
-   dateF.setText(DateFin.getCellData(index));;
+   dateF.setText(DateFin.getCellData(index));
      prixVoy.setText(prix.getCellData(index).toString());
    
     
@@ -175,11 +201,11 @@ public class ReserverVoyageController implements Initializable {
     private void CalculerPrixTotal(KeyEvent event) {
         
             
-        System.out.println("aaaaaaaaaa");
+       
            
         try{
             
-            System.out.println("bbbbbbbbbbbbbbbb");
+          
             
             if(!nbp.getText().equals("0") && !nbp.getText().equals("") )
         { 
@@ -196,7 +222,26 @@ public class ReserverVoyageController implements Initializable {
         {
             System.out.println(e);
         }
-    }}
+    }
+
+    @FXML
+    private void vider(MouseEvent event) {
+        
+         villeDvoy.clear();
+     VilleDestVoy.clear();
+    dateD.clear();
+    dateF.clear();
+   dateF.clear();
+     prixVoy.clear();
+      prixTTV.clear();
+     modaliteV.getItems().clear();
+      nbp.setText("0");
+        modaliteV.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
+     tableviewVO.getItems().clear();
+      loadTable();
+     
+    }
+}
 
   
 

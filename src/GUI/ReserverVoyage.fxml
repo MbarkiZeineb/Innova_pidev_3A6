@@ -17,7 +17,7 @@
       <Label layoutX="90.0" layoutY="354.0" prefHeight="21.0" prefWidth="51.0" text="Prix" />
       <Label layoutX="84.0" layoutY="409.0" text="Nombre de place" />
       <Label layoutX="90.0" layoutY="470.0" prefHeight="21.0" prefWidth="125.0" text="Nom Client" />
-      <Button fx:id="Reservervoyage" layoutX="577.0" layoutY="605.0" mnemonicParsing="false" onAction="#addVoyage" prefHeight="31.0" prefWidth="110.0" text="Reserver" />
+      <Button fx:id="Reservervoyage" layoutX="519.0" layoutY="696.0" mnemonicParsing="false" onAction="#addVoyage" onMouseClicked="#vider" prefHeight="31.0" prefWidth="110.0" text="Reserver" />
       <TextField fx:id="villeDvoy" layoutX="235.0" layoutY="137.0" />
       <TextField fx:id="VilleDestVoy" layoutX="235.0" layoutY="172.0" />
       <TextField fx:id="dateD" layoutX="245.0" layoutY="248.0" />
@@ -26,7 +26,7 @@
       <TextField fx:id="nbp" layoutX="245.0" layoutY="404.0" onKeyReleased="#CalculerPrixTotal" />
       <TextField fx:id="idc" layoutX="254.0" layoutY="465.0" />
       <Label layoutX="78.0" layoutY="542.0" text="Modalite de paiment " />
-      <ComboBox layoutX="282.0" layoutY="537.0" prefWidth="150.0" />
+      <ComboBox fx:id="modaliteV" layoutX="282.0" layoutY="537.0" prefWidth="150.0" />
       <Label layoutX="98.0" layoutY="626.0" prefHeight="21.0" prefWidth="87.0" text="Prix total" />
       <TableView fx:id="tableviewVO" layoutX="451.0" layoutY="58.0" onMouseClicked="#selectvol" prefHeight="442.0" prefWidth="868.0">
         <columns>
@@ -41,6 +41,5 @@
         </columns>
       </TableView>
       <TextField fx:id="prixTTV" layoutX="264.0" layoutY="621.0" />
-      <TextField fx:id="aaaa" layoutX="339.0" layoutY="708.0" onKeyTyped="#CalculerPrixTotal" />
    </children>
 </AnchorPane>
