@@ -77,7 +77,7 @@ public class GetAwayvoyage {
 ////   p.setMontant(ps.calculermontantActivite(r4));
 ////        ps.modifier(p,3);
 ////
-System.out.println(Rs.verifierNbplaceAct(1,4));
+
 ////Rs.modifiernbplacevol(1,2);
 ////Rs.modifiernbplacevoyage(1,10);
 ////

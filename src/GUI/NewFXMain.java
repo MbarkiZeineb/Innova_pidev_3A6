@@ -26,7 +26,8 @@ public class NewFXMain extends Application {
           //Parent root = FXMLLoader.load(getClass().getResource("AfficherReservation.fxml"));
           //Parent root = FXMLLoader.load(getClass().getResource("StatR.fxml"));
           //Parent root = FXMLLoader.load(getClass().getResource("ReserverVol.fxml"));
-          Parent root = FXMLLoader.load(getClass().getResource("ReserverActivite.fxml"));
+          //Parent root = FXMLLoader.load(getClass().getResource("ReserverActivite.fxml"));
+         Parent root = FXMLLoader.load(getClass().getResource("ReserverVoyage.fxml"));
           
          
         

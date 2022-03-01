@@ -179,27 +179,10 @@ public class ReserverActiviteController implements Initializable {
     tvactivite.getItems().clear();
     affichage();
     }
+    
+    
+    
+    
 
-    @FXML
-    private void calculerPT(KeyEvent event) {
-        System.out.println("aaaaaaaaaa");
-           
-        try{
-            if(!nbpA.getText().contains("0")&&!nbpA.getText().contains("0"))
-        { 
-            Float prixTT=Integer.parseInt( nbpA.getText())* Float.parseFloat(prixA.getText());
-         prixtotal.setText(valueOf(prixTT));
-        
-    }
-            
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
-        
-    }
-        
-        
-    }
+}
 

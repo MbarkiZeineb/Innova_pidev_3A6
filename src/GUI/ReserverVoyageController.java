@@ -7,21 +7,30 @@ package GUI;
 
 import Entities.Reservation;
 import Entities.Vol;
+import Entities.voyageOrganise;
 import Services.PaiementService;
 import Services.ReservationService;
+import Services.voyOrgServ;
 import static java.lang.String.valueOf;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -46,10 +55,40 @@ public class ReserverVoyageController implements Initializable {
     private TextField nbp;
     @FXML
     private TextField dateF;
-    private TextField prixTotal;
  ReservationService rs = new ReservationService();
     @FXML
-    private TextField prixTotalV;
+    private TableView<voyageOrganise> tableviewVO;
+
+    @FXML
+    private TableColumn<voyageOrganise, String> VilleDep;
+
+    @FXML
+    private TableColumn<voyageOrganise, String> villeDest;
+
+    @FXML
+    private TableColumn<voyageOrganise, String> DateDeb;
+
+    @FXML
+    private TableColumn<voyageOrganise, String> DateFin;
+
+    @FXML
+    private TableColumn<voyageOrganise, Integer> nbrPlace;
+
+    @FXML
+    private TableColumn<voyageOrganise, Integer> categ;
+
+    @FXML
+    private TableColumn<voyageOrganise, Float> prix;
+
+    @FXML
+    private TableColumn<voyageOrganise, String> Desc;
+    
+    voyOrgServ vo = new voyOrgServ();
+    @FXML
+    private TextField prixTTV;
+    @FXML
+    private TextField aaaa;
+   
     /**
      * Initializes the controller class.
      */
@@ -57,6 +96,8 @@ public class ReserverVoyageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         nbp.setText("0");
+        
+        loadTable();
     }    
 
     @FXML
@@ -86,25 +127,67 @@ public class ReserverVoyageController implements Initializable {
        {
            System.out.println(e);
        }
-        
-        
+    
     }
+        
+         private void loadTable() {
+     
+            // TODO
+       
+     ObservableList<voyageOrganise> oblist = FXCollections.observableArrayList();
+          List <voyageOrganise> ls =vo.afficher();
+          ls.forEach(e->oblist.add(e));
+          System.out.print(oblist);
+          VilleDep.setCellValueFactory(new PropertyValueFactory<>("villeDepart"));
+          villeDest.setCellValueFactory(new PropertyValueFactory<>("villeDest"));
+           DateDeb.setCellValueFactory(new PropertyValueFactory<>("dateDepart"));
+            DateFin.setCellValueFactory(new PropertyValueFactory<>("dateArrive"));
+            nbrPlace.setCellValueFactory(new PropertyValueFactory<>("nbrPlace"));
+            categ.setCellValueFactory(new PropertyValueFactory<>("idCat"));
+            prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
+            Desc.setCellValueFactory(new PropertyValueFactory<>("description"));
+      
+    tableviewVO.setItems(oblist);
+   
+    }
+         
+           @FXML
+    private void selectvol(MouseEvent event) {
+         int  index =   tableviewVO.getSelectionModel().getSelectedIndex();
+    villeDvoy.setText( VilleDep.getCellData(index));
+     VilleDestVoy.setText(villeDest.getCellData(index));
+    dateD.setText(DateDeb.getCellData(index));
+    dateF.setText(DateDeb.getCellData(index));
+   dateF.setText(DateFin.getCellData(index));;
+     prixVoy.setText(prix.getCellData(index).toString());
+   
+    
+        }
+    
 
-    private void CalculerPrixTotal(InputMethodEvent event) {
-//        
-//        PaiementService ps = new PaiementService();
-//         prixTotalV.setText(""+ps.calculermontantVoyage(1, Integer.parseInt(nbp.getText())));
+   
         
-    }
+    
+
+    
 
     @FXML
     private void CalculerPrixTotal(KeyEvent event) {
+        
+            
+        System.out.println("aaaaaaaaaa");
            
-        PaiementService ps = new PaiementService();
         try{
-            if(nbp.getText()!=null)
-        {
-       // prixTotalV.setText(valueOf(ps.calculermontantVoyage(1, Integer.parseInt(nbp.getText()))));
+            
+            System.out.println("bbbbbbbbbbbbbbbb");
+            
+            if(!nbp.getText().equals("0") && !nbp.getText().equals("") )
+        { 
+            Float prixTT=Integer.parseInt(nbp.getText())* Float.parseFloat(prixVoy.getText());
+            
+            prixTTV.setText(prixTT.toString());
+           
+            
         
     }
             
@@ -113,6 +196,7 @@ public class ReserverVoyageController implements Initializable {
         {
             System.out.println(e);
         }
-        
-    }
-}
+    }}
+
+  
+
