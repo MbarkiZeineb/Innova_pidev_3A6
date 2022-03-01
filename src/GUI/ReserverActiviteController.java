@@ -95,6 +95,7 @@ public class ReserverActiviteController implements Initializable {
         
         
                ReservationService rs = new ReservationService();
+     ///test
      
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
        try
