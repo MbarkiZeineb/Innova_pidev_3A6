@@ -104,78 +104,7 @@ private Connection conn;
         
         return Paiements;
     }
-
-    //calculer montant 
-
-      public float  calculermontantVol(Reservation r) {
-          float montant=0; 
-          
-        String req = "SELECT `prix`*'"+r.getNbr_place()+"' from vol where id_vol='"+r.getId_vol()+"'";
-        
-        try {
-
-            ste = conn.createStatement();
-            ResultSet rs = ste.executeQuery(req);
-            
-            while(rs.next()){
-             
-              montant=rs.getFloat(1);
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return montant;
-        
-    }
-
-
-      public float  calculermontantVoyage(int id , int nb) {
-          float montant=0; 
-          
-        String req = "SELECT `prix`*'"+nb+"' from voyageorganise where idVoy='"+id+"'";
-        
-        try {
-
-            ste = conn.createStatement();
-            ResultSet rs = ste.executeQuery(req);
-            
-            while(rs.next()){
-             
-              montant=rs.getFloat(1);
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return montant;
-        
-    }
-      
-      
-      
-      
-         public float  calculermontantActivite(Reservation r) {
-          float montant=0; 
-          
-        String req = "SELECT `prix`*'"+r.getNbr_place()+"' from activite where RefAct='"+r.getId_active()+"'";
-        
-        try {
-
-            ste = conn.createStatement();
-            ResultSet rs = ste.executeQuery(req);
-            
-            while(rs.next()){
-             
-              montant=rs.getFloat(1);
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return montant;
-        
-    }
+ 
    public void MontantTotal(List<Integer> l )
          
            
@@ -192,6 +121,5 @@ private Connection conn;
        
        
    
-  
- 
 }
+ 

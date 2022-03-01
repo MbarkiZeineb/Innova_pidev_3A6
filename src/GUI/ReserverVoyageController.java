@@ -104,7 +104,7 @@ public class ReserverVoyageController implements Initializable {
         try{
             if(nbp.getText()!=null)
         {
-        prixTotalV.setText(valueOf(ps.calculermontantVoyage(1, Integer.parseInt(nbp.getText()))));
+       // prixTotalV.setText(valueOf(ps.calculermontantVoyage(1, Integer.parseInt(nbp.getText()))));
         
     }
             

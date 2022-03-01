@@ -2,12 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="598.0" prefWidth="1009.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReserverActiviteController">
+<AnchorPane id="AnchorPane" prefHeight="845.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReserverActiviteController">
    <children>
-      <Label layoutX="118.0" layoutY="147.0" prefHeight="21.0" prefWidth="104.0" text="Nom " />
+      <Label layoutX="87.0" layoutY="142.0" prefHeight="21.0" prefWidth="104.0" text="Nom" />
       <Label layoutX="118.0" layoutY="195.0" prefHeight="21.0" prefWidth="57.0" text="Prix" />
       <Label layoutX="107.0" layoutY="299.0" text="Nombre de place" />
       <TextField fx:id="nomA" layoutX="170.0" layoutY="142.0" />
@@ -16,9 +18,22 @@
       <TextField fx:id="DateA" layoutX="211.0" layoutY="242.0" />
       <Label layoutX="118.0" layoutY="247.0" prefHeight="21.0" prefWidth="68.0" text="Date" />
       <Label layoutX="106.0" layoutY="354.0" prefHeight="21.0" prefWidth="82.0" text="prix total" />
-      <TextField fx:id="prixtotal" layoutX="235.0" layoutY="349.0" />
-      <Button fx:id="ReserverA" layoutX="398.0" layoutY="485.0" mnemonicParsing="false" onAction="#addact" prefHeight="31.0" prefWidth="115.0" text="Reserver" />
+      <TextField fx:id="prixtotal" layoutX="235.0" layoutY="349.0" onKeyTyped="#calculerPT" />
+      <Button fx:id="ReserverA" layoutX="398.0" layoutY="485.0" mnemonicParsing="false" onAction="#addact" onMouseReleased="#vider" prefHeight="31.0" prefWidth="115.0" text="Reserver" />
       <Label layoutX="101.0" layoutY="426.0" text="Nom Client" />
       <TextField fx:id="idc" layoutX="235.0" layoutY="421.0" />
+      <TableView fx:id="tvactivite" layoutX="513.0" layoutY="73.0" onMouseClicked="#selecteAct" prefHeight="348.0" prefWidth="787.0">
+        <columns>
+           <TableColumn fx:id="colnom" prefWidth="140.0" text="Nom" />
+            <TableColumn fx:id="colduree" prefWidth="97.0" text="Durée" />
+            <TableColumn fx:id="colnbrp" prefWidth="153.0" text="Nombre de place" />
+            <TableColumn fx:id="coldate" prefWidth="108.0" text="Date" />
+            <TableColumn fx:id="coltype" prefWidth="92.0" text="Type" />
+            <TableColumn fx:id="colloc" prefWidth="117.0" text="Location" />
+            <TableColumn fx:id="colprix" prefWidth="81.0" text="Prix" />
+            <TableColumn fx:id="coldesc" prefWidth="316.0" text="Description" />
+        </columns>
+      </TableView> 
+      
    </children>
 </AnchorPane>

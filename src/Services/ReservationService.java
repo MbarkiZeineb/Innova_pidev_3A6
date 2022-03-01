@@ -76,8 +76,7 @@ private Connection conn;
         
     }
       public void ajouterAct(Reservation r) {
-   if(this.verifierNbplaceAct(r.getId_active(),r.getNbr_place()))
-        {
+  
         String req = "INSERT INTO `reservation` (`date_reservation`,`nbr_place`,`date_debut`,`date_fin`,`id_activite`,`id_client`,`etat`,`type`) VALUE (?,?,?,?,?,?,?,?)";
         try {
              pste = conn.prepareStatement(req);
@@ -94,10 +93,7 @@ private Connection conn;
         } catch (SQLException ex) {
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-      
-   else 
-              System.out.println("nbre de place non disponible ");
+   
       
       }
       
@@ -349,6 +345,7 @@ private Connection conn;
       ActiviteService as = new ActiviteService();
       List<Activite> lv= as.afficher();
       boolean test =lv.stream().filter(v->v.getRefAct()==id).anyMatch(v -> v.getNbrPlace()- nb >= 0);
+          System.out.println(test);
       return test;
   }
       

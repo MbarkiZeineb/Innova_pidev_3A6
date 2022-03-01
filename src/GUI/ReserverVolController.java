@@ -219,9 +219,9 @@ public class ReserverVolController implements Initializable {
     @FXML
     private void calculetPrixTotal(KeyEvent event) {
         
-             PaiementService ps = new PaiementService();
+         
         try{
-            if(!nbplaceRvol.getText().contains("0"))
+            if(!nbplaceRvol.getText().contains("0")&&!nbplaceRvol.getText().contains(""))
         { 
             Float prixTT=Integer.parseInt(nbplaceRvol.getText())* Float.parseFloat(prixvolr.getText());
         prixTotalV.setText(valueOf(prixTT));
