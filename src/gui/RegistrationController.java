@@ -8,7 +8,7 @@ package gui;
 import entities.Admin;
 import entities.Client;
 import entities.Offreur;
-import entities.User;
+import entities.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,6 +28,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javax.swing.JOptionPane;
 import services.*;
 import services.ClientService;
@@ -183,13 +184,59 @@ private Connection conn;
     @FXML
     private TableView<Offreur> tvOffreur;
     
+    //agent aerien
+
+ @FXML
+    private TextField txtnomAG;
+
+    @FXML
+    private TextField txtprenomAG;
+
+    @FXML
+    private TextField txtemailAG;
     
+    @FXML
+    private PasswordField txtmdpAG;
+
+    @FXML
+    private TextField txtNomAgence; 
+    @FXML
+    private TextField txtrechAG;
+
+    @FXML
+    private TableView<AgentAerien> tvAgent;
+
+    @FXML
+    private TableColumn<AgentAerien, String> colnomAG;
+
+    @FXML
+    private TableColumn<AgentAerien, String> colprenomAG;
+
+    @FXML
+    private TableColumn<AgentAerien, String> colemailAG;
+
+    @FXML
+    private TableColumn<AgentAerien, String> colNomAgence;
+
+    @FXML
+    private Button btnrechAG;
+
+    @FXML
+    private Button btnajouterAG;
+
+    @FXML
+    private Button btnmodifierAG;
+
+    @FXML
+    private Button btnsuppAG;
+
     
       @Override
     public void initialize(URL url, ResourceBundle rb) {
       afficherAdmin();
       afficherClient();
       afficherOffreur();
+       afficherAgent();
     }   
 
     public RegistrationController() {
@@ -435,10 +482,7 @@ ObservableList<Offreur> oblist2 = FXCollections.observableArrayList();
    
        @FXML
     void ajouterO(ActionEvent event) {
-
-        
-        
-        if(!(txtnomOF.getText().matches("^[a-zA-Z]+$"))||(txtnomOF.getText().length()==0)) {
+            if(!(txtnomOF.getText().matches("^[a-zA-Z]+$"))||(txtnomOF.getText().length()==0)) {
 
             JOptionPane.showMessageDialog(null, "verifier votre nom");
              }
@@ -461,29 +505,136 @@ ObservableList<Offreur> oblist2 = FXCollections.observableArrayList();
             JOptionPane.showMessageDialog(null, "verifier votre numero de telephone");
              }
              else{
-                
-         //Offreur o = new Offreur(txtnomOF.getText(), txtprenomOF.getText(), txtmdpOF.getText(), txtemailOF.getText(),txtTelOF.getText());
-//os.ajouter(o);
+         int num = Integer.parseInt(txtTelOF.getText());
+         Offreur o = new Offreur(txtnomOF.getText(), txtprenomOF.getText(), txtmdpOF.getText(), txtemailOF.getText(),num);
+os.ajouter(o);
 tvOffreur.getItems().clear();
 afficherOffreur();
-             }
-        
-        
-        
+             }   
     }
     
     @FXML
     void modifierO(ActionEvent event) {
-
+        Offreur o =  tvOffreur.getSelectionModel().getSelectedItem();
+        o.setEmail(txtemailOF.getText());
+        o.setNom( txtnomOF.getText());
+        o.setPrenom(txtprenomOF.getText());    
+        o.setNumtl(Integer.parseInt(txtTelOF.getText()));
+        o.setPwd(txtmdpOF.getText());
+        
+os.modifier(o);
+tvOffreur.getItems().clear();
+afficherOffreur();
+        
     }
        @FXML
     void supprimerO(ActionEvent event) {
-
+Offreur o =  tvOffreur.getSelectionModel().getSelectedItem();
+os.supprimer(o.getId());
+tvOffreur.getItems().clear();
+afficherOffreur();
     }
         @FXML
     void rechercherO(ActionEvent event) {
-
+List <Offreur> ls =os.rechercheroffreur(txtrechOF.getText());
+tvOffreur.getItems().clear();
+  tvOffreur.getItems().addAll(ls);
     }
+    
+    
+    
+    //*******************************agent aerien*************************************************
+    
+   ObservableList<AgentAerien> oblist3 = FXCollections.observableArrayList();
+     AgentAerienService ags= new AgentAerienService(); 
+     
+         @FXML
+    void ajouterAG(ActionEvent event) {
+ if(!(txtnomAG.getText().matches("^[a-zA-Z]+$"))||(txtnomAG.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre nom");
+             }
+            if(!(txtprenomAG.getText().matches("^[a-zA-Z]+$"))||(txtprenomAG.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre prenom");
+             }
+              
+              if(!(txtemailAG.getText().matches("^[a-zA-Z@.]+$"))||(txtemailAG.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre email");
+             }
+              
+             if  (txtmdpAG.getText().length()<4||(txtmdpAG.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres");
+             }
+               if(!(txtNomAgence.getText().matches("^[a-zA-Z]+$"))||(txtNomAgence.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre nom d'agence ");
+             }
+             else{
+AgentAerien ag = new AgentAerien(txtnomAG.getText(), txtprenomAG.getText(), txtmdpAG.getText(), txtemailAG.getText(), txtNomAgence.getText());
+ags.ajouter(ag);
+tvAgent.getItems().clear();
+afficherAgent();
+             }   
+    }
+    
+    @FXML
+    void modifierAG(ActionEvent event) {
+      AgentAerien ag =  tvAgent.getSelectionModel().getSelectedItem();
+        ag.setEmail(txtemailAG.getText());
+        ag.setNom( txtnomAG.getText());
+        ag.setPrenom(txtprenomAG.getText());    
+        ag.setPwd(txtmdpAG.getText());
+        ag.setNomAgence(txtNomAgence.getText());
+        
+ags.modifier(ag);
+tvAgent.getItems().clear();
+afficherAgent();
+    }
+    
+        @FXML
+    void rechercherAG(ActionEvent event) {
+List <AgentAerien> ls =ags.rechercheragent(txtrechAG.getText());
+tvAgent.getItems().clear();
+  tvAgent.getItems().addAll(ls);
+    }
+    
+    
+        @FXML
+    void selectAgent(MouseEvent event) {
+     int index= -1;
+     index = tvAgent.getSelectionModel().getSelectedIndex();
+     txtnomAG.setText(colnomAG.getCellData(index));
+     txtprenomAG.setText(""+  colprenomAG.getCellData(index));
+     txtemailAG.setText(""+colemailAG.getCellData(index));
+     txtNomAgence.setText(""+colNomAgence.getCellData(index));
+     txtmdpC.setText("");
+    }
+    
+        private void afficherAgent() {
+      List <AgentAerien> ls =ags.afficher();
+      ls.forEach(e->oblist3.add(e));
+      colnomAG.setCellValueFactory(new PropertyValueFactory<AgentAerien,String>("nom"));
+        colprenomAG.setCellValueFactory(new PropertyValueFactory<AgentAerien, String>("prenom"));
+         colemailAG.setCellValueFactory(new PropertyValueFactory<AgentAerien, String>("email"));
+       colNomAgence.setCellValueFactory(new PropertyValueFactory<AgentAerien, String>("nomAgence"));
+        tvAgent.setItems(oblist3);    
+    }
+    
+    @FXML
+    void supprimerAG(ActionEvent event) {
+AgentAerien ag =  tvAgent.getSelectionModel().getSelectedItem();
+ags.supprimer(ag.getId());
+tvAgent.getItems().clear();
+afficherAgent();
+    }
+    
+    
+    
+     
+     
    
    
    

@@ -87,16 +87,27 @@ pste.setString(2,mdp);
                      txtmdp.setText("");
                     }
     }else if(combo.getSelectionModel().getSelectedItem().toString()=="Client"){
+        
          String sql="select * from client where nom=? and password=?";
 PreparedStatement pste=conn.prepareStatement(sql);
 pste.setString(1,nom);
 pste.setString(2,mdp);
  ResultSet rs = pste.executeQuery();
    if(rs.next()){
+       if(rs.getInt("etat")==0){
+          JOptionPane.showMessageDialog(null, "vous etes bloqué");
+          txtnom.setText("");
+          txtmdp.setText("");}
+       else{
                 JOptionPane.showMessageDialog(null, "client and password matched");
                 txtnom.setText("");
                      txtmdp.setText("");
-                     
+                        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("client.fxml"));
+        Scene scene =new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+       }      
             }else{
                     JOptionPane.showMessageDialog(null, "client and password donot matched");
                     txtnom.setText("");
