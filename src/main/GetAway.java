@@ -24,11 +24,11 @@ public class GetAway {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        Datasource ds = Datasource.getInstance();
-        System.out.println(ds.hashCode());
+       // Datasource ds = Datasource.getInstance();
+        //System.out.println(ds.hashCode());
         
         
-        ActiviteService as = new ActiviteService();
+       // ActiviteService as = new ActiviteService();
         AvisService avs = new AvisService();
         
         
@@ -46,8 +46,8 @@ public class GetAway {
         // as.supprimer(a);
 
         // Ajout Avis
-         //Avis av = new Avis ("wtaaedaad","11/02/201",1);
-       //avs.ajouter(av);
+         Avis av = new Avis ("wtaaedaad","",1);
+       avs.ajouter(av);
         
         // Modifier Avis
         // Avis av= new Avis(6,"Bla bla");
@@ -58,13 +58,14 @@ public class GetAway {
 //         avs.supprimer(av);
 
         // Afficher Activites
-        System.out.println(as.afficher());
-        System.out.println("**********************************************************************************************************************************");
+       // System.out.println(as.afficher());
+        //System.out.println("**********************************************************************************************************************************");
         // Afficher Avis
         System.out.println(avs.afficher());
         //System.out.println(as.recupAdrM());
         //System.out.println(as.rechercherActiviteRef(4));
-        System.out.println(as.rechercherActivite("1"));
+       /// System.out.println(as.rechercherActivite("1"));
+       
     }
     
 }

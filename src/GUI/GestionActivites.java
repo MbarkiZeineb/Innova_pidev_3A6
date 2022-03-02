@@ -15,6 +15,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import java.io.File;  
+ 
+import javafx.scene.Group;  
+
+import javafx.scene.media.Media;  
+import javafx.scene.media.MediaPlayer;  
+import javafx.scene.media.MediaView;  
 
 /**
  *
@@ -30,6 +37,9 @@ public class GestionActivites extends Application {
         primaryStage.setTitle("GetAway");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        
+         
     }
 
     /**

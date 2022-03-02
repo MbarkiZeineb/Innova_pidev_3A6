@@ -6,10 +6,13 @@
 package GUI;
 
 import GetAway.entities.Activite;
+import GetAway.entities.Avis;
 import GetAway.services.ActiviteService;
+import GetAway.services.AvisService;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -93,16 +96,47 @@ public class GestionActivitesController implements Initializable {
     private TextField txtinput;
     @FXML
     private Button btntri;
+    @FXML
+    private TableView<Activite> tvavisa;
+    @FXML
+    private TableView<Avis> tvavis;
+    @FXML
+    private TableColumn<Activite, String> colnomac;
+    @FXML
+    private TextField txtnoma;
+    @FXML
+    private TextArea txtcomment;
+    @FXML
+    private TableColumn<Avis, String> colmessage;
+    @FXML
+    private TableColumn<Avis, String> coldateav;
+    @FXML
+    private TableColumn<?, ?> colnomcl;
+    @FXML
+    private Button btnmodifierav;
+    @FXML
+    private Button btnsupprimerav;
+    @FXML
+    private TableColumn<?, ?> coldescripac;
+    @FXML
+    private Button btnviderav;
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
       affichage();
+      affichageAv();
+      AffActAv();
       Activite a = tvactivite.getSelectionModel().getSelectedItem();
+      Avis av = tvavis.getSelectionModel().getSelectedItem();
+      Activite ava = tvavisa.getSelectionModel().getSelectedItem();
     }
     
         ActiviteService as = new ActiviteService();
+         AvisService avs = new AvisService();
+         
         ObservableList<Activite> oblist = FXCollections.observableArrayList();
+        ObservableList<Avis> oblistav = FXCollections.observableArrayList();
         
      
     @FXML
@@ -139,26 +173,26 @@ public class GestionActivitesController implements Initializable {
 
     @FXML
     private void modifier(ActionEvent event) {
-//        
-////         Activite a=  tvactivite.getSelectionModel().getSelectedItem();
-////      
-////       String date = txtdate.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-////         
-////        a.setNom(txtnom.getText());
-////        a.setDuree(txtduree.getText());
-////        a.setNbrPlace(Integer.parseInt(txtnbrp.getText()));
-////        a.setDate(date);
-////        a.setType(txttype.getText());
-////        a.setLocation(txtloc.getText());
-////        a.setPrix(Float.parseFloat(txtprix.getText()));
-////        a.setDescrip(textdescrip.getText());
-////       
-////      as.modifier(a);
-////      
-////    tvactivite.getItems().clear();
-////    affichage();
-//    
-//    
+        
+         Activite a=  tvactivite.getSelectionModel().getSelectedItem();
+      
+       String date = txtdate.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+         
+        a.setNom(txtnom.getText());
+        a.setDuree(txtduree.getText());
+        a.setNbrPlace(Integer.parseInt(txtnbrp.getText()));
+        a.setDate(date);
+        a.setType(txttype.getText());
+       a.setLocation(txtloc.getText());
+        a.setPrix(Float.parseFloat(txtprix.getText()));
+      a.setDescrip(textdescrip.getText());
+      
+     as.modifier(a);
+     
+    tvactivite.getItems().clear();
+    affichage();
+  
+   
     }
 
    
@@ -304,6 +338,113 @@ public class GestionActivitesController implements Initializable {
     }
 
    
+    @FXML
+    private void selectAll(javafx.scene.input.MouseEvent event) {
+    int index= -1;
+    index = tvactivite.getSelectionModel().getSelectedIndex();
+    
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");     
+    LocalDate localDate = LocalDate.parse(coldate.getCellData(index), formatter);
+         
+ 
+     txtduree.setText(colduree.getCellData(index));
+     txtnom.setText(""+  colnom.getCellData(index));
+     txtnbrp.setText(""+colnbrp.getCellData(index));
+     textdescrip.setText(""+coldesc.getCellData(index));
+     txttype.setText(""+coltype.getCellData(index));
+     txtdate.setValue(localDate);
+     txtprix.setText(""+colprix.getCellData(index));
+     txtloc.setText(""+colloc.getCellData(index));
+    }
+   /************************************************Avis**********************************************
+    */
+    
+    
+    public void affichageAv() {
+        List<Avis> avis = avs.afficher();
+        avis.forEach(e->oblistav.add(e));
+        
+        colmessage.setCellValueFactory(new PropertyValueFactory<>("Message"));
+        coldateav.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        colnomcl.setCellValueFactory(new PropertyValueFactory<>("Id"));
 
-   
+        tvavis.setItems(oblistav);
+    
+    
+    }
+
+    @FXML
+    private void modifierAv(ActionEvent event) {
+        
+         Avis av=  tvavis.getSelectionModel().getSelectedItem();
+      av.setMessage(txtcomment.getText());
+      
+     avs.modifier(av);
+     
+     Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Notification de modification.");
+		alert.setHeaderText(null);
+		alert.setContentText("L'avis est modifier avec succees");
+		alert.showAndWait();
+     
+    tvavis.getItems().clear();
+    affichageAv();
+
+    
+}
+    @FXML
+     private void supprimerav(ActionEvent event) {
+        
+        Avis av =  tvavis.getSelectionModel().getSelectedItem();  
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Notification de Confirmation");
+		alert.setHeaderText(null);
+		alert.setContentText("Vous confirmer la suppression ?");
+		Optional<ButtonType> action = alert.showAndWait();
+        avs.supprimer(av);
+        tvavis.getItems().clear();
+        affichageAv();
+     
+
+    }
+     
+    @FXML
+    private void selectAllav(javafx.scene.input.MouseEvent event) {
+    int index= -1;
+    index = tvavis.getSelectionModel().getSelectedIndex();
+    
+     txtcomment.setText(""+colmessage.getCellData(index));
+    }
+    
+    
+    @FXML
+    private void selectNom(javafx.scene.input.MouseEvent event) {
+    int index= -1;
+    index = tvavisa.getSelectionModel().getSelectedIndex();
+    
+     txtnoma.setText(""+colnomac.getCellData(index));
+    }
+
+    public void AffActAv() {
+        List<Activite> activites = as.afficher();
+        activites.forEach(e->oblist.add(e));
+        
+        colnomac.setCellValueFactory(new PropertyValueFactory<>("Nom"));
+        coldescripac.setCellValueFactory(new PropertyValueFactory<>("Descrip"));
+        
+
+        tvavisa.setItems(oblist);
+
+    }
+
+    
+    private void clearFieldsAv() {
+		txtcomment.clear();
+		txtnoma.clear();
+	}
+    
+    @FXML
+    private void viderAv(ActionEvent event) {
+        clearFieldsAv();
+    }
 }
