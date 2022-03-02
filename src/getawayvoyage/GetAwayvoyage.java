@@ -66,14 +66,14 @@ public class GetAwayvoyage {
    //Rs.ajouterHeb(r5);
 //      
 //        Paiement p = new Paiement("cheque",0,3,DateD);
-//    IPaiementService ps= new  IPaiementService();
+    PaiementService ps= new  PaiementService();
 //    
 //    
 ////        ps.ajouter(p);
 ////        Paiement p2= new Paiement();
 ////  
 //////        ps.supprimer(p2);
-//////        System.out.println(ps.afficher());
+        System.out.println(ps.afficher());
 ////   p.setMontant(ps.calculermontantActivite(r4));
 ////        ps.modifier(p,3);
 ////

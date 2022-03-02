@@ -41,7 +41,7 @@ private Connection conn;
              pste.setFloat(3,p.getMontant());
              pste.setInt(4,p.getId_reservation());
             pste.executeUpdate();
-            System.out.println(" Reservation voyage   créée");
+            System.out.println(" Paiment est    créée");
         } catch (SQLException ex) {
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -66,10 +66,10 @@ private Connection conn;
 
     @Override
     public void supprimer(Paiement p) {
-            String req = "DELETE FROM `paiement` WHERE id=?";
+            String req = "DELETE FROM `paiement` WHERE id_reservation=?";
         try {
              pste = conn.prepareStatement(req);
-            pste.setInt(1,p.getId());
+            pste.setInt(1,p.getId_reservation());
             pste.executeUpdate();
             System.out.println("paiment suprime");
         } catch (SQLException ex) {

@@ -340,9 +340,7 @@ private Connection conn;
     
   
             public boolean verifierNbplaceAct(int id , int nb)
-  {
-      
-      ActiviteService as = new ActiviteService();
+  {ActiviteService as = new ActiviteService();
       List<Activite> lv= as.afficher();
       boolean test =lv.stream().filter(v->v.getRefAct()==id).anyMatch(v -> v.getNbrPlace()- nb >= 0);
           System.out.println(test);
@@ -350,16 +348,16 @@ private Connection conn;
   }
       
       
-      //voyage organise 
       
-//            public boolean verifierNbplaceVoyage(int id , int nb)
-//  {
-//      
-////      VolService vs = new VolService();
-////      List<Vol> lv= vs.afficher();
-////      boolean test =lv.stream().filter(v->v.getId_vol()==id).anyMatch(v -> v.getNbr_placedispo() - nb >= 0);
-////      return test;
-//  }
+      
+            public boolean verifierNbplaceVoyage(int id , int nb)
+  {
+      
+      voyOrgServ vs = new voyOrgServ();
+      List<voyageOrganise> lv= vs.afficher();
+      boolean test =lv.stream().filter(v->v.getIdVoy()==id).anyMatch(v -> v.getNbrPlace() - nb >= 0);
+      return test;
+  }
     
     
     
@@ -438,8 +436,6 @@ public List<Integer> listeReservationparClient(int id)
             List<LocalDate> periodes = new ArrayList<LocalDate>();
 
 
-//current = current.plusDays(1); //If you don't want to include the start date
-//toDate = toDate.plusDays(1); //If you want to include the end date
 for (int i=0; i<dated.size(); i++)
 {     LocalDate current = dated.get(i);
       while (current.isBefore(datef.get(i))|| current.equals((datef.get(i)))) {

@@ -6,20 +6,29 @@
 package GUI;
 
 import Entities.Hebergement;
+import Entities.Paiement;
 import Entities.Reservation;
 import Entities.Vol;
 import Services.HebergementService;
+import Services.PaiementService;
 import Services.ReservationService;
+import static java.lang.String.format;
 import java.net.URL;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +36,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -34,7 +44,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.util.Callback;
+import org.controlsfx.control.Notifications;
 
 /**
  * FXML Controller class
@@ -86,6 +98,14 @@ public class ReserverHebergementController implements Initializable {
 ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
      HebergementService hs= new HebergementService();
      
+     @FXML
+    private TextField prixtotal;
+       @FXML
+    private ComboBox<String> modalite;
+
+     
+     
+     
     /**
      * Initializes the controller class.
      */
@@ -97,11 +117,22 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
        
         loadTableHebegement();
 
-// Setting the maximum date available in the calendar
+   BooleanBinding bb = Bindings.createBooleanBinding(() -> {
+    LocalDate from = DateD.getValue();
+    LocalDate to = DateF.getValue();
+
+    // disable, if one selection is missing or from is not smaller than to
+    return (from == null || to == null || (from.compareTo(to) >= 0));
+}, DateD.valueProperty(), DateF.valueProperty());
+
+   ReserverH.disableProperty().bind(bb);
           
+        modalite.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
+        DateD.valueProperty().addListener((observable, oldDate, newDate)->{ 
+        DateF.setValue(DateD.getValue().plusDays(1));
         
-        
-    
+        });
+     
         
         
         
@@ -121,7 +152,6 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         h_affiche_pic.setCellValueFactory(new PropertyValueFactory<>("photo"));
         h_affiche_datestart.setCellValueFactory(new PropertyValueFactory<>("date_start"));
         h_affiche_dateend.setCellValueFactory(new PropertyValueFactory<>("date_end"));
-        h_affiche_datestart.setCellValueFactory(new PropertyValueFactory<>("contact"));
         h_affiche_contact.setCellValueFactory(new PropertyValueFactory<>("nbr_detoile"));
         h_affiche_nbrdetoile.setCellValueFactory(new PropertyValueFactory<>("nbr_suite"));
         h_affiche_nbrsuite.setCellValueFactory(new PropertyValueFactory<>("nbr_parking"));
@@ -137,29 +167,36 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
 
     @FXML
     private void addHeb(ActionEvent event) {
-         
-     
-       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-       try
-       {
-           //Vol v = Tablevol.getSelectionModel().getSelectedItem();
-             java.util.Date parsedd = format.parse(DateD.getValue().toString());
-              java.util.Date parseda = format.parse(DateF.getValue().toString());
-              java.sql.Date datR = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        java.sql.Date Datedv = new java.sql.Date(parsedd.getTime());
-        java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
-        //v.getId_vol();
-         Reservation r= new Reservation(datR,1, Datedv, Dateav,0,0,0,1,"En attente",Integer.parseInt(idc.getText()),"vol");
-      
-         rs.ajouterHeb(r);
+          PaiementService ps = new PaiementService();
+      Hebergement h = hebergement_table.getSelectionModel().getSelectedItem();
+        try
+
+        {     
+        java.sql.Date Datedv =Date.valueOf(DateD.getValue());
+        java.sql.Date Dateav = Date.valueOf(DateF.getValue());
+       
+           java.sql.Date datR = new java.sql.Date(Calendar.getInstance().getTime().getTime()); 
            
+         Reservation r= new Reservation(datR,0, Datedv, Dateav,0,0,0,h.getReferance(),"Approuve",1,"Hebergement");
+         if(rs.testerdisponibliteH(Datedv,  Dateav,h.getReferance())&&rs.verifierDateHberg(h.getReferance(), Datedv,  Dateav))
+         { rs.ajouterHeb(r);
+        
+                
+      Paiement p = new Paiement(modalite.getValue(),Float.valueOf( prixtotal.getText()),rs.afficher().get(rs.afficher().size()-1).getId(),datR);
+         ps.ajouter(p);
+          Notifications.create().title("Reservation Vol").text(" Reservation est Créé ").show();
+        
+        
+     
          
-    
-            //Tablevol.refresh();
+         }
+          else
+          {     Notifications.create().title("Reservation Hebergement ").text(" Date non disponibile   ").show();
+          }
        
        }
        
-       catch(ParseException e)
+       catch(Exception e)
        {
            System.out.println(e);
        }
@@ -174,23 +211,15 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         Adresse.setText(h_affiche_adress.getCellData(index));
         Description.setText(h_affiche_description.getCellData(index));
         prix.setText(h_affiche_prix.getCellData(index).toString());
-
-
-       try{
-             
-//        LocalDate DD = h_affiche_datestart.getCellData(index).getValue();
-//        LocalDate Df = h_affiche_dateend.getCellData(index).getValue();
-//        DateD.setValue(DD);
-//        DateF.setValue(Df);
-       
-        List<LocalDate> listdd = rs.ListeDd(h.getReferance());
+ List<LocalDate> listdd = rs.ListeDd(h.getReferance());
+        System.out.println(listdd);
        DateD.setDayCellFactory((DatePicker param) -> new DateCell(){
            public void updateItem(LocalDate item, boolean empty) {
                super.updateItem(item, empty);
                
                if (!empty && item != null) {
                    if(listdd.contains(item)) {
-                       setDisable(true);
+                       
                        this.setStyle("-fx-background-color: pink");
                    }
                }
@@ -210,20 +239,30 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
                }
            }
        });
-       }
-       catch(Exception e)
-       {
-           
-           System.out.println(e);
-       }
-       
-       
-        
-        
-       }
+
+     
       
   
         
+    }
+    @FXML
+    void calculerprix(MouseEvent  event) {
+    java.sql.Date Datedv =Date.valueOf(DateD.getValue());
+        java.sql.Date Dateav = Date.valueOf(DateF.getValue());
+         
+         java.util.Date  utilDateD = new java.util.Date(Datedv.getTime());
+         java.util.Date  utilDateF = new java.util.Date(Dateav.getTime());
+          long diffInMillies = Math.abs( utilDateD.getTime() -  utilDateF.getTime());
+             System.out.println(diffInMillies);
+             long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+             System.out.println(diff);
+             
+              Float prixTT=diff* Float.parseFloat(prix.getText());
+            
+         
+             prixtotal.setText(prixTT.toString());
+    }
+    
     
     
 }
