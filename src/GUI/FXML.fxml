@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1401.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.FXMLController">
+   <children>
+      <VBox layoutX="-6.0" layoutY="154.0" prefHeight="648.0" prefWidth="308.0" style="-fx-background-color: #FFC200;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <Button fx:id="B_utilisateur" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handelButtonAction" prefHeight="62.0" prefWidth="302.0" style="-fx-background-color: #FFC300;" text="Gestion de Utilisateur">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="B_voyages" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handelButtonAction" prefHeight="62.0" prefWidth="302.0" style="-fx-background-color: #FFC300;" text="Gestion des voyages">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="B_hebergement" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handelButtonAction" prefHeight="62.0" prefWidth="302.0" style="-fx-background-color: #FFC300;" text="Gestion des hébergements">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="B_activites" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handelButtonAction" prefHeight="62.0" prefWidth="302.0" style="-fx-background-color: #FFC300;" text="Gestion des activités">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="B_vols" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handelButtonAction" prefHeight="62.0" prefWidth="302.0" style="-fx-background-color: #FFC300;" text="Gestion des vols">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="B_reservations" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handelButtonAction" prefHeight="62.0" prefWidth="302.0" style="-fx-background-color: #FFC300;" text="Gestion des reservations">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font name="Arial" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <ImageView fitHeight="138.0" fitWidth="302.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="582.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1033.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../image/logo.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="308.0" prefHeight="725.0" prefWidth="1096.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TabPane fx:id="F_hebergement" layoutX="31.0" layoutY="154.0" prefHeight="529.0" prefWidth="1044.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="ajouter_hebegement" text="Ajouter">
+                  <content>
+                    <AnchorPane fx:id="hebergement_ajouter" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="317.0" layoutY="178.0" prefHeight="29.0" prefWidth="73.0" text="jusqu'a :" />
+                              <Label layoutX="412.0" layoutY="238.0" prefHeight="26.0" prefWidth="164.0" text="nombre de place parking :" />
+                              <Label layoutX="678.0" layoutY="238.0" prefHeight="26.0" prefWidth="116.0" text="nombre d'etoile : " />
+                              <Label layoutX="205.0" layoutY="238.0" prefHeight="26.0" prefWidth="116.0" text="nombre de suite :" />
+                              <Label layoutX="32.0" layoutY="238.0" prefHeight="26.0" prefWidth="116.0" text="Modele" />
+                              <Label layoutX="19.0" layoutY="183.0" prefHeight="26.0" prefWidth="128.0" text="Disponile depuis  : " />
+                              <Label layoutX="32.0" layoutY="134.0" prefHeight="26.0" prefWidth="116.0" text="Prix :" />
+                              <Label layoutX="328.0" layoutY="51.0" prefHeight="26.0" prefWidth="116.0" text="adress" />
+                              <Label layoutX="32.0" layoutY="51.0" prefHeight="26.0" prefWidth="116.0" text="Paye :" />
+                              <Label layoutX="39.0" layoutY="331.0" prefHeight="26.0" prefWidth="96.0" text="Description :" />
+                              <TextField fx:id="a_paye" layoutX="90.0" layoutY="51.0" />
+                              <TextArea fx:id="a_description" layoutX="148.0" layoutY="313.0" prefHeight="133.0" prefWidth="569.0" />
+                              <TextField fx:id="a_adress" layoutX="396.0" layoutY="51.0" />
+                              <TextField fx:id="a_prix" layoutX="90.0" layoutY="121.0" />
+                              <TextField fx:id="a_category" layoutX="447.0" layoutY="131.0" prefHeight="26.0" prefWidth="101.0" />
+                              <DatePicker fx:id="a_datestart" layoutX="158.0" layoutY="183.0" prefHeight="26.0" prefWidth="149.0" />
+                              <DatePicker fx:id="a_dateend" layoutX="374.0" layoutY="181.0" prefHeight="26.0" prefWidth="149.0" />
+                              <Label layoutX="315.0" layoutY="134.0" prefHeight="26.0" prefWidth="124.0" text="Numero categorie:" />
+                              <TextField fx:id="a_modele" layoutX="90.0" layoutY="238.0" prefHeight="26.0" prefWidth="102.0" />
+                              <TextField fx:id="a_nbr_suite" layoutX="315.0" layoutY="238.0" prefHeight="26.0" prefWidth="80.0" />
+                              <TextField fx:id="a_nbr_parking" layoutX="576.0" layoutY="238.0" prefHeight="26.0" prefWidth="80.0" />
+                              <TextField fx:id="a_nbr_detoile" layoutX="791.0" layoutY="238.0" prefHeight="26.0" prefWidth="80.0" />
+                              <ImageView fx:id="a_picture_kol" fitHeight="142.0" fitWidth="151.0" layoutX="749.0" layoutY="309.0" onDragDetected="#Import" pickOnBounds="true" preserveRatio="true" />
+                              <Button fx:id="B_c_ajouter" layoutX="933.0" layoutY="14.0" mnemonicParsing="false" onAction="#C_ajouter" prefHeight="32.0" prefWidth="71.0" stylesheets="@fxml.css" text="Ajouter" />
+                              <TableView fx:id="categorie_table" layoutX="596.0" layoutY="14.0" prefHeight="146.0" prefWidth="213.0">
+                                <columns>
+                                  <TableColumn fx:id="c_id" prefWidth="107.0" text="Numero categorie" />
+                                  <TableColumn fx:id="c_nom" minWidth="0.0" prefWidth="104.0" text="Nom categorie" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="B_c_supprimer" layoutX="924.0" layoutY="128.0" mnemonicParsing="false" onMouseClicked="#C_suppimer" prefHeight="32.0" prefWidth="89.0" text="supprimer" />
+                              <Button fx:id="B_c_modifer" layoutX="933.0" layoutY="68.0" mnemonicParsing="false" onMouseClicked="#C_modifer" prefHeight="32.0" prefWidth="71.0" text="modifer" />
+                              <Button fx:id="B_h_ajouter" layoutX="933.0" layoutY="408.0" mnemonicParsing="false" onAction="#H_ajouter" prefHeight="32.0" prefWidth="71.0" text="Ajouter" />
+                              <ComboBox fx:id="c_cbox" layoutX="832.0" layoutY="79.0" prefHeight="28.0" prefWidth="71.0" />
+                              <Button fx:id="c_b_back" layoutX="833.0" layoutY="118.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" text="&lt;" />
+                              <Button fx:id="c_b_next" layoutX="831.0" layoutY="30.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="69.0" text="&gt;" />
+                              <Button fx:id="B_import" layoutX="933.0" layoutY="364.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="68.0" text="import" />
+                              <Label layoutX="554.0" layoutY="180.0" prefHeight="26.0" prefWidth="81.0" text="Contact : " />
+                              <TextField fx:id="a_contact" layoutX="645.0" layoutY="180.0" prefHeight="26.0" prefWidth="229.0" />
+                              <TextField fx:id="a_pic" layoutX="924.0" layoutY="309.0" prefHeight="26.0" prefWidth="95.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Afficher">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="hebergement_table" layoutX="14.0" layoutY="14.0" prefHeight="328.0" prefWidth="1025.0">
+                                <columns>
+                                  <TableColumn fx:id="h_affiche_referance" prefWidth="75.0" text="Referance" />
+                                  <TableColumn fx:id="h_affiche_paye" prefWidth="57.0" text="paye" />
+                                    <TableColumn fx:id="h_affiche_adress" prefWidth="62.000030517578125" text="adress" />
+                                    <TableColumn fx:id="h_affiche_prix" prefWidth="47.0" text="prix" />
+                                    <TableColumn fx:id="h_affiche_description" prefWidth="82.0" text="description" />
+                                    <TableColumn fx:id="h_affiche_pic" prefWidth="43.0" text="photo" />
+                                    <TableColumn fx:id="h_affiche_datestart" prefWidth="84.0" text="date dispo" />
+                                    <TableColumn fx:id="h_affiche_dateend" prefWidth="67.0" text="jusqu'a" />
+                                    <TableColumn fx:id="h_affiche_contact" prefWidth="53.0" text="Contact" />
+                                    <TableColumn fx:id="h_affiche_nbrdetoile" prefWidth="104.0" text="nombre d'etoile" />
+                                    <TableColumn fx:id="h_affiche_nbrsuite" prefWidth="97.0" text="nombre de suite" />
+                                    <TableColumn fx:id="h_affiche_nbrparking" prefWidth="130.0" text="nombre de place parking " />
+                                    <TableColumn minWidth="0.0" prefWidth="0.0" text="Model caravane" />
+                                    <TableColumn fx:id="h_affiche_categ" text="categorie" />
+                                    <TableColumn fx:id="h_affiche_offreur" text="ID Offreur" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="B_h_supp" layoutX="925.0" layoutY="398.0" mnemonicParsing="false" onMouseClicked="#h_hebergement" text="Supprimer" AnchorPane.bottomAnchor="39.0" AnchorPane.rightAnchor="41.0" />
+                              <Button fx:id="B_h_recherche" layoutX="821.0" layoutY="399.0" mnemonicParsing="false" onAction="#H_recherche" prefHeight="36.0" prefWidth="82.0" text="Recherche " AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="821.0" AnchorPane.rightAnchor="141.0" AnchorPane.topAnchor="399.0" />
+                              <TextField fx:id="h_recherche_referance" layoutX="652.0" layoutY="404.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
