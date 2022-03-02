@@ -5,8 +5,10 @@
  */
 package GUI;
 
+import Entities.Hebergement;
 import Entities.Reservation;
 import Entities.Vol;
+import Services.HebergementService;
 import Services.ReservationService;
 import java.net.URL;
 import java.sql.Date;
@@ -18,6 +20,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +29,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 /**
@@ -40,8 +48,6 @@ public class ReserverHebergementController implements Initializable {
     @FXML
     private DatePicker DateF;
     @FXML
-    private CheckBox parking;
-    @FXML
     private TextField Adresse;
     @FXML
     private TextField Description;
@@ -52,7 +58,34 @@ public class ReserverHebergementController implements Initializable {
     @FXML
     private Button ReserverH;
      ReservationService rs = new ReservationService();
-
+        @FXML
+  private TableView<Hebergement> hebergement_table;
+     
+    @FXML
+    private TableColumn<Hebergement, String> h_affiche_paye;
+    @FXML
+    private TableColumn<Hebergement, String> h_affiche_adress;
+    @FXML
+    private TableColumn<Hebergement, Float> h_affiche_prix;
+    @FXML
+    private TableColumn<Hebergement, String> h_affiche_description;
+    @FXML
+    private TableColumn<Hebergement, String> h_affiche_pic;
+    @FXML
+    private TableColumn<Hebergement, DatePicker> h_affiche_datestart;
+    @FXML
+    private TableColumn<Hebergement, DatePicker> h_affiche_dateend;
+    @FXML
+    private TableColumn<Hebergement, String> h_affiche_contact;
+    @FXML
+    private TableColumn<Hebergement, Integer> h_affiche_nbrdetoile;
+    @FXML
+    private TableColumn<Hebergement, Integer> h_affiche_nbrsuite;
+    @FXML
+    private TableColumn<Hebergement, Integer> h_affiche_nbrparking;
+ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
+     HebergementService hs= new HebergementService();
+     
     /**
      * Initializes the controller class.
      */
@@ -60,44 +93,15 @@ public class ReserverHebergementController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
-        String SDateD="2022-02-01";
-         String SDateF="2022-02-16";
-        LocalDate ddd= LocalDate.of(2022,02,01);
-       LocalDate fff= LocalDate.of(2022,02,16);
+    
+       
+        loadTableHebegement();
 
 // Setting the maximum date available in the calendar
           
+        
+        
     
-        
-    Date DateDebut=Date.valueOf(SDateD);
-    Date DateFin=Date.valueOf(SDateF);
-      List<LocalDate> listdd= rs.ListeDd(1);
-       DateD.setDayCellFactory((DatePicker param) -> new DateCell(){
-           public void updateItem(LocalDate item, boolean empty) {
-               super.updateItem(item, empty);
-               
-               if (!empty && item != null) {
-                   if(listdd.contains(item)) {
-                       setDisable(true);
-                       this.setStyle("-fx-background-color: pink");
-                   }
-               }
-           }
-       });
-        
-        
-          DateD.setDayCellFactory((DatePicker param) -> new DateCell(){
-           public void updateItem(LocalDate item, boolean empty) {
-               super.updateItem(item, empty);
-               
-               if (!empty && item != null) {
-                   if(!listdd.contains(item)) {
-                       
-                       this.setStyle("-fx-background-color:yellow");
-                   }
-               }
-           }
-       });
         
         
         
@@ -106,7 +110,29 @@ public class ReserverHebergementController implements Initializable {
         
           
     }
-    
+       
+    private void loadTableHebegement() {// hebergement affiche
+         List <Hebergement> ls =hs.afficher();
+        ls.forEach(e->oblistH.add(e));
+         h_affiche_paye.setCellValueFactory(new PropertyValueFactory<>("paye"));
+        h_affiche_adress.setCellValueFactory(new PropertyValueFactory<>("adress"));
+        h_affiche_prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
+        h_affiche_description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        h_affiche_pic.setCellValueFactory(new PropertyValueFactory<>("photo"));
+        h_affiche_datestart.setCellValueFactory(new PropertyValueFactory<>("date_start"));
+        h_affiche_dateend.setCellValueFactory(new PropertyValueFactory<>("date_end"));
+        h_affiche_datestart.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        h_affiche_contact.setCellValueFactory(new PropertyValueFactory<>("nbr_detoile"));
+        h_affiche_nbrdetoile.setCellValueFactory(new PropertyValueFactory<>("nbr_suite"));
+        h_affiche_nbrsuite.setCellValueFactory(new PropertyValueFactory<>("nbr_parking"));
+        h_affiche_nbrparking.setCellValueFactory(new PropertyValueFactory<>("model_caravane"));
+        
+     hebergement_table.setItems(oblistH);
+  
+     
+  
+     
+    }
     
 
     @FXML
@@ -139,5 +165,65 @@ public class ReserverHebergementController implements Initializable {
        }
         
     }
+
+    @FXML
+    private void select(MouseEvent event) {
+        
+          int index = hebergement_table.getSelectionModel().getSelectedIndex();
+        Hebergement h = hebergement_table.getSelectionModel().getSelectedItem();
+        Adresse.setText(h_affiche_adress.getCellData(index));
+        Description.setText(h_affiche_description.getCellData(index));
+        prix.setText(h_affiche_prix.getCellData(index).toString());
+
+
+       try{
+             
+//        LocalDate DD = h_affiche_datestart.getCellData(index).getValue();
+//        LocalDate Df = h_affiche_dateend.getCellData(index).getValue();
+//        DateD.setValue(DD);
+//        DateF.setValue(Df);
+       
+        List<LocalDate> listdd = rs.ListeDd(h.getReferance());
+       DateD.setDayCellFactory((DatePicker param) -> new DateCell(){
+           public void updateItem(LocalDate item, boolean empty) {
+               super.updateItem(item, empty);
+               
+               if (!empty && item != null) {
+                   if(listdd.contains(item)) {
+                       setDisable(true);
+                       this.setStyle("-fx-background-color: pink");
+                   }
+               }
+           }
+       });
+       
+       
+         DateF.setDayCellFactory((DatePicker param) -> new DateCell(){
+           public void updateItem(LocalDate item, boolean empty) {
+               super.updateItem(item, empty);
+               
+               if (!empty && item != null) {
+                   if(listdd.contains(item)) {
+                       
+                       this.setStyle("-fx-background-color:yellow");
+                   }
+               }
+           }
+       });
+       }
+       catch(Exception e)
+       {
+           
+           System.out.println(e);
+       }
+       
+       
+        
+        
+       }
+      
+  
+        
+    
     
 }
