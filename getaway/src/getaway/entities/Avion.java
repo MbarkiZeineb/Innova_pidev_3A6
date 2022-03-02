@@ -18,6 +18,13 @@ public class Avion {
     public Avion() {
     }
 
+    public Avion(int id_avion,String nom_avion) {
+        this.nom_avion = nom_avion;
+        this.id_avion=id_avion;
+    }
+    
+    
+
     public Avion(int id_avion, int nbr_place, int id_agence, String nom_agence) {
         this.id_avion = id_avion;
         this.nbr_place = nbr_place;

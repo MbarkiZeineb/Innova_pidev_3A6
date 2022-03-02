@@ -25,6 +25,11 @@ public class Vol {
     public Vol() {
     }
 
+    public Vol(String ville_depart) {
+        this.ville_depart = ville_depart;
+    }
+    
+
     public Vol(int id_vol, Timestamp date_depart, Timestamp date_arrivee,String ville_depart, String ville_arrivee, int nbr_placedispo, int id_avion, float prix) {
         this.id_vol = id_vol;
         this.date_depart = date_depart;
@@ -44,6 +49,17 @@ public class Vol {
         this.nbr_placedispo = nbr_placedispo;
         this.id_avion = id_avion;
         this.prix = prix;
+    }
+
+    public Vol(Timestamp querydated, Timestamp querydatea, String queryvilled, String queryvillea, Integer queryplace, Float queryprix) {
+       
+        this.date_depart = querydated;
+        this.date_arrivee = querydatea;
+        this.ville_depart=queryvilled;
+        this.ville_arrivee = queryvillea;
+        this.nbr_placedispo = queryplace;
+        this.prix = queryprix;
+    
     }
     
    

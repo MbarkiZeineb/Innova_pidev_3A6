@@ -188,6 +188,36 @@ public class VolService implements IService<Vol> {
         return Vols;
     }
     
+    public List<Vol> findVolPardepart(String ville_depart) {
+         List<Vol> Vols = new ArrayList<>();
+        String req = "SELECT * FROM `vol` where `ville_depart`= ? ";
+        
+        try {
+            
+            PreparedStatement preparedStatement = conn.prepareStatement(req);
+            preparedStatement.setString(1, ville_depart);
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while(rs.next()){
+                Vol v = new Vol();
+                v.setId_vol(rs.getInt("id_vol"));
+                v.setDate_depart(rs.getTimestamp("date_depart"));
+                v.setDate_arrivee(rs.getTimestamp("date_arrivee"));
+                v.setVille_depart(rs.getString("ville_depart"));
+                v.setVille_arrivee(rs.getString("ville_arrivee"));
+                v.setNbr_placedispo(rs.getInt("nbr_placedispo"));
+                v.setId_avion(rs.getInt("id_avion"));
+                v.setPrix(rs.getFloat("prix"));
+                Vols.add(v);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return Vols;
+    }
+    
     public List<Vol> findVolsprix(float prix) throws SQLException {
         List<Vol> vols = new ArrayList<>();
         String req = "SELECT *   FROM vol  WHERE (prix=" + prix + ")";
@@ -223,10 +253,6 @@ public class VolService implements IService<Vol> {
         return null;
     
 }
-    
-   
-    
-    
     
    
      public int calculenbvol(int id_avion ) {
@@ -496,6 +522,9 @@ public class VolService implements IService<Vol> {
         }
         return OVol;
 }
-             
+           
+    
+     
+      
      
 }

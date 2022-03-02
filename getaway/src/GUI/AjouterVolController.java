@@ -52,6 +52,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import javafx.beans.binding.Bindings;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.input.KeyEvent;
 
 
@@ -95,11 +97,17 @@ public class AjouterVolController implements Initializable {
     private TableColumn<Vol, String> tb_villedepart;
     @FXML
     private TableColumn<Vol, String> tb_villearrivee;
+     @FXML
+    private TableColumn<Vol, String> tb_nomagence;
     
      @FXML
     private TableColumn<Vol, Integer> tb_place;
     @FXML
     private TextField id_rech;
+    @FXML
+    private TextField id_arrivee;
+    @FXML
+    private TextField id_depart;
     @FXML
     private Button supp;
     @FXML
@@ -144,7 +152,8 @@ public class AjouterVolController implements Initializable {
     @FXML
     private ComboBox<String> id_agence;
    
-    
+    ObservableList<Vol> listM;
+    ObservableList<Vol> dataList;
     int index= -1;
   ObservableList<Vol> oblist = FXCollections.observableArrayList();
     ObservableList<Avion> oblist1 = FXCollections.observableArrayList();
@@ -159,6 +168,15 @@ public class AjouterVolController implements Initializable {
      getidagence();
      getida();
      Vol v = tb_v.getSelectionModel().getSelectedItem();
+     supp1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+     supp.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+         modifier1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+     modifier.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+         id_button1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+         id_button.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+     r_id1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+     r_id.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+     
     }    
     
     //****************************************tabVol******************************************************
@@ -186,7 +204,9 @@ public class AjouterVolController implements Initializable {
     public void afficher()
     {
          VolService vs = new VolService();
+         
         List<Vol> ls = vs.afficher();
+          
           ls.forEach(e->oblist.add(e));
           System.out.print(oblist);
         tb_datedepart.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
@@ -196,10 +216,13 @@ public class AjouterVolController implements Initializable {
         tb_villearrivee.setCellValueFactory(new PropertyValueFactory<>("ville_arrivee"));
         //tb_avion.setCellValueFactory(new PropertyValueFactory<>("id_avion"));
         tb_place.setCellValueFactory(new PropertyValueFactory<>("nbr_placedispo"));
+        tb_nomavion.setCellValueFactory(new PropertyValueFactory<>("nom_avion"));
         tb_v.setItems(oblist);
+        
       
        
     }   
+   
 
    @FXML
     void ajouter(ActionEvent event) throws Exception {
@@ -336,24 +359,15 @@ alert.showAndWait();
 
     @FXML
     private void recherche(ActionEvent event) {
-//         VolService ps = new VolService();
-//        ResultSet resultset=ps.getall();
-//        
-//        ObservableList<Vol> listvol = FXCollections.observableArrayList(ps.findVolParDest((id_rech.getText())));
-////        tb_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        tb_datedepart.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
-//        tb_datearrivee.setCellValueFactory(new PropertyValueFactory<>("date_arrivee"));
-//        tb_prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
-//        tb_villedepart.setCellValueFactory(new PropertyValueFactory<>("ville_depart"));
-//        tb_villearrivee.setCellValueFactory(new PropertyValueFactory<>("ville_arrivee"));
-//        //tb_avion.setCellValueFactory(new PropertyValueFactory<>("id_avion"));
-//        tb_place.setCellValueFactory(new PropertyValueFactory<>("nbr_placedispo"));
-//        tb_v.setItems(listvol);
+
+
            VolService as = new VolService();
          Vol a=new Vol ();
         
         ObservableList<Vol> Vol = as.rechercherVol(id_rech.getText());
-        
+        ObservableList<Vol> listvol = FXCollections.observableArrayList(as.findVolParDest((id_arrivee.getText())));
+        ObservableList<Vol> listvol1 = FXCollections.observableArrayList(as.findVolPardepart((id_arrivee.getText())));
+       
         tb_datedepart.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
         tb_datearrivee.setCellValueFactory(new PropertyValueFactory<>("date_arrivee"));
         tb_prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
@@ -364,6 +378,71 @@ alert.showAndWait();
         tb_v.setItems(Vol);
 
     }   
+    
+//    @FXML
+//    private void recherche2() {
+//        String req ="SELECT ville_depart from vol";
+//         try {
+//            Connection conn = getConnection();
+//             Statement ste;
+//            ste = conn.createStatement();
+//            ResultSet rs = ste.executeQuery(req);
+//            Vol p =new Vol();
+//             List<Vol> Vols = new ArrayList<>();
+//            while(rs.next()){
+//                
+////                Timestamp querydated=rs.getTimestamp("date_depart");
+////                Timestamp querydatea=rs.getTimestamp("date_arrivee");
+//             String queryvilled=rs.getString("ville_depart");
+////                String queryvillea=rs.getString("ville_arrivee");
+////                Integer queryplace=rs.getInt("nbr_placedispo");
+//               // Float queryprix=rs.getFloat("prix");
+////                oblist.add(new Vol(querydated,querydatea,queryvilled,queryvillea,queryplace,queryprix));
+//                oblist.add(new Vol(queryvilled));
+//                
+//                tb_datedepart.setCellValueFactory(new PropertyValueFactory<>("date_depart"));
+//                tb_datearrivee.setCellValueFactory(new PropertyValueFactory<>("date_arrivee"));
+//                tb_prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
+//                tb_villedepart.setCellValueFactory(new PropertyValueFactory<>("ville_depart"));
+//                tb_villearrivee.setCellValueFactory(new PropertyValueFactory<>("ville_arrivee"));
+//                tb_place.setCellValueFactory(new PropertyValueFactory<>("nbr_placedispo"));
+//
+//                 tb_v.setItems(oblist);
+//                 
+//                 
+//                 FilteredList<Vol> filteredData =new FilteredList<>(oblist,b->true);
+//                 id_rech.textProperty().addListener(((observable,oldValue,newValue) -> {filteredData.setPredicate(oblist->
+//                 {
+//                     if (newValue.isEmpty() || newValue==null)
+//                     {return true ;}
+//                     String searchKeyword = newValue.toLowerCase();
+//                     if(p.getVille_depart().toLowerCase().indexOf(searchKeyword)!=-1)
+//                     {return true;}
+////                     else if(p.getVille_arrivee().toLowerCase().indexOf(searchKeyword)!=-1)
+////                     {return true;}
+////                      else if(String.valueOf(p.getNbr_placedispo()).toLowerCase().indexOf(searchKeyword)!=-1)
+////                     {return true;}
+////                      else if(String.valueOf(p.getPrix()).toLowerCase().indexOf(searchKeyword)!=-1)
+////                     {return true;}
+////                       else if(String.valueOf(p.getDate_depart()).toLowerCase().indexOf(searchKeyword)!=-1)
+////                     {return true;}
+////                        else if(String.valueOf(p.getDate_arrivee()).toLowerCase().indexOf(searchKeyword)!=-1)
+////                     {return true;}
+//                     else 
+//                         return false;
+//                 
+//                 
+//                 });
+//                 }));
+//                
+//            }}
+//         catch (SQLException ex) {
+//            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+        
+   
+    
 
     
 
@@ -596,7 +675,7 @@ alert.showAndWait();
         p.setNbr_place(Integer.parseInt(nbr_place.getText()));
        as.ajouter(p);
          
-       //tb_v.getItems().clear();
+       tb_a.getItems().clear();
        afficher1();
        Alert alert = new Alert(AlertType.INFORMATION);
         
@@ -632,22 +711,29 @@ alert.showAndWait();
      @FXML
     private void supprimer1(ActionEvent event) {
         
+       //Vol v = new Vol();
+       Avion a = new Avion();
        
       Avion r=  tb_a.getSelectionModel().getSelectedItem();
       AvionService as = new AvionService();
+     
       as.supprimer(r);
       tb_a.getItems().clear();
+      tb_v.getItems().clear();
        afficher1();
-       Alert alert = new Alert(AlertType.INFORMATION);
-        
-alert.setTitle("intformation");
-alert.setHeaderText(null);
-alert.setContentText("suppression avec succes!");
-alert.showAndWait();
+//       Alert alert = new Alert(AlertType.INFORMATION);
+//        
+//alert.setTitle("intformation");
+//alert.setHeaderText(null);
+//alert.setContentText("suppression avec succes!");
+//alert.showAndWait();
+//      
         
         
         
     }
+    
+    
     
     
 

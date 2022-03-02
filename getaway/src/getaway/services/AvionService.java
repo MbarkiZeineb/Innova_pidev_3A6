@@ -31,6 +31,8 @@ public class AvionService implements IService<Avion>{
         conn = Datasource.getInstance().getCnx();
     }
 
+    
+   
     @Override
     public void ajouter(Avion A) {
          String req = "INSERT INTO `avion` (`nbr_place`,`id_agence`,`nom_avion`) VALUE (?,?,?)";
