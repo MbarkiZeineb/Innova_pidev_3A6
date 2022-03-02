@@ -183,6 +183,115 @@ try {
         return hebergement;
     }
 
+    public List  <Hebergement> getBypaye (String paye) {
+        List<Hebergement> Hebergement = new ArrayList<>();
+        String req = "select * from hebergement where paye='"+paye+"';";
+        
+        try {
+            
+            ste = conn.createStatement();
+            ResultSet resultSet = ste.executeQuery(req);
+            
+            while(resultSet.next()){
+                Hebergement h = new Hebergement();
+                h.setReferance(resultSet.getInt(1));
+                h.setOffreur(resultSet.getInt(15));
+                h.setPaye(resultSet.getString(2));
+                h.setAdress(resultSet.getString(3));
+                h.setPrix(resultSet.getFloat(4));
+                h.setDescription(resultSet.getString(5));
+                h.setPhoto(resultSet.getString(6));
+                h.setDate_start(resultSet.getDate(7));
+                h.setDate_end(resultSet.getDate(8));
+                h.setContact(resultSet.getString(9));
+                h.setNbr_detoile(resultSet.getInt(10));
+                h.setNbr_suite(resultSet.getInt(11));
+                h.setNbr_parking(resultSet.getInt(12));
+                h.setModel_caravane(resultSet.getString(13));
+                h.setId_confeg(resultSet.getInt(14));
+                Hebergement.add(h);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(HebergementService.class.getName()).log(Level.SEVERE, null, ex);     
+        }
+        return Hebergement;
+
+    }
+    
+    public List  <Hebergement> getByidoffreur (int id) {
+        List<Hebergement> Hebergement = new ArrayList<>();
+        String req = "select * from hebergement where offreur_id='"+id+"';";
+        
+        try {
+            
+            ste = conn.createStatement();
+            ResultSet resultSet = ste.executeQuery(req);
+            
+            while(resultSet.next()){
+                Hebergement h = new Hebergement();
+                h.setReferance(resultSet.getInt(1));
+                h.setOffreur(resultSet.getInt(15));
+                h.setPaye(resultSet.getString(2));
+                h.setAdress(resultSet.getString(3));
+                h.setPrix(resultSet.getFloat(4));
+                h.setDescription(resultSet.getString(5));
+                h.setPhoto(resultSet.getString(6));
+                h.setDate_start(resultSet.getDate(7));
+                h.setDate_end(resultSet.getDate(8));
+                h.setContact(resultSet.getString(9));
+                h.setNbr_detoile(resultSet.getInt(10));
+                h.setNbr_suite(resultSet.getInt(11));
+                h.setNbr_parking(resultSet.getInt(12));
+                h.setModel_caravane(resultSet.getString(13));
+                h.setId_confeg(resultSet.getInt(14));
+                Hebergement.add(h);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(HebergementService.class.getName()).log(Level.SEVERE, null, ex);     
+        }
+        return Hebergement;
+       
+    }
+       
+    public List  <Hebergement> getBycateg (int id_categ) {
+        List<Hebergement> Hebergement = new ArrayList<>();
+        String req = "select * from hebergement where id_categ='"+id_categ+"';";
+        
+        try {
+            
+            ste = conn.createStatement();
+            ResultSet resultSet = ste.executeQuery(req);
+            
+            while(resultSet.next()){
+                Hebergement h = new Hebergement();
+                h.setReferance(resultSet.getInt(1));
+                h.setOffreur(resultSet.getInt(15));
+                h.setPaye(resultSet.getString(2));
+                h.setAdress(resultSet.getString(3));
+                h.setPrix(resultSet.getFloat(4));
+                h.setDescription(resultSet.getString(5));
+                h.setPhoto(resultSet.getString(6));
+                h.setDate_start(resultSet.getDate(7));
+                h.setDate_end(resultSet.getDate(8));
+                h.setContact(resultSet.getString(9));
+                h.setNbr_detoile(resultSet.getInt(10));
+                h.setNbr_suite(resultSet.getInt(11));
+                h.setNbr_parking(resultSet.getInt(12));
+                h.setModel_caravane(resultSet.getString(13));
+                h.setId_confeg(resultSet.getInt(14));
+                Hebergement.add(h);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(HebergementService.class.getName()).log(Level.SEVERE, null, ex);     
+        }
+        return Hebergement;
+        
+        
+}
+    
     
 }
 

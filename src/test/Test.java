@@ -35,7 +35,7 @@ public class Test {
         HebergementService HS = new HebergementService(); 
         CategoryService CS = new CategoryService();
         Category c1= new Category(3,"toktok");
-//Hebergement h= new Hebergement( "azea", "String adress", (float) 465.54, "String description"," String photo", DateD, DateF, "tact", 84, 48, 4, "String",1 ,1);
+Hebergement h= new Hebergement( "tunis", "String adress", (float) 465.54, "String description"," String photo", DateD, DateF, "tact", 84, 48, 4, "String",1 ,1);
 //  String paye, String adress, float prix, String description, String photo, Date date_start, Date date_end, String contact, int nbr_detoile, int nbr_suite, int nbr_parking, String model_caravane, int id_confeg ,int offreur  
 //     Category C1 = new Category(5,"jcp");
 //CS.ajouter(C1);
@@ -44,6 +44,7 @@ public class Test {
 //HS.supprimer(h);
 //System.out.println(HS.afficher());
 System.out.println(CS.afficher());
+HS.ajouter(h);
 //CS.ajouter(C1);
 //       
 //        CS.getByReferanc(2);

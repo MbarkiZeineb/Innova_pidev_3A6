@@ -143,12 +143,6 @@ public class FXMLController implements Initializable {
     @FXML
     private Button B_c_ajouter;
     @FXML
-    private ComboBox<?> c_cbox;
-    @FXML
-    private Button c_b_back;
-    @FXML
-    private Button c_b_next;
-    @FXML
     private TextField a_prix;
     @FXML
     private TextField a_contact;
@@ -158,6 +152,12 @@ public class FXMLController implements Initializable {
     private ImageView a_picture_kol;
     @FXML
     private TextField a_pic;
+    @FXML
+    private Button B_h_modifer;
+    @FXML
+    private TextField h_referance_modifer;
+    @FXML
+    private ComboBox<String> h_combo_recherche;
 
 
     /**
@@ -174,12 +174,21 @@ public class FXMLController implements Initializable {
      ObservableList<Category> oblist = FXCollections.observableArrayList();
      CategoryService cs= new CategoryService();
     @Override
+    
+    
+    
+    
+    
+    
+    
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     loadTablecateg();//categ
     loadTableHebegement();//heberegement
-    
+    h_combo_recherche.setItems(FXCollections.observableArrayList("Referance","Paye","Category"));
     }    
+    
+    
     
     
     private void loadTablecateg(){//affiche categ 
@@ -193,6 +202,8 @@ public class FXMLController implements Initializable {
    
 ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
      HebergementService hs= new HebergementService();
+     
+     
     private void loadTableHebegement() {// hebergement affiche
          List <Hebergement> ls =hs.afficher();
         ls.forEach(e->oblistH.add(e));
@@ -220,10 +231,8 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
 
     @FXML
     private void C_suppimer(MouseEvent event) {
-        
-        
-        Category c=  categorie_table.getSelectionModel().getSelectedItem();
-      
+
+      Category c=  categorie_table.getSelectionModel().getSelectedItem();
       cs.supprimer(c);
       categorie_table.getItems().clear();
       loadTablecateg();
@@ -251,13 +260,24 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         categorie_table.getItems().clear();
         loadTablecateg();
     }//ajouter categ
+    
+    
+    
 @FXML
     private void H_recherche(ActionEvent event) {
+
+        if (h_combo_recherche.getValue() =="Referance")
+        {
         hebergement_table.getItems().clear();
-      String ref=h_recherche_referance.getText();
+        String ref=h_recherche_referance.getText();
         int i;
         i =Integer.parseInt(ref);
-        List <Hebergement> ls =hs.getByReferanc(i));
+        if (i==0){
+            loadTableHebegement();}
+        else{
+        
+        List <Hebergement> ls =hs.getByReferanc(i);
+
         ls.forEach(e->oblistH.add(e));
         System.out.println(oblist);
         h_affiche_referance.setCellValueFactory(new PropertyValueFactory<>("referance"));
@@ -275,16 +295,62 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         h_affiche_nbrparking.setCellValueFactory(new PropertyValueFactory<>("model_caravane"));
         h_affiche_categ.setCellValueFactory(new PropertyValueFactory<>("id_confeg"));
         h_affiche_offreur.setCellValueFactory(new PropertyValueFactory<>("offreur"));
+        }
+        }
+        else if (h_combo_recherche.getValue() =="Paye")
+        {
+         hebergement_table.getItems().clear();
+      String ref=h_recherche_referance.getText();
+         List <Hebergement> ls =hs.getBypaye(ref);
+        ls.forEach(e->oblistH.add(e));
+        System.out.println(oblist);
+        h_affiche_referance.setCellValueFactory(new PropertyValueFactory<>("referance"));
+        h_affiche_paye.setCellValueFactory(new PropertyValueFactory<>("paye"));
+        h_affiche_adress.setCellValueFactory(new PropertyValueFactory<>("adress"));
+        h_affiche_prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
+        h_affiche_description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        h_affiche_pic.setCellValueFactory(new PropertyValueFactory<>("photo"));
+        h_affiche_datestart.setCellValueFactory(new PropertyValueFactory<>("date_start"));
+        h_affiche_dateend.setCellValueFactory(new PropertyValueFactory<>("date_end"));
+        h_affiche_datestart.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        h_affiche_contact.setCellValueFactory(new PropertyValueFactory<>("nbr_detoile"));
+        h_affiche_nbrdetoile.setCellValueFactory(new PropertyValueFactory<>("nbr_suite"));
+        h_affiche_nbrsuite.setCellValueFactory(new PropertyValueFactory<>("nbr_parking"));
+        h_affiche_nbrparking.setCellValueFactory(new PropertyValueFactory<>("model_caravane"));
+        h_affiche_categ.setCellValueFactory(new PropertyValueFactory<>("id_confeg"));
+        h_affiche_offreur.setCellValueFactory(new PropertyValueFactory<>("offreur"));
+      
+        }
+        else
+        {
+           hebergement_table.getItems().clear();
+          String ref=h_recherche_referance.getText();
+        int x;
+        x =Integer.parseInt(ref);
+        List <Hebergement> ls =hs.getBycateg(x);
+        ls.forEach(e->oblistH.add(e));
+        System.out.println(oblist);
+        h_affiche_referance.setCellValueFactory(new PropertyValueFactory<>("referance"));
+        h_affiche_paye.setCellValueFactory(new PropertyValueFactory<>("paye"));
+        h_affiche_adress.setCellValueFactory(new PropertyValueFactory<>("adress"));
+        h_affiche_prix.setCellValueFactory(new PropertyValueFactory<>("prix"));
+        h_affiche_description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        h_affiche_pic.setCellValueFactory(new PropertyValueFactory<>("photo"));
+        h_affiche_datestart.setCellValueFactory(new PropertyValueFactory<>("date_start"));
+        h_affiche_dateend.setCellValueFactory(new PropertyValueFactory<>("date_end"));
+        h_affiche_datestart.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        h_affiche_contact.setCellValueFactory(new PropertyValueFactory<>("nbr_detoile"));
+        h_affiche_nbrdetoile.setCellValueFactory(new PropertyValueFactory<>("nbr_suite"));
+        h_affiche_nbrsuite.setCellValueFactory(new PropertyValueFactory<>("nbr_parking"));
+        h_affiche_nbrparking.setCellValueFactory(new PropertyValueFactory<>("model_caravane"));
+        h_affiche_categ.setCellValueFactory(new PropertyValueFactory<>("id_confeg"));
+        h_affiche_offreur.setCellValueFactory(new PropertyValueFactory<>("offreur"));
+        System.out.println("d5al");
+        }
+}
 
-     hebergement_table.setItems(oblistH);
-        
-        
-    }
-
-    @FXML
-    private void Import(MouseEvent event) {
-    }
-
+    
+//*******************************************************************
     @FXML
     private void C_modifer(MouseEvent event) {
           Category a =  categorie_table.getSelectionModel().getSelectedItem();
@@ -292,32 +358,30 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         cs.modifier(a);
         categorie_table.getItems().clear();
         loadTablecateg();
-    }
+    }//modifer catergory 
 
-    @FXML
-    private void H_ajouter(ActionEvent event) {
+    private void H_ajouter(ActionEvent event) {//Float.parseFloat  string to float 
+
+       // Hebergement h= new Hebergement(a_paye.getText(),a_adress.getText(),prix, a_description.getText(),a_pic.getText(),a_datestart.getValue(),a_dateend.getValue(),a_contact.getText(),a_nbr_detoile.getText(),a_nbr_suite.getText(),a_nbr_parking.getText(),a_modele.getText(),a_category.getText(),1);
+       // Hebergement h= new Hebergement(a_paye.getText(),a_adress.getText(),prix, a_description.getText(),a_pic.getText(),                      ,a_dateend.getValue(),a_contact.getText(), a_nbr_detoile.getText(),a_nbr_suite.getText(),a_nbr_parking.getText(),a_modele.getText(),a_category.getText(),1);
+       // hs.ajouter(h);
+        //hebergement_table.getItems().clear();
+        loadTableHebegement();
         //        Hebergement h= new Hebergement(a_paye.getText(),a_adress.getText(),a_prix.getText(), a_description.getText(),a_picture.get, a_datestart.getValue() ,a_dateend.getValue(),a_contact.getText(), a_nbr_detoile.getText(),a_nbr_suite.getText(),a_nbr_parking.getText(),a_modele.getText(),a_category.getText() ,1);
 
     }
-}
+
    
-    
-//    @FXML
-//    private void C_modifer(MouseEvent event) {
-//           Category a =  categorie_table.getSelectionModel().getSelectedItem();
-//        a.setNom_categ(a_category.getText());
-//        cs.modifier(a);
-//        categorie_table.getItems().clear();
-//        loadTablecateg();
-//    }
-//    
-//    @FXML
-//    private void Import(MouseEvent event) {
-//        
-//    }
-//    @FXML
-//    private void H_ajouter(ActionEvent event) {
-//    }
+
+
+    @FXML
+    private void Import(MouseEvent event) {//3aleh fama jcp 
+    }
 
     
-
+    
+    
+    
+    
+    
+}//end Function
