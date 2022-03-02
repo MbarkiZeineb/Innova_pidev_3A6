@@ -24,7 +24,7 @@ public class Activite {
     private Statement ste;
     private PreparedStatement pste; 
     
-   private int RefAct;
+   public int RefAct;
    private String Nom;
    private String Descrip;
    private String Duree;
@@ -141,9 +141,7 @@ public class Activite {
         return "RefAct= " + RefAct + ", Nom= " + Nom + ", Descrip= " + Descrip + ", Duree= " + Duree + ", NbrPlace= " + NbrPlace + ", Date= " + Date + ", Type= " + Type + ", Location= " + Location + ", Prix= " + Prix + "}\n";
     }
 
-    public void getNom(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     
    

@@ -166,7 +166,7 @@ public class ActiviteService implements IService<Activite> {
 //            ste = conn.createStatement();
 //            ResultSet rs = ste.executeQuery(req);
             
-            System.out.println("Liste des activites:");
+            //System.out.println("Liste des activites:");
             
             while(rs.next()){
                 Activite a = new Activite();

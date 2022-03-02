@@ -14,15 +14,17 @@ public class Avis {
     private String Message;
     private String Date;
     private int Id;
-
+    private int RefActivite;
+    
     public Avis() {
     }
 
-    public Avis(int RefAvis, String Message, String Date, int Id) {
+    public Avis(int RefAvis, String Message, String Date, int Id, int RefActivite) {
         this.RefAvis = RefAvis;
         this.Message = Message;
         this.Date = Date;
         this.Id = Id;
+        this.RefActivite = RefActivite;
     }
 
     public Avis(int RefAvis, String Message) {
@@ -35,10 +37,19 @@ public class Avis {
     }
 
    
-    public Avis(String Message, String Date, int Id) {
+    public Avis(String Message, String Date, int Id, int RefActivite) {
         this.Message = Message;
         this.Date = Date;
         this.Id = Id;
+        this.RefActivite = RefActivite;
+    }
+
+    public int getRefActivite() {
+        return RefActivite;
+    }
+
+    public void setRefActivite(int RefActivite) {
+        this.RefActivite = RefActivite;
     }
 
     public int getRefAvis() {
@@ -75,8 +86,10 @@ public class Avis {
 
     @Override
     public String toString() {
-        return "{RefAvis= " + RefAvis + ", Message= " + Message + ", Date= " + Date + ", Id= " + Id +"}\n";
+        return "Avis{" + "RefAvis=" + RefAvis + ", Message=" + Message + ", Date=" + Date + ", Id=" + Id + ", RefActivite=" + RefActivite + '}';
     }
+
+   
     
     
 }

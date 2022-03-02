@@ -9,25 +9,41 @@ import GetAway.entities.Activite;
 import GetAway.entities.Avis;
 import GetAway.services.ActiviteService;
 import GetAway.services.AvisService;
+import GetAway.utilis.Datasource;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -37,6 +53,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -103,13 +122,17 @@ public class GestionActivitesController implements Initializable {
     @FXML
     private TableColumn<Activite, String> colnomac;
     @FXML
-    private TextField txtnoma;
+    private TableColumn<Activite, String> coldescripac;
     @FXML
-    private TextArea txtcomment;
+     TextField txtnoma;
+    @FXML
+    private ComboBox<String> txtcomment;
     @FXML
     private TableColumn<Avis, String> colmessage;
     @FXML
     private TableColumn<Avis, String> coldateav;
+    @FXML
+    private TableColumn<Activite, String> colnomact;
     @FXML
     private TableColumn<?, ?> colnomcl;
     @FXML
@@ -117,19 +140,34 @@ public class GestionActivitesController implements Initializable {
     @FXML
     private Button btnsupprimerav;
     @FXML
-    private TableColumn<?, ?> coldescripac;
-    @FXML
     private Button btnviderav;
+    @FXML
+    private Button btnajouterav;    
 
+    private Connection con = Datasource.getInstance().getCnx();
+    @FXML
+    private Button btnstat;
+    @FXML
+    private PieChart stat;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
       affichage();
       affichageAv();
       AffActAv();
+      
       Activite a = tvactivite.getSelectionModel().getSelectedItem();
       Avis av = tvavis.getSelectionModel().getSelectedItem();
       Activite ava = tvavisa.getSelectionModel().getSelectedItem();
+      
+      
+      ObservableList<String> list = FXCollections.observableArrayList("Très satisfait", "Satisfait", "Neutre", "Très déçu");
+      txtcomment.setItems(list);
+      
+      
+             
+ 
     }
     
         ActiviteService as = new ActiviteService();
@@ -169,6 +207,19 @@ public class GestionActivitesController implements Initializable {
         clearFields();
     }
     
+    @FXML
+        private void stat(){
+                       FXMLLoader loader=new FXMLLoader(getClass().getResource("Statisique.fxml"));
+                       Parent root ;
+        try {
+            root=loader.load();
+             btnstat.getScene().setRoot(root);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.StatisiqueController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+               } 
+        
         
 
     @FXML
@@ -321,9 +372,9 @@ public class GestionActivitesController implements Initializable {
     @FXML
     private void trier(ActionEvent event) {
         ActiviteService as = new ActiviteService();
-        as.trierActiviteNbrplace();
+        
 
-       ObservableList <Activite> activites= as.trierActiviteNbrplace();;
+       ObservableList <Activite> activites= as.trierActiviteNbrplace();
 
         colnom.setCellValueFactory(new PropertyValueFactory<>("Nom"));
         colduree.setCellValueFactory(new PropertyValueFactory<>("Duree"));
@@ -363,21 +414,46 @@ public class GestionActivitesController implements Initializable {
     public void affichageAv() {
         List<Avis> avis = avs.afficher();
         avis.forEach(e->oblistav.add(e));
-        
+        Activite a = new Activite ();
+
         colmessage.setCellValueFactory(new PropertyValueFactory<>("Message"));
         coldateav.setCellValueFactory(new PropertyValueFactory<>("Date"));
         colnomcl.setCellValueFactory(new PropertyValueFactory<>("Id"));
-
+        colnomact.setCellValueFactory(new PropertyValueFactory<>("RefActivite"));
+        
+        
         tvavis.setItems(oblistav);
     
     
     }
 
     @FXML
+    private void ajouterav(ActionEvent event) {
+        Avis av =new Avis();
+        
+        int ref = recupRefact();
+        av.setMessage(txtcomment.getSelectionModel().getSelectedItem());
+        av.setRefActivite(ref);
+        avs.ajouter(av);
+        
+        Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Notification d'ajout.");
+		alert.setHeaderText(null);
+		alert.setContentText("Votre avis est ajouter avec succées");
+		alert.showAndWait();
+                
+        tvavis.getItems().clear();
+        affichageAv();
+        
+    }
+    
+    
+    
+    @FXML
     private void modifierAv(ActionEvent event) {
         
          Avis av=  tvavis.getSelectionModel().getSelectedItem();
-      av.setMessage(txtcomment.getText());
+      av.setMessage(txtcomment.getSelectionModel().getSelectedItem().toString());
       
      avs.modifier(av);
      
@@ -409,11 +485,11 @@ public class GestionActivitesController implements Initializable {
     }
      
     @FXML
-    private void selectAllav(javafx.scene.input.MouseEvent event) {
+   private void selectAllav(javafx.scene.input.MouseEvent event) {
     int index= -1;
     index = tvavis.getSelectionModel().getSelectedIndex();
-    
-     txtcomment.setText(""+colmessage.getCellData(index));
+     txtcomment.setValue(""+colmessage.getCellData(index));
+     
     }
     
     
@@ -423,11 +499,13 @@ public class GestionActivitesController implements Initializable {
     index = tvavisa.getSelectionModel().getSelectedIndex();
     
      txtnoma.setText(""+colnomac.getCellData(index));
+     recupRefact();
+     
     }
 
     public void AffActAv() {
         List<Activite> activites = as.afficher();
-        activites.forEach(e->oblist.add(e));
+//        activites.forEach(e->oblist.add(e));
         
         colnomac.setCellValueFactory(new PropertyValueFactory<>("Nom"));
         coldescripac.setCellValueFactory(new PropertyValueFactory<>("Descrip"));
@@ -439,12 +517,68 @@ public class GestionActivitesController implements Initializable {
 
     
     private void clearFieldsAv() {
-		txtcomment.clear();
+		txtcomment.getSelectionModel().clearSelection();
 		txtnoma.clear();
 	}
     
     @FXML
     private void viderAv(ActionEvent event) {
         clearFieldsAv();
+        
     }
-}
+
+
+
+    private int recupRefact() 
+    {
+    int ref = 0;    
+    
+    String req="Select RefAct from Activite where Nom='"+txtnoma.getText()+"'";
+    PreparedStatement ste;
+    
+        try {
+            ste = (PreparedStatement) con.prepareStatement(req);
+            ResultSet rs = ste.executeQuery();
+         while(rs.next()){
+                
+             ref = rs.getInt(1);
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(GestionActivitesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         System.out.println(ref);
+ return ref;
+    }
+        
+//    private List<Activite> recupNomAct() 
+//    {
+//        
+//        int ref = recupRefact();
+//                List<Activite> nom = new ArrayList<>();
+//
+//    String req="SELECT Nom from activite INNER JOIN avis WHERE activite.RefAct=avis.RefActivite";
+//    PreparedStatement ste;
+//    
+//        try {
+//            ste = (PreparedStatement) con.prepareStatement(req);
+//            ResultSet rs = ste.executeQuery();
+//         while(rs.next()){
+//                Activite a = new Activite();
+//            rs.getString(1);
+//             nom.add(rs);
+//            } 
+//        } catch (SQLException ex) {
+//            Logger.getLogger(GestionActivitesController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//         System.out.println(nom);
+//return nom; 
+//    }
+        
+    }
+
+
+ 
+
+
+
+

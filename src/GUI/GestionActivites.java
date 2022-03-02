@@ -37,7 +37,7 @@ public class GestionActivites extends Application {
         primaryStage.setTitle("GetAway");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+
         
          
     }

@@ -53,13 +53,14 @@ public class AvisService extends SendSms implements IService<Avis> {
     
     @Override
     public void ajouter(Avis av) {
-        String req = "INSERT INTO `Avis` (`Message`,`Date`,`Id`) VALUE ('" + av.getMessage() + "',NOW(), '" + av.getId() +"')";
+//        String req = "INSERT INTO `Avis` (`Message`,`Date`,`Id`) VALUE ('" + av.getMessage() + "',NOW(), '" + av.getId() +"')";
+        String req = "INSERT INTO `Avis` (`Message`,`Date`,RefActivite) VALUE ('" + av.getMessage() + "',NOW(),'" + av.getRefActivite() +"')";
         try {
             ste = conn.createStatement();
             ste.executeUpdate(req);
             System.out.println("Avis crée");
-            String NumTel = this.NumTel(av);
-            sendSms(NumTel);
+//            String NumTel = this.NumTel(av);
+//            sendSms(NumTel);
         } catch (SQLException ex) {
             Logger.getLogger(AvisService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,13 +102,14 @@ public class AvisService extends SendSms implements IService<Avis> {
             
 //            ste = conn.createStatement();
 //            ResultSet rs = ste.executeQuery(req);
-            System.out.println("Liste des avis:");
+            //System.out.println("Liste des avis:");
             while(rs.next()){
                 Avis av = new Avis();
                 av.setRefAvis(rs.getInt(1));
                 av.setMessage(rs.getString(2));
                 av.setDate(rs.getString(3));
                 av.setId(rs.getInt(4));
+                av.setRefActivite(rs.getInt(5));
                 
                
                 avis.add(av);

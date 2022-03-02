@@ -46,8 +46,8 @@ public class GetAway {
         // as.supprimer(a);
 
         // Ajout Avis
-         Avis av = new Avis ("wtaaedaad","",1);
-       avs.ajouter(av);
+        // Avis av = new Avis ("wtaaedaad","",1);
+       //avs.ajouter(av);
         
         // Modifier Avis
         // Avis av= new Avis(6,"Bla bla");
@@ -61,7 +61,7 @@ public class GetAway {
        // System.out.println(as.afficher());
         //System.out.println("**********************************************************************************************************************************");
         // Afficher Avis
-        System.out.println(avs.afficher());
+        //System.out.println(avs.afficher());
         //System.out.println(as.recupAdrM());
         //System.out.println(as.rechercherActiviteRef(4));
        /// System.out.println(as.rechercherActivite("1"));
