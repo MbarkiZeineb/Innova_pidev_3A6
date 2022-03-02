@@ -63,6 +63,21 @@ private Connection conn;
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+     
+    public void modifierMontant(int id , float nb  ) {
+          String req = " update paiement set  montant=?  where id_reservation= ?";
+        try {
+             pste = conn.prepareStatement(req);
+           pste.setInt(2, id);
+            pste.setFloat(1,nb);
+            pste.executeUpdate();
+            System.out.println(" Reservation voyage   créée");
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
     public void supprimer(Paiement p) {
@@ -118,6 +133,8 @@ private Connection conn;
    
       
         }
+   
+   
        
        
    

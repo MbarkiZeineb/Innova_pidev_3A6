@@ -69,7 +69,7 @@ private Connection conn;
               pste.setString(8,r.getType());
             pste.executeUpdate();
             System.out.println(" Reservation  vol créée");
-              modifiernbplacevol(r.getId_vol(),r.getNbr_place());
+            
         } catch (SQLException ex) {
             Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -292,13 +292,12 @@ private Connection conn;
     
        //Vol 
     public void modifiernbplacevol(int id,int nb)
-{
+{  System.out.println(nb);
     System.out.println("test");
-    String req = "update vol  set `nbr_placedispo`= `nbr_placedispo` - ? where id_vol=?";
+    String req = "update vol  set `nbr_placedispo`= `nbr_placedispo` - ? where id_vol= ?";
      try {
              pste = conn.prepareStatement(req);
-          
-               pste.setInt(1,nb);
+              pste.setInt(1,nb);
               pste.setInt(2,id);
             pste.executeUpdate();
             System.out.println(" nombre place vol modifié  ");
@@ -399,8 +398,8 @@ public List<Integer> listeReservationparClient(int id)
       
         List<Reservation> l = this.afficher();
         
-        List<LocalDate> dated=l.stream().filter(e->e.getId_hebergement()==id).map(e->e.getDate_debut().toLocalDate()).collect(Collectors.toList());
-          List<LocalDate> datef=l.stream().filter(e->e.getId_hebergement()==id).map(e->e.getDate_fin().toLocalDate()).collect(Collectors.toList());
+        List<LocalDate> dated=l.stream().filter(e->e.getId_hebergement()==id).filter(e->e.getEtat().equals("Approuve")).map(e->e.getDate_debut().toLocalDate()).collect(Collectors.toList());
+          List<LocalDate> datef=l.stream().filter(e->e.getId_hebergement()==id).filter(e->e.getEtat().equals("Approuve")).map(e->e.getDate_fin().toLocalDate()).collect(Collectors.toList());
            
           for ( int i=0 ; i<dated.size(); i++)
           {
@@ -430,8 +429,8 @@ public List<Integer> listeReservationparClient(int id)
            
         List<Reservation> l = this.afficher();
         List<LocalDate> dates = new ArrayList<LocalDate>();
-      List<LocalDate> dated=  l.stream().filter(e->e.getId_hebergement()==id).map(e->e.getDate_debut().toLocalDate()).collect(Collectors.toList());
-        List<LocalDate> datef=l.stream().filter(e->e.getId_hebergement()==id).map(e->e.getDate_fin().toLocalDate()).collect(Collectors.toList());
+      List<LocalDate> dated=  l.stream().filter(e->e.getId_hebergement()==id).filter(e->e.getEtat().equals("Approuve")).map(e->e.getDate_debut().toLocalDate()).collect(Collectors.toList());
+        List<LocalDate> datef=l.stream().filter(e->e.getId_hebergement()==id).filter(e->e.getEtat().equals("Approuve")).map(e->e.getDate_fin().toLocalDate()).collect(Collectors.toList());
        
             List<LocalDate> periodes = new ArrayList<LocalDate>();
 
@@ -451,9 +450,63 @@ for (int i=0; i<dated.size(); i++)
        }
        
        
+     //Annuler 
        
  
-     
+     //Activite
+    public void AnnulernbplaceA(int id,int nb )
+{
+    
+    String req = "update Activite set `NbrPlace`=`NbrPlace` + ? where RefAct=?";
+     try {
+             pste = conn.prepareStatement(req);
+          
+               pste.setInt(1,nb);
+            
+              pste.setInt(2,id);
+            pste.executeUpdate();
+            System.out.println(" Nombre de place Activite modifie ");
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+}
+    
+       //Vol 
+    public void Annulernbplacevol(int id,int nb)
+{
+    
+    String req = "update vol  set `nbr_placedispo`= `nbr_placedispo` + ? where id_vol=?";
+     try {
+             pste = conn.prepareStatement(req);
+          
+               pste.setInt(1,nb);
+              pste.setInt(2,id);
+            pste.executeUpdate();
+            System.out.println(" nombre place vol modifié  ");
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+}
+   //Voyage 
+        
+    public void Annulernbplacevoyage(int id,int nb)
+{
+    System.out.println(nb);
+    String req = "update voyageorganise  set `nbrPlace`=`nbrPlace` + ? where idVoy=?";
+     try {
+             pste = conn.prepareStatement(req);
+          
+               pste.setInt(1,nb);
+              pste.setInt(2,id);
+            pste.executeUpdate();
+            System.out.println(" nombre place voyage modifié ");
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+}
        
   
   ///Statistique sur nbre de reservation selon le type 

@@ -176,10 +176,10 @@ public class ReserverVolController implements Initializable {
         java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
        
            System.out.println(v.getId_vol());
-         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"En attente",1,"vol");
+           
+         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"En attente",1,"Vol");
          if(rs.verifierNbplaceVol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText())))
          { rs.ajouterVol(r);
-        
          Paiement p = new Paiement(modalite.getValue(),Float.valueOf(prixTotalV.getText()),rs.afficher().get(rs.afficher().size()-1).getId(),datR);
          ps.ajouter(p);
           Notifications.create().title("Reservation Vol").text(" Reservation est Créé ").show();
@@ -221,7 +221,7 @@ public class ReserverVolController implements Initializable {
         
          
         try{
-            if(!nbplaceRvol.getText().contains("0")&&!nbplaceRvol.getText().contains(""))
+            if(!nbplaceRvol.getText().equals("0")&&!nbplaceRvol.getText().equals(""))
         { 
             Float prixTT=Integer.parseInt(nbplaceRvol.getText())* Float.parseFloat(prixvolr.getText());
         prixTotalV.setText(valueOf(prixTT));
