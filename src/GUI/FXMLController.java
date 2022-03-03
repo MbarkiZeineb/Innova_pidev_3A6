@@ -12,6 +12,8 @@ import entities.Category;
 import entities.Hebergement;
 import java.net.URL;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -174,12 +176,7 @@ public class FXMLController implements Initializable {
      ObservableList<Category> oblist = FXCollections.observableArrayList();
      CategoryService cs= new CategoryService();
     @Override
-    
-    
-    
-    
-    
-    
+
     
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -360,22 +357,24 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         loadTablecateg();
     }//modifer catergory 
 
-    private void H_ajouter(ActionEvent event) {//Float.parseFloat  string to float 
-
-       // Hebergement h= new Hebergement(a_paye.getText(),a_adress.getText(),prix, a_description.getText(),a_pic.getText(),a_datestart.getValue(),a_dateend.getValue(),a_contact.getText(),a_nbr_detoile.getText(),a_nbr_suite.getText(),a_nbr_parking.getText(),a_modele.getText(),a_category.getText(),1);
-       // Hebergement h= new Hebergement(a_paye.getText(),a_adress.getText(),prix, a_description.getText(),a_pic.getText(),                      ,a_dateend.getValue(),a_contact.getText(), a_nbr_detoile.getText(),a_nbr_suite.getText(),a_nbr_parking.getText(),a_modele.getText(),a_category.getText(),1);
-       // hs.ajouter(h);
-        //hebergement_table.getItems().clear();
-        loadTableHebegement();
-        //        Hebergement h= new Hebergement(a_paye.getText(),a_adress.getText(),a_prix.getText(), a_description.getText(),a_picture.get, a_datestart.getValue() ,a_dateend.getValue(),a_contact.getText(), a_nbr_detoile.getText(),a_nbr_suite.getText(),a_nbr_parking.getText(),a_modele.getText(),a_category.getText() ,1);
-
-    }
-
-   
-
 
     @FXML
     private void Import(MouseEvent event) {//3aleh fama jcp 
+    }
+
+    @FXML
+    private void h_ajouter(ActionEvent event) {
+     //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+     java.sql.Date datestart =Date.valueOf(a_datestart.getValue());
+     java.sql.Date dateend = Date.valueOf(a_dateend.getValue());
+     int nbr1=Integer.parseInt(a_nbr_detoile.getText());  
+     int nbr2=Integer.parseInt(a_nbr_suite.getText());  
+     int nbr3=Integer.parseInt(a_nbr_parking.getText());  
+     int nbr4=Integer.parseInt(a_category.getText()); 
+     Hebergement h= new Hebergement(a_paye.getText(),a_adress.getText(),Float.parseFloat(a_prix.getText()),a_description.getText(),a_pic.getText(),datestart,dateend,a_contact.getText(),nbr1 ,nbr2,nbr3,a_modele.getText(),nbr4,1);
+     hs.ajouter(h); 
+        hebergement_table.getItems().clear();
+        loadTableHebegement();
     }
 
     

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1401.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.FXMLController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.FXMLController">
    <children>
       <VBox layoutX="-6.0" layoutY="154.0" prefHeight="648.0" prefWidth="308.0" style="-fx-background-color: #FFC200;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="150.0">
          <children>
@@ -77,9 +77,9 @@
             <Image url="@../image/logo.png" />
          </image>
       </ImageView>
-      <Pane layoutX="302.0" layoutY="7.0" prefHeight="725.0" prefWidth="1096.0" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="302.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="7.0">
+      <Pane layoutX="302.0" layoutY="7.0" prefHeight="725.0" prefWidth="1096.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="302.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TabPane fx:id="F_hebergement" layoutX="31.0" layoutY="147.0" prefHeight="536.0" prefWidth="1053.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="F_hebergement" layoutX="31.0" layoutY="147.0" prefHeight="536.0" prefWidth="1033.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab fx:id="ajouter_hebegement" text="Ajouter">
                   <content>
@@ -108,7 +108,7 @@
                               <TextField fx:id="a_nbr_parking" layoutX="576.0" layoutY="238.0" prefHeight="26.0" prefWidth="80.0" />
                               <TextField fx:id="a_nbr_detoile" layoutX="791.0" layoutY="238.0" prefHeight="26.0" prefWidth="80.0" />
                               <ImageView fx:id="a_picture_kol" fitHeight="142.0" fitWidth="151.0" layoutX="743.0" layoutY="293.0" onDragDetected="#Import" pickOnBounds="true" preserveRatio="true" />
-                              <Button fx:id="B_c_ajouter" layoutX="933.0" layoutY="14.0" mnemonicParsing="false" onAction="#C_ajouter" prefHeight="32.0" prefWidth="71.0" stylesheets="@fxml.css" text="Ajouter" AnchorPane.bottomAnchor="423.0" AnchorPane.leftAnchor="933.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="14.0" />
+                              <Button fx:id="B_c_ajouter" layoutX="933.0" layoutY="14.0" mnemonicParsing="false" onAction="#C_ajouter" prefHeight="32.0" prefWidth="71.0" stylesheets="@fxml.css" text="Ajouter" />
                               <TableView fx:id="categorie_table" layoutX="564.0" layoutY="14.0" prefHeight="146.0" prefWidth="302.0">
                                 <columns>
                                   <TableColumn fx:id="c_id" prefWidth="107.0" text="Numero categorie" />
@@ -117,7 +117,7 @@
                               </TableView>
                               <Button fx:id="B_c_supprimer" layoutX="924.0" layoutY="128.0" mnemonicParsing="false" onMouseClicked="#C_suppimer" prefHeight="32.0" prefWidth="89.0" text="supprimer" />
                               <Button fx:id="B_c_modifer" layoutX="933.0" layoutY="68.0" mnemonicParsing="false" onMouseClicked="#C_modifer" prefHeight="32.0" prefWidth="71.0" text="modifer" />
-                              <Button fx:id="B_h_ajouter" layoutX="933.0" layoutY="315.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="71.0" text="Ajouter" />
+                              <Button fx:id="B_h_ajouter" layoutX="933.0" layoutY="315.0" mnemonicParsing="false" onAction="#h_ajouter" prefHeight="32.0" prefWidth="71.0" text="Ajouter" />
                               <Button fx:id="B_import" layoutX="935.0" layoutY="364.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="68.0" text="import" />
                               <Label layoutX="554.0" layoutY="180.0" prefHeight="26.0" prefWidth="81.0" text="Contact : " />
                               <TextField fx:id="a_contact" layoutX="645.0" layoutY="180.0" prefHeight="26.0" prefWidth="229.0" />
