@@ -127,7 +127,7 @@ public class ReserverVoyageController implements Initializable {
         java.sql.Date Datedv = new java.sql.Date(parsedd.getTime());
         java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
        
-        Reservation r= new Reservation(datR,Integer.parseInt(nbp.getText()), Datedv, Dateav,v.getIdVoy(),0,0,0,"En attente",Integer.parseInt(idc.getText()),"voyage");
+        Reservation r= new Reservation(datR,Integer.parseInt(nbp.getText()), Datedv, Dateav,v.getIdVoy(),0,0,0,"Approuve",Integer.parseInt(idc.getText()),"Voyage");
         if(rs. verifierNbplaceVoyage(v.getIdVoy(), Integer.parseInt(nbp.getText())))
         {rs.ajouter(r);
            

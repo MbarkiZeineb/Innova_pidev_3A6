@@ -450,6 +450,38 @@ for (int i=0; i<dated.size(); i++)
        }
        
        
+       public  List<LocalDate> WeekRH(int i)
+       {
+           
+               
+        List<Reservation> l = this.afficher();
+       return l.stream().filter(a->a.getType().equals("Hebergement")).filter(e->e.getEtat().equals("Approuve")).map(e->e.getDate_debut().toLocalDate()).collect(Collectors.toList());
+           
+           
+       }
+       
+       
+        public  List<LocalDate> WeekRV(int i)
+       {
+           
+               
+        List<Reservation> l = this.afficher();
+       return l.stream().filter(a->a.getType().equals("Vol")).filter(e->e.getEtat().equals("Approuve")).map(e->e.getDate_debut().toLocalDate()).collect(Collectors.toList());
+           
+           
+       }
+          public  List<LocalDate> WeekVO(int i)
+       {
+           
+               
+        List<Reservation> l = this.afficher();
+       return l.stream().filter(a->a.getType().equals("Voyage")).filter(e->e.getEtat().equals("Approuve")).map(e->e.getDate_debut().toLocalDate()).collect(Collectors.toList());
+           
+           
+       }
+        
+       
+       
      //Annuler 
        
  

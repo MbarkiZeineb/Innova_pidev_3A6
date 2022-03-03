@@ -21,16 +21,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.SortEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 
 /**
@@ -99,7 +104,18 @@ public class AfficherReservationController implements Initializable {
     private DatePicker DD;
     @FXML
     private Button modifierR;
-    
+        
+      @FXML
+    private Button BVol;
+
+    @FXML
+    private Button RH;
+
+    @FXML
+    private Button ReserverV;
+
+    @FXML
+    private Button agenda;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -109,7 +125,41 @@ public class AfficherReservationController implements Initializable {
        comboMontant.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
        Etat.getItems().addAll("Approuve" ,"Annule");
         
-    }    
+    } 
+    
+     @FXML
+    void agenda(ActionEvent event) throws Exception  {
+        
+        
+         Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("agenda.fxml"));
+        Scene scene =new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+  
+        
+      
+    }
+    
+      @FXML
+    void ReserverH(ActionEvent event) throws Exception {
+ Stage stage = new Stage();
+         Parent root = FXMLLoader.load(getClass().getResource("ReserverHebergement.fxml"));
+        Scene scene =new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    void ReserverVoyage(ActionEvent event) throws Exception {
+        
+        Stage stage = new Stage();
+         Parent root = FXMLLoader.load(getClass().getResource("ReserverVoyage.fxml"));
+        Scene scene =new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
 
     private void loadTable() {
      
@@ -142,7 +192,14 @@ public class AfficherReservationController implements Initializable {
         
     }
     
-    
+     @FXML
+    void reserverVol(ActionEvent event) throws  Exception  {
+Stage stage = new Stage();
+         Parent root = FXMLLoader.load(getClass().getResource("ReserverVol.fxml"));
+        Scene scene =new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     
     private void loadTableP() {
      
@@ -197,7 +254,7 @@ public class AfficherReservationController implements Initializable {
      loadTableP();
      
     }
-
+    
     @FXML
     private void selectP(MouseEvent event) {
              
@@ -275,6 +332,8 @@ public class AfficherReservationController implements Initializable {
                  switch(r.getType())
                   {
              case "Vol":
+                 
+                 
                r.setEtat(Etat.getValue());
                rs.modifiervol(r);
               rs.Annulernbplacevol(r.getId_vol(), r.getNbr_place());

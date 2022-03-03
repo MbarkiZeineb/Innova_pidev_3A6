@@ -273,6 +273,7 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
     prix.setText("");
      prixtotal.setText("");    
      modalite.getItems().clear();
+      modalite.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
     }
     
     
