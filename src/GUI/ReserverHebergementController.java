@@ -122,8 +122,9 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
     LocalDate to = DateF.getValue();
 
     // disable, if one selection is missing or from is not smaller than to
-    return (from == null || to == null || (from.compareTo(to) >= 0));
-}, DateD.valueProperty(), DateF.valueProperty());
+    return (from == null || to == null || (from.compareTo(to) >= 0));   
+}, 
+ DateD.valueProperty(), DateF.valueProperty());
 
    ReserverH.disableProperty().bind(bb);
           
@@ -261,6 +262,17 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
             
          
              prixtotal.setText(prixTT.toString());
+    }
+
+    @FXML
+    private void vider(MouseEvent event) {
+           DateD.setValue(null);
+    DateF.setValue(null);
+    Adresse.setText("");
+    Description.setText("");
+    prix.setText("");
+     prixtotal.setText("");    
+     modalite.getItems().clear();
     }
     
     

@@ -104,7 +104,7 @@ public class ReserverVolController implements Initializable {
         prixvolr.textProperty().isEqualTo("")).or(
          dateavol.textProperty().isEqualTo("")).or(
         datedvol.textProperty().isEqualTo("")).or(
-        destinationvol.textProperty().isEqualTo(""));
+        destinationvol.textProperty().isEqualTo("")).or((nbplaceRvol.textProperty().isEqualTo(""))).or((prixTotalV.textProperty().isEqualTo(""))).or(prixTotalV.textProperty().isEqualTo("0"));
          
           nbplaceRvol.setText("0");
           Vol v = tb_v.getSelectionModel().getSelectedItem();
@@ -154,6 +154,8 @@ public class ReserverVolController implements Initializable {
     prixvolr.clear();
     idCvol.clear();
     villeDepart.clear();
+    prixTotalV.clear();
+    modalite.getItems().clear();
     tb_v.getItems().clear();
     loadTableVol();
   
@@ -177,7 +179,7 @@ public class ReserverVolController implements Initializable {
        
            System.out.println(v.getId_vol());
            
-         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"En attente",1,"Vol");
+         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"Approuve",1,"Vol");
          if(rs.verifierNbplaceVol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText())))
          { rs.ajouterVol(r);
          Paiement p = new Paiement(modalite.getValue(),Float.valueOf(prixTotalV.getText()),rs.afficher().get(rs.afficher().size()-1).getId(),datR);
@@ -189,7 +191,10 @@ public class ReserverVolController implements Initializable {
          
          }
           else
-          {     Notifications.create().title("Reservation Vol").text(" Nombre de place non valide  ").show();
+          {    
+                String s=" Nombre de place non valide il vous reste"+v.getNbr_placedispo();
+              
+              Notifications.create().title("Reservation Vol").text(s).show();
           }
        
        }

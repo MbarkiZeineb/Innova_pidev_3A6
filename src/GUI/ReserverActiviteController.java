@@ -109,7 +109,7 @@ public class ReserverActiviteController implements Initializable {
               java.sql.Date datR = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         java.sql.Date Datedv = new java.sql.Date(parsedd.getTime());
         java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
-         if(rs.verifierNbplaceAct(A.getRefAct(),A.getNbrPlace()))
+         if(rs.verifierNbplaceAct(A.getRefAct(),Integer.parseInt(nbpA.getText())))
         {
         Reservation r= new Reservation(datR,Integer.parseInt(nbpA.getText()), Datedv, Dateav,0,A.getRefAct(),0,0,"Approuve",Integer.parseInt(idc.getText()),"vol");
       

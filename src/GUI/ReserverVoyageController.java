@@ -134,14 +134,16 @@ public class ReserverVoyageController implements Initializable {
          rs.modifiernbplacevoyage(v.getIdVoy(),Integer.parseInt(nbp.getText()));
           Paiement p = new Paiement(modaliteV.getValue(),Float.valueOf(prixTTV.getText()),rs.afficher().get(rs.afficher().size()-1).getId(),datR);
          ps.ajouter(p);
+          rs.modifiernbplacevol(v.getIdVoy(),Integer.parseInt(nbp.getText()));
           Notifications.create().title("Reservation voyage organise ").text(" Reservation est Créé ").show();
-         rs.modifiernbplacevol(v.getIdVoy(),Integer.parseInt(nbp.getText()));
+        
         }
         
         else
         {
+            String s=" Nombre de place non valide il vous reste"+v.getNbrPlace();
             
-             Notifications.create().title("Reservation voyage organise ").text(" Nombre de place non valide  ").show();
+            Notifications.create().title("Reservation voyage organise ").text(s).show();
             
         }
        
