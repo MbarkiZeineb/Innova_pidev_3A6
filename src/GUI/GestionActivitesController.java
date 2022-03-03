@@ -147,8 +147,6 @@ public class GestionActivitesController implements Initializable {
     private Connection con = Datasource.getInstance().getCnx();
     @FXML
     private Button btnstat;
-    @FXML
-    private PieChart stat;
     
     
     @Override
@@ -282,25 +280,9 @@ public class GestionActivitesController implements Initializable {
 
     }
 
-     @FXML
-    private void recherche(ActionEvent event) {
-    
-       ActiviteService as = new ActiviteService();
-         Activite a=new Activite ();
-        
-        ObservableList<Activite> activ = as.rechercherActivite(txtinput.getText());
-        
-        colnom.setCellValueFactory(new PropertyValueFactory<>("Nom"));
-        colduree.setCellValueFactory(new PropertyValueFactory<>("Duree"));
-        colnbrp.setCellValueFactory(new PropertyValueFactory<>("NbrPlace"));
-        coldate.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        coltype.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        colloc.setCellValueFactory(new PropertyValueFactory<>("Location"));
-        colprix.setCellValueFactory(new PropertyValueFactory<>("Prix"));
-        coldesc.setCellValueFactory(new PropertyValueFactory<>("Descrip"));
-
-        tvactivite.setItems(activ);
-    }
+//    
+//       
+//    }
     
      private boolean validate(String field, String value, String pattern){
 		if(!value.isEmpty()){
@@ -548,7 +530,33 @@ public class GestionActivitesController implements Initializable {
         }
          System.out.println(ref);
  return ref;
+ 
     }
+
+    
+
+    @FXML
+    private void recherchek(KeyEvent event) {
+              ActiviteService as = new ActiviteService();
+         Activite a=new Activite ();
+        
+        ObservableList<Activite> activ = as.rechercherActivite(txtinput.getText());
+        
+        colnom.setCellValueFactory(new PropertyValueFactory<>("Nom"));
+        colduree.setCellValueFactory(new PropertyValueFactory<>("Duree"));
+        colnbrp.setCellValueFactory(new PropertyValueFactory<>("NbrPlace"));
+        coldate.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        coltype.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        colloc.setCellValueFactory(new PropertyValueFactory<>("Location"));
+        colprix.setCellValueFactory(new PropertyValueFactory<>("Prix"));
+        coldesc.setCellValueFactory(new PropertyValueFactory<>("Descrip"));
+
+        tvactivite.setItems(activ);
+    }
+    
+}
+    
+    
         
 //    private List<Activite> recupNomAct() 
 //    {
@@ -573,8 +581,8 @@ public class GestionActivitesController implements Initializable {
 //         System.out.println(nom);
 //return nom; 
 //    }
-        
-    }
+
+    
 
 
  

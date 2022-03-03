@@ -85,8 +85,8 @@
                               <Font name="AGA Arabesque" size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btnrecherche" layoutX="623.0" layoutY="290.0" mnemonicParsing="false" onAction="#recherche" prefHeight="32.0" prefWidth="101.0" text="Rechercher" textAlignment="CENTER" />
-                        <TextField fx:id="txtinput" layoutX="445.0" layoutY="293.0" />
+                        <Button fx:id="btnrecherche" layoutX="623.0" layoutY="290.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="101.0" text="Rechercher" textAlignment="CENTER" />
+                        <TextField fx:id="txtinput" layoutX="445.0" layoutY="293.0" onKeyReleased="#recherchek" />
                         <Button fx:id="btntri" layoutX="749.0" layoutY="290.0" mnemonicParsing="false" onAction="#trier" prefHeight="32.0" prefWidth="152.0" text="Tri Nombre de place" />
                      </children>
                   </AnchorPane>
