@@ -18,13 +18,13 @@
             <content>
               <AnchorPane blendMode="DIFFERENCE" minHeight="0.0" minWidth="0.0" prefHeight="547.0" prefWidth="946.0">  
     <children>
-      <Button fx:id="id_button" layoutX="17.0" layoutY="443.0" mnemonicParsing="false" onAction="#ajouter" onMouseReleased="#viderVol" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
-      <TextField fx:id="date_depart" cache="true" cacheHint="QUALITY" depthTest="DISABLE" layoutX="104.0" layoutY="124.0" prefHeight="25.0" prefWidth="114.0" promptText="date_depart" />
-      <TextField fx:id="date_arrivee" cache="true" cacheHint="QUALITY" depthTest="DISABLE" layoutX="104.0" layoutY="165.0" prefHeight="25.0" prefWidth="114.0" promptText="date_arrivee" />
-      <TextField fx:id="prix" cache="true" cacheHint="QUALITY" depthTest="DISABLE" layoutX="104.0" layoutY="207.0" prefHeight="25.0" prefWidth="114.0" promptText="prix" />
-      <TextField fx:id="ville_depart" cache="true" cacheHint="QUALITY" depthTest="DISABLE" layoutX="105.0" layoutY="246.0" prefHeight="25.0" prefWidth="114.0" promptText="ville_depart" />
+      <Button fx:id="id_button" blendMode="ADD" layoutX="17.0" layoutY="443.0" mnemonicParsing="false" onAction="#ajouter" onMouseReleased="#viderVol" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
+      <TextField fx:id="date_depart" blendMode="ADD" cacheHint="QUALITY" depthTest="DISABLE" layoutX="104.0" layoutY="124.0" prefHeight="25.0" prefWidth="114.0" promptText="date_depart" />
+      <TextField fx:id="date_arrivee" blendMode="ADD" cacheHint="QUALITY" depthTest="DISABLE" layoutX="104.0" layoutY="165.0" prefHeight="25.0" prefWidth="114.0" promptText="date_arrivee" />
+      <TextField fx:id="prix" blendMode="ADD" cacheHint="QUALITY" depthTest="DISABLE" layoutX="104.0" layoutY="207.0" prefHeight="25.0" prefWidth="114.0" promptText="prix" />
+      <TextField fx:id="ville_depart" blendMode="ADD" cacheHint="QUALITY" depthTest="DISABLE" layoutX="105.0" layoutY="246.0" prefHeight="25.0" prefWidth="114.0" promptText="ville_depart" />
       <TextField fx:id="ville_arrivee" cache="true" cacheHint="QUALITY" depthTest="DISABLE" layoutX="105.0" layoutY="287.0" prefHeight="25.0" prefWidth="114.0" promptText="ville_arrivee" />
-      <TextField fx:id="nbr_placedispo" cache="true" cacheHint="QUALITY" depthTest="DISABLE" layoutX="105.0" layoutY="367.0" prefHeight="25.0" prefWidth="114.0" promptText="nbr_placedispo" />
+      <TextField fx:id="nbr_placedispo" blendMode="ADD" cacheHint="QUALITY" depthTest="DISABLE" layoutX="105.0" layoutY="367.0" prefHeight="25.0" prefWidth="114.0" promptText="nbr_placedispo" />
       <Label layoutX="24.0" layoutY="128.0" text="date depart" textFill="#eaff00" />
       <Label layoutX="28.0" layoutY="169.0" text="date arrivee" textFill="#eaff00" />
       <Label layoutX="39.0" layoutY="211.0" text="prix" textFill="#eaff00" />
@@ -32,7 +32,7 @@
       <Label layoutX="25.0" layoutY="291.0" text="ville arrivee" textFill="#eaff00" />
       <Label layoutX="27.0" layoutY="330.0" text="id avion" textFill="#eaff00" />
       <Label layoutX="18.0" layoutY="371.0" text="nbr place dispo" textFill="#eaff00" />
-      <TableView fx:id="tb_v" cache="true" layoutX="232.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#selectVOL" prefHeight="342.0" prefWidth="667.0">
+      <TableView fx:id="tb_v" layoutX="232.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#selectVOL" prefHeight="342.0" prefWidth="667.0">
          <columns>
             <TableColumn fx:id="tb_datedepart" prefWidth="134.0" text="date depart" />
             <TableColumn fx:id="tb_datearrivee" prefWidth="162.0" text="date arrivée" />
@@ -43,16 +43,16 @@
          </columns>
       </TableView>
       
-      <TextField fx:id="id_rech" cache="true" cacheHint="QUALITY" depthTest="DISABLE" layoutX="489.0" layoutY="27.0" prefHeight="25.0" prefWidth="71.0" promptText="prix" />
-      <Button fx:id="supp" layoutX="109.0" layoutY="443.0" mnemonicParsing="false" onAction="#supprimer" onMouseReleased="#viderVol" text="supprimer" />
-      <Button fx:id="modifier" layoutX="197.0" layoutY="443.0" mnemonicParsing="false" onAction="#modifier" onMouseReleased="#viderVol" prefHeight="25.0" prefWidth="70.0" text="modifier" />
-      <Button fx:id="r_id" layoutX="587.0" layoutY="27.0" mnemonicParsing="false" onAction="#recherche" text="rechercher" />  
-      <Button layoutX="678.0" layoutY="27.0" mnemonicParsing="false" onAction="#trier" prefHeight="25.0" prefWidth="70.0" text="trier" />
-       <Button fx:id="stat" layoutX="713.0" layoutY="430.0" mnemonicParsing="false" onAction="#statistique" text="statistique" />
-      <ComboBox fx:id="id_avion" cache="true" cacheHint="QUALITY" depthTest="DISABLE" layoutX="109.0" layoutY="326.0" prefHeight="25.0" prefWidth="102.0" />
-                        <Button fx:id="pdf" layoutX="625.0" layoutY="430.0" mnemonicParsing="false" onAction="#telechargerVol" prefHeight="25.0" prefWidth="61.0" text="PDF" />
-                        <TextField fx:id="id_arrivee" layoutX="382.0" layoutY="27.0" prefHeight="25.0" prefWidth="91.0" promptText="ville_arrivee" />
-                        <TextField fx:id="id_depart" layoutX="273.0" layoutY="27.0" prefHeight="25.0" prefWidth="94.0" promptText="ville_depart" />
+      <TextField fx:id="id_rech" blendMode="ADD" cacheHint="QUALITY" depthTest="DISABLE" layoutX="489.0" layoutY="27.0" prefHeight="25.0" prefWidth="71.0" promptText="prix" />
+      <Button fx:id="supp" blendMode="ADD" layoutX="109.0" layoutY="443.0" mnemonicParsing="false" onAction="#supprimer" onMouseReleased="#viderVol" text="supprimer" />
+      <Button fx:id="modifier" blendMode="ADD" layoutX="197.0" layoutY="443.0" mnemonicParsing="false" onAction="#modifier" onMouseReleased="#viderVol" prefHeight="25.0" prefWidth="70.0" text="modifier" />
+      <Button fx:id="r_id" blendMode="ADD" layoutX="587.0" layoutY="27.0" mnemonicParsing="false" onAction="#recherche" text="rechercher" />  
+      <Button blendMode="ADD" layoutX="678.0" layoutY="27.0" mnemonicParsing="false" onAction="#trier" prefHeight="25.0" prefWidth="70.0" text="trier" />
+       <Button fx:id="stat" blendMode="ADD" layoutX="713.0" layoutY="430.0" mnemonicParsing="false" onAction="#statistique" text="statistique" />
+      <ComboBox fx:id="id_avion" blendMode="ADD" cacheHint="QUALITY" depthTest="DISABLE" layoutX="109.0" layoutY="326.0" prefHeight="25.0" prefWidth="102.0" />
+                        <Button fx:id="pdf" blendMode="ADD" layoutX="625.0" layoutY="430.0" mnemonicParsing="false" onAction="#telechargerVol" prefHeight="25.0" prefWidth="61.0" text="PDF" />
+                        <TextField fx:id="id_arrivee" blendMode="ADD" layoutX="382.0" layoutY="27.0" prefHeight="25.0" prefWidth="91.0" promptText="ville_arrivee" />
+                        <TextField fx:id="id_depart" blendMode="ADD" layoutX="273.0" layoutY="27.0" prefHeight="25.0" prefWidth="94.0" promptText="ville_depart" />
       
    </children>
     </AnchorPane>

@@ -52,6 +52,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import java.util.stream.IntStream;
 import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.input.KeyEvent;
@@ -168,14 +169,14 @@ public class AjouterVolController implements Initializable {
      getidagence();
      getida();
      Vol v = tb_v.getSelectionModel().getSelectedItem();
-     supp1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
-     supp.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
-         modifier1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
-     modifier.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
-         id_button1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
-         id_button.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
-     r_id1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
-     r_id.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+    // supp1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+    // supp.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+    //     modifier1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+    // modifier.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+    //     id_button1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+      //   id_button.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+     //r_id1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
+     //r_id.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
      
     }    
     
@@ -493,6 +494,40 @@ alert.showAndWait();
             Logger.getLogger(GUI.StatController.class.getName()).log(Level.SEVERE, null, ex);
         }
        
+    }
+    
+     @FXML
+    private void selectP(MouseEvent event) {
+             
+      Avion r=  tb_a.getSelectionModel().getSelectedItem();
+      VolService vs= new VolService();
+      
+    
+     try{
+         
+       tb_a.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection)->
+     {
+      
+        Vol v = vs.afficher().stream().filter(e->e.getId_avion()==newSelection.getId_avion()).findFirst().get();
+        
+       
+   int a=  IntStream.range(0,tb_v.getItems().size())
+     .filter(i -> tb_v.getItems().get(i).getId_avion()==v.getId_avion()).findFirst().getAsInt();
+   
+    tb_v.getSelectionModel().select(a);
+    
+     });
+       
+     }catch(Exception e)
+     {
+         
+         System.out.println(e);
+         
+     }
+     
+    
+        
+        
     }
     
     @FXML
