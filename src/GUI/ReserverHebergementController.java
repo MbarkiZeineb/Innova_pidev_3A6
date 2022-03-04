@@ -8,21 +8,14 @@ package GUI;
 import Entities.Hebergement;
 import Entities.Paiement;
 import Entities.Reservation;
-import Entities.Vol;
 import Services.HebergementService;
 import Services.PaiementService;
 import Services.ReservationService;
 import static java.lang.String.format;
 import java.net.URL;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -36,18 +29,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 
 /**
@@ -86,9 +70,9 @@ public class ReserverHebergementController implements Initializable {
     @FXML
     private TableColumn<Hebergement, String> h_affiche_pic;
     @FXML
-    private TableColumn<Hebergement, DatePicker> h_affiche_datestart;
+    private TableColumn<Hebergement, Date> h_affiche_datestart;
     @FXML
-    private TableColumn<Hebergement, DatePicker> h_affiche_dateend;
+    private TableColumn<Hebergement, Date> h_affiche_dateend;
     @FXML
     private TableColumn<Hebergement, String> h_affiche_contact;
     @FXML
@@ -185,6 +169,8 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
     private void addHeb(ActionEvent event) {
           PaiementService ps = new PaiementService();
       Hebergement h = hebergement_table.getSelectionModel().getSelectedItem();
+      
+          
         try
 
         {     
@@ -218,6 +204,8 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
        }
         
     }
+    
+    
 
     @FXML
     private void select(MouseEvent event) {
@@ -227,9 +215,24 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         Adresse.setText(h_affiche_adress.getCellData(index));
         Description.setText(h_affiche_description.getCellData(index));
          idc.setText(rs.NomP(idC));
-        prix.setText(h_affiche_prix.getCellData(index).toString());
+
        List<LocalDate> listdd = rs.ListeDd(h.getReferance());
-        System.out.println(listdd);
+     
+       
+       try{
+            prix.setText(h_affiche_prix.getCellData(index).toString());
+           System.out.println("indesx"+index);
+           
+  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+         
+  String  date =h_affiche_datestart.getCellData(index).toString();
+          LocalDate localDate = LocalDate.parse(date, formatter);
+                  DateD.setValue(localDate);
+       }catch(Exception e)
+       {
+           System.out.println(e);
+           
+       }
        DateD.setDayCellFactory((DatePicker param) -> new DateCell(){
            public void updateItem(LocalDate item, boolean empty) {
                super.updateItem(item, empty);

@@ -120,6 +120,33 @@ private Connection conn;
         return Paiements;
     }
  
+    
+        public List<Paiement> afficher2(int id ) {
+           List<Paiement> Paiements = new ArrayList<>();
+        String req = "SELECT * FROM `paiement` where id_reservation in ( select id from reservation where id_client='"+id+"' )";
+        
+        try {
+
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+                Paiement p = new Paiement();
+               p.setId(rs.getInt("id"));
+               p.setDate(rs.getDate("date"));
+                p.setMontant(rs.getFloat("montant"));
+                p.setModalite(rs.getNString("modalite_paiement"));
+                p.setId_reservation(rs.getInt("id_reservation"));
+                Paiements.add(p);
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return Paiements;
+    }
    public void MontantTotal(List<Integer> l )
          
            

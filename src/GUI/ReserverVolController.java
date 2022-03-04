@@ -95,10 +95,14 @@ public class ReserverVolController implements Initializable {
     private TextField prixTotalV;
     @FXML
     private ComboBox<String> modalite;
+    private int id=2;
      @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
+         ReservationService rs = new ReservationService();
+        
+        idCvol.setText( rs.NomP(id));
          loadTableVol();
          BooleanBinding booleanBinding =(nbplaceRvol.textProperty().isEqualTo("0")).or(
         prixvolr.textProperty().isEqualTo("")).or(
@@ -109,6 +113,7 @@ public class ReserverVolController implements Initializable {
           nbplaceRvol.setText("0");
           Vol v = tb_v.getSelectionModel().getSelectedItem();
         AjouterVol.disableProperty().bind(booleanBinding);
+        
          
           modalite.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
     }
@@ -169,6 +174,9 @@ public class ReserverVolController implements Initializable {
           PaiementService ps = new PaiementService();
      
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       
+       if(nbplaceRvol.getText().matches("^[0-9]+$"))
+       {
        try
        { Vol v = tb_v.getSelectionModel().getSelectedItem();
              java.util.Date parsedd = format.parse(datedvol.getText());
@@ -179,7 +187,7 @@ public class ReserverVolController implements Initializable {
        
            System.out.println(v.getId_vol());
            
-         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"Approuve",1,"Vol");
+         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"Approuve",id,"Vol");
          if(rs.verifierNbplaceVol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText())))
          { rs.ajouterVol(r);
          Paiement p = new Paiement(modalite.getValue(),Float.valueOf(prixTotalV.getText()),rs.afficher().get(rs.afficher().size()-1).getId(),datR);
@@ -203,6 +211,20 @@ public class ReserverVolController implements Initializable {
        {
            System.out.println(e);
        }
+    }
+       else
+       {
+           
+           
+                       Notifications.create().title("Reservation voyage organise ").text(" verifier le champs nbre de place " ) .show();
+                       
+                       
+       }
+    
+    
+    
+    
+    
     }
 
     @FXML

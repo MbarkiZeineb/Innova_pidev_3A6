@@ -21,7 +21,7 @@
       <Label layoutX="69.0" layoutY="424.0" text="Prix" />
       <TextField fx:id="prixvolr" editable="false" layoutX="209.0" layoutY="419.0" />
       <Button fx:id="AjouterVol" layoutX="426.0" layoutY="725.0" mnemonicParsing="false" onAction="#addVol" onMouseReleased="#viderVol" prefHeight="31.0" prefWidth="128.0" text="Reserver" />
-      <TextField fx:id="idCvol" layoutX="630.0" layoutY="629.0" />
+      <TextField fx:id="idCvol" editable="false" layoutX="217.0" layoutY="629.0" />
         <TableView fx:id="tb_v" layoutX="590.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#selectVOL" prefHeight="339.0" prefWidth="674.0" styleClass="button">
          <columns>
             <TableColumn fx:id="tb_datedepart" prefWidth="146.0" text="date depart" />
@@ -33,10 +33,12 @@
          </columns>
       </TableView>
       <Label layoutX="101.0" layoutY="115.0" text="Ville Depart" />
-      <TextField fx:id="villeDepart" layoutX="209.0" layoutY="110.0" />
+      <TextField fx:id="villeDepart" editable="false" layoutX="209.0" layoutY="110.0" />
       <Label layoutX="61.0" layoutY="490.0" prefHeight="21.0" prefWidth="85.0" text="Prix Total" />
       <Label layoutX="66.0" layoutY="546.0" prefHeight="21.0" prefWidth="71.0" text="Modalite" />
-      <TextField fx:id="prixTotalV" layoutX="209.0" layoutY="485.0" />
-      <ComboBox fx:id="modalite" layoutX="209.0" layoutY="541.0" prefHeight="31.0" prefWidth="187.0" />
+      <TextField fx:id="prixTotalV" editable="false" layoutX="209.0" layoutY="485.0" />
+      <ComboBox fx:id="modalite" editable="true" layoutX="209.0" layoutY="541.0" prefHeight="31.0" prefWidth="187.0" />
+      <Label layoutX="77.0" layoutY="634.0" text="Nom Client " />
+      <Button layoutX="790.0" layoutY="679.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="294.0" text="Consulter Reservation " />
    </children>
 </AnchorPane>

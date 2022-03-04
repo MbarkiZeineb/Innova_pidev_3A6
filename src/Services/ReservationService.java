@@ -270,7 +270,38 @@ private Connection conn;
     }
     
     
-     
+         public List<Reservation> afficher2(int id ) {
+          List<Reservation> reservations = new ArrayList<>();
+        String req = "SELECT * FROM `reservation`  where id_client= '"+id+"' ";
+        
+        try {
+
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+                Reservation r = new Reservation();
+                r.setId(rs.getInt("id"));
+                r.setId_client(rs.getInt("id_client"));
+                 r.setNbr_place(rs.getInt("nbr_place"));
+                r.setId_voyage(rs.getInt("id_voyage"));
+                   r.setId_vol(rs.getInt("id_vol"));
+                      r.setId_active(rs.getInt("id_activite"));
+                r.setId_hebergement(rs.getInt("id_hebergement"));
+                r.setEtat(rs.getNString("etat"));
+                r.setDate_reservation(rs.getDate("date_reservation"));
+                 r.setDate_debut(rs.getDate("date_debut"));
+                  r.setDate_fin(rs.getDate("date_fin"));
+                  r.setType(rs.getString("type"));
+                reservations.add(r);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return reservations;
+    }
     public String  NomP(int id) {
          
         String req = "SELECT CONCAT(`nom`,'  ',`prenom`) FROM `client` WHERE id = "+id+" " ;
@@ -314,8 +345,10 @@ private Connection conn;
     
        //Vol 
     public void modifiernbplacevol(int id,int nb)
-{  System.out.println(nb);
+{  System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"+nb);
     System.out.println("test");
+    
+    
     String req = "update vol  set `nbr_placedispo`= `nbr_placedispo` - ? where id_vol= ?";
      try {
              pste = conn.prepareStatement(req);
@@ -351,11 +384,12 @@ private Connection conn;
     //Vol 
       public boolean verifierNbplaceVol(int id , int nb)
   {
-      
+       System.out.println("aaaaa"+nb);
       VolService vs = new VolService();
       List<Vol> lv= vs.afficher();
+      System.out.println("aaaaa"+nb);
       boolean test =lv.stream().filter(v->v.getId_vol()==id).anyMatch(v -> v.getNbr_placedispo() - nb >= 0);
-      System.out.println(test);
+ 
       return test;
   }
     

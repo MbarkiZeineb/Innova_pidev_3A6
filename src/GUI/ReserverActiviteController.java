@@ -102,6 +102,11 @@ public class ReserverActiviteController implements Initializable {
        PaiementService ps = new PaiementService();
      
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       
+          if(nbpA.getText().matches("^[0-9]+$"))  
+          {
+              
+          
        try
        {    Activite A =  tvactivite.getSelectionModel().getSelectedItem();
              java.util.Date parsedd = format.parse(DateA.getText());
@@ -132,6 +137,12 @@ public class ReserverActiviteController implements Initializable {
            System.out.println(e);
        }
     }
+    else
+    {
+        
+        Notifications.create().title("Reservation Activite ").text("  Verifier le champs nombre de place   ").show();
+        
+    }}
     
     
     

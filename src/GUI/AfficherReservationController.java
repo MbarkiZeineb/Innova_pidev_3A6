@@ -116,11 +116,56 @@ public class AfficherReservationController implements Initializable {
 
     @FXML
     private Button agenda;
-    @Override
+    
+    
+  private int idc=2 ;
+  
+  
+  
+  //provisoire 
+  
+      @FXML
+    private Button btnOverview;
+
+    @FXML
+    private Button btnOrders;
+
+    @FXML
+    private Button btnCustomers;
+
+    @FXML
+    private Button btnMenus;
+
+    @FXML
+    private Button btnPackages;
+
+    @FXML
+    private Button btnSettings;
+
+    @FXML
+    private Button btnSignout;
+    @FXML
+    private Button btnSettings1;
+    @FXML
+    private TextField nbpChange;
+
+    public void setIdc(int idc) {
+        this.idc = idc;
+        
+        loadTable(idc);
+          loadTableP(idc);
+        
+    }
+  
+  
+    
+    
+    
+
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-          loadTable();
-          loadTableP();
+          loadTable(idc);
+          loadTableP(idc);
           supprimerR.disableProperty().bind(Bindings.isEmpty(tableRe.getSelectionModel().getSelectedItems()));
        comboMontant.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
        Etat.getItems().addAll("Approuve" ,"Annule");
@@ -133,7 +178,7 @@ public class AfficherReservationController implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("agenda.fxml"));
 		Parent root = loader.load();
 		AgendaController  e = loader.getController();
-                e.setId(1);
+                e.setId(2);
 		((Button) event.getSource()).getScene().setRoot(root);
 		}catch(Exception ex){
 			System.out.println(ex);
@@ -162,15 +207,21 @@ public class AfficherReservationController implements Initializable {
     @FXML
     void ReserverVoyage(ActionEvent event) throws Exception {
         
-        Stage stage = new Stage();
-         Parent root = FXMLLoader.load(getClass().getResource("ReserverVoyage.fxml"));
-        Scene scene =new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+         try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverVoyage.fxml"));
+		Parent root = loader.load();
+		ReserverVoyageController  e = loader.getController();
+           
+                
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
 
     }
 
-    private void loadTable() {
+    private void loadTable(int id ) {
      
        
          
@@ -179,10 +230,10 @@ public class AfficherReservationController implements Initializable {
             // TODO
        
      
-          List <Reservation> ls =rs.afficher();
-          List <Paiement> lp =ps.afficher();
+          List <Reservation> ls =rs.afficher2(2);
+       
           ls.forEach(e->{oblist.add(e);
-         // System.out.print(oblist);
+         
           dateR.setCellValueFactory(new PropertyValueFactory<>("date_reservation"));
           nbp.setCellValueFactory(new PropertyValueFactory<>("nbr_place"));
            dated.setCellValueFactory(new PropertyValueFactory<>("Date_debut"));
@@ -210,7 +261,7 @@ Stage stage = new Stage();
         stage.show();
     }
     
-    private void loadTableP() {
+    private void loadTableP(int id ) {
      
        
          
@@ -220,7 +271,7 @@ Stage stage = new Stage();
        
     
         
-          List <Paiement> lp =ps.afficher();
+          List <Paiement> lp =ps.afficher2(id);
          
           lp.forEach(e->{oblistp.add(e);
          System.out.print(oblistp);
@@ -258,9 +309,9 @@ Stage stage = new Stage();
         
         
        tableRe.getItems().clear();
-    loadTable();
+    loadTable(idc);
      paiment.getItems().clear();
-     loadTableP();
+     loadTableP(idc);
      
     }
     
@@ -324,7 +375,7 @@ Stage stage = new Stage();
         p.setModalite( comboMontant.getValue());
         ps.modifier(p);
         paiment.getItems().clear();
-     loadTableP();
+     loadTableP(idc);
         
     }
 
@@ -350,8 +401,8 @@ Stage stage = new Stage();
                
                  tableRe.getItems().clear();
                 paiment.getItems().clear();
-                 loadTableP();
-                 loadTable();
+                  loadTableP(idc);
+                 loadTable(idc);  
             break;
         case "Voyage":
              r.setEtat(Etat.getValue());
@@ -361,8 +412,8 @@ Stage stage = new Stage();
                
                  tableRe.getItems().clear();
                 paiment.getItems().clear();
-                 loadTableP();
-                 loadTable();
+            loadTableP(idc);
+                 loadTable(idc);  
             
            
         case "Activite":
@@ -374,17 +425,88 @@ Stage stage = new Stage();
                
                  tableRe.getItems().clear();
                 paiment.getItems().clear();
-                 loadTableP();
-                 loadTable();
+                  loadTableP(idc);
+                 loadTable(idc);  
          
             break;        
                  }
                   
              }
-             else
+             
+             if(Etat.getValue().equals("Annule"))
                  
              {
                   Notifications.create().title(" Affichage  ").text("  la reseravation est deja annule  ").show();
+                 
+                 
+             }
+             if(Etat.getValue().equals("Approuve") && r.getEtat().equals("Approuve") && (nbpChange.getText().matches("^[0-9]+$")))
+             {
+                 
+                  switch(r.getType())
+                  {
+             case "Vol":
+                 try{
+                     
+                     rs.modifiernbplacevol(r.getId_vol(),r.getNbr_place());
+                     int nb=  Integer.parseInt(nbpChange.getText());
+                      System.out.println("nbb"+nb);
+                     
+                 if(rs.verifierNbplaceVol(r.getId_vol(),nb)==true)
+                 {
+                     
+                     rs.modifiernbplacevol(r.getId_vol(),Integer.parseInt(nbpChange.getText()));
+                     r.setNbr_place(nb);
+                     rs.modifiervol(r);
+                     
+                 loadTableP(idc);
+                 loadTable(idc);    
+                
+                 
+                    
+                 }
+                  if(rs.verifierNbplaceVol(r.getId_vol(),nb)==false)
+                 {
+                      
+                     rs.Annulernbplacevol(r.getId_vol(), r.getNbr_place());
+                     Notifications.create().title(" Affichage  ").text("  nombre de place nom disponible   ").show();
+                 }
+                 
+                 
+                 }
+                 catch(Exception e)
+                 {
+                     
+                     
+                 }
+              break;
+        case "Voyage":
+             r.setEtat(Etat.getValue());
+              rs.modifier(r);
+              rs.Annulernbplacevoyage(r.getId_voyage(), r.getNbr_place());
+              ps.modifierMontant(r.getId(),0);
+               
+                 tableRe.getItems().clear();
+                paiment.getItems().clear();
+                 loadTableP(2);
+                 loadTable(1);
+            
+           
+        case "Activite":
+            
+             r.setEtat(Etat.getValue());
+              rs.modifierAct(r);
+             rs.AnnulernbplaceA(r.getId_active(),r.getNbr_place());
+              ps.modifierMontant(r.getId(),0);
+               
+                 tableRe.getItems().clear();
+                paiment.getItems().clear();
+                 loadTableP(2);
+                 loadTable(1);
+         
+            break;        
+                 }
+
                  
                  
              }
@@ -418,8 +540,8 @@ Stage stage = new Stage();
                ps.modifierMontant(r.getId(),prixTT);
               tableRe.getItems().clear();
                 paiment.getItems().clear();
-                 loadTableP();
-                 loadTable();
+                 loadTableP(2);
+                 loadTable(1);
                       Notifications.create().title(" Affichage  ").text("  la reseravation est modifiee  ").show();
                      
                  }
@@ -445,8 +567,8 @@ Stage stage = new Stage();
               ps.modifierMontant(r.getId(),0);
                  tableRe.getItems().clear();
                 paiment.getItems().clear();
-                 loadTableP();
-                 loadTable();
+                 loadTableP(2);
+                 loadTable(1);
                  
                  
              }

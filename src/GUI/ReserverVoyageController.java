@@ -103,8 +103,6 @@ public class ReserverVoyageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        nbp.setText("0");
-        
           BooleanBinding booleanBinding =(nbp.textProperty().isEqualTo("0")).or(
         prixVoy.textProperty().isEqualTo("")).or(
          villeDvoy.textProperty().isEqualTo("")).or(
@@ -112,13 +110,25 @@ public class ReserverVoyageController implements Initializable {
             modaliteV.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
             Reservervoyage.disableProperty().bind(booleanBinding);
         loadTable();
-    }    
+    }   
+    
+    
+    
+ 
+  
 
     @FXML
-    private void addVoyage(ActionEvent event) {
-             
-     ReservationService rs = new ReservationService();
+    void reserverVoyage(ActionEvent event) {
+
+    
+    
+   
+ReservationService rs = new ReservationService();
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       
+       
+       if(nbp.getText().matches("^[0-9]+$"))
+       {
        try
        { voyageOrganise v = tableviewVO.getSelectionModel().getSelectedItem();
              java.util.Date parsedd = format.parse(dateD.getText());
@@ -126,7 +136,7 @@ public class ReserverVoyageController implements Initializable {
               java.sql.Date datR = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         java.sql.Date Datedv = new java.sql.Date(parsedd.getTime());
         java.sql.Date Dateav = new java.sql.Date(parseda.getTime());
-       
+           System.out.print(Integer.parseInt(idc.getText()));
         Reservation r= new Reservation(datR,Integer.parseInt(nbp.getText()), Datedv, Dateav,v.getIdVoy(),0,0,0,"Approuve",Integer.parseInt(idc.getText()),"Voyage");
         if(rs. verifierNbplaceVoyage(v.getIdVoy(), Integer.parseInt(nbp.getText())))
         {rs.ajouter(r);
@@ -155,8 +165,19 @@ public class ReserverVoyageController implements Initializable {
        {
            System.out.println(e);
        }
-    
+       }
+       else
+           
+       {
+          
+            
+            Notifications.create().title("Reservation voyage organise ").text(" verifier le champs nbre de place " ) .show();
+           
+           
+       }
     }
+
+
         
          private void loadTable() {
      
@@ -178,20 +199,17 @@ public class ReserverVoyageController implements Initializable {
     tableviewVO.setItems(oblist);
    
     }
-         
-           @FXML
-    private void selectvol(MouseEvent event) {
-         int  index =   tableviewVO.getSelectionModel().getSelectedIndex();
+          @FXML
+    void selectvol(MouseEvent event) {
+      int  index =   tableviewVO.getSelectionModel().getSelectedIndex();
     villeDvoy.setText( VilleDep.getCellData(index));
      VilleDestVoy.setText(villeDest.getCellData(index));
     dateD.setText(DateDeb.getCellData(index));
     dateF.setText(DateDeb.getCellData(index));
    dateF.setText(DateFin.getCellData(index));
-     prixVoy.setText(prix.getCellData(index).toString());
-   
-    
-        }
-    
+     prixVoy.setText(""+prix.getCellData(index));
+    }   
+       
 
    
         

@@ -13,16 +13,16 @@
       <Label layoutX="87.0" layoutY="142.0" prefHeight="21.0" prefWidth="104.0" text="Nom" />
       <Label layoutX="118.0" layoutY="195.0" prefHeight="21.0" prefWidth="57.0" text="Prix" />
       <Label layoutX="107.0" layoutY="299.0" text="Nombre de place" />
-      <TextField fx:id="nomA" layoutX="170.0" layoutY="142.0" />
-      <TextField fx:id="prixA" layoutX="170.0" layoutY="190.0" />
-      <TextField fx:id="nbpA" layoutX="235.0" layoutY="294.0" onKeyTyped="#calculerPT" />
-      <TextField fx:id="DateA" layoutX="211.0" layoutY="242.0" />
+      <TextField fx:id="nomA" editable="false" layoutX="170.0" layoutY="142.0" />
+      <TextField fx:id="prixA" editable="false" layoutX="170.0" layoutY="190.0" />
+      <TextField fx:id="nbpA" editable="false" layoutX="235.0" layoutY="294.0" onKeyTyped="#calculerPT" />
+      <TextField fx:id="DateA" editable="false" layoutX="211.0" layoutY="242.0" />
       <Label layoutX="118.0" layoutY="247.0" prefHeight="21.0" prefWidth="68.0" text="Date" />
       <Label layoutX="106.0" layoutY="354.0" prefHeight="21.0" prefWidth="82.0" text="prix total" />
-      <TextField fx:id="prixtotal" layoutX="235.0" layoutY="349.0" />
+      <TextField fx:id="prixtotal" editable="false" layoutX="235.0" layoutY="349.0" />
       <Button fx:id="ReserverA" layoutX="522.0" layoutY="508.0" mnemonicParsing="false" onAction="#addact" onMouseReleased="#vider" prefHeight="31.0" prefWidth="115.0" text="Reserver" />
       <Label layoutX="101.0" layoutY="426.0" text="Nom Client" />
-      <TextField fx:id="idc" layoutX="235.0" layoutY="421.0" />
+      <TextField fx:id="idc" editable="false" layoutX="235.0" layoutY="421.0" />
       <TableView fx:id="tvactivite" layoutX="513.0" layoutY="73.0" onMouseClicked="#selecteAct" prefHeight="348.0" prefWidth="787.0">
         <columns>
            <TableColumn fx:id="colnom" prefWidth="140.0" text="Nom" />
