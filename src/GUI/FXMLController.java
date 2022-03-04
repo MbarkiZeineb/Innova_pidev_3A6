@@ -10,6 +10,7 @@ import Services.CategoryService;
 import Services.HebergementService;
 import entities.Category;
 import entities.Hebergement;
+import java.io.File;
 import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -36,7 +37,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import static sun.net.www.MimeTable.loadTable;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
 /**
@@ -160,6 +163,8 @@ public class FXMLController implements Initializable {
     private TextField h_referance_modifer;
     @FXML
     private ComboBox<String> h_combo_recherche;
+    @FXML
+    private TableColumn<?, ?> h_affiche_model;
 
 
     /**
@@ -183,7 +188,8 @@ public class FXMLController implements Initializable {
     loadTablecateg();//categ
     loadTableHebegement();//heberegement
     h_combo_recherche.setItems(FXCollections.observableArrayList("Referance","Paye","Category"));
-    }    
+     
+    }
     
     
     
@@ -213,11 +219,11 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         h_affiche_pic.setCellValueFactory(new PropertyValueFactory<>("photo"));
         h_affiche_datestart.setCellValueFactory(new PropertyValueFactory<>("date_start"));
         h_affiche_dateend.setCellValueFactory(new PropertyValueFactory<>("date_end"));
-        h_affiche_datestart.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        h_affiche_contact.setCellValueFactory(new PropertyValueFactory<>("nbr_detoile"));
-        h_affiche_nbrdetoile.setCellValueFactory(new PropertyValueFactory<>("nbr_suite"));
-        h_affiche_nbrsuite.setCellValueFactory(new PropertyValueFactory<>("nbr_parking"));
-        h_affiche_nbrparking.setCellValueFactory(new PropertyValueFactory<>("model_caravane"));
+        h_affiche_contact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        h_affiche_nbrdetoile.setCellValueFactory(new PropertyValueFactory<>("nbr_detoile"));
+        h_affiche_nbrsuite.setCellValueFactory(new PropertyValueFactory<>("nbr_suite"));
+        h_affiche_nbrparking.setCellValueFactory(new PropertyValueFactory<>("nbr_parking"));
+        h_affiche_model.setCellValueFactory(new PropertyValueFactory<>("model_caravane"));
         h_affiche_categ.setCellValueFactory(new PropertyValueFactory<>("id_confeg"));
         h_affiche_offreur.setCellValueFactory(new PropertyValueFactory<>("offreur"));
 
@@ -362,9 +368,72 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
     private void Import(MouseEvent event) {//3aleh fama jcp 
     }
 
+//    private void h_ajouter(ActionEvent event) {
+//     
+//
+//    }
     @FXML
-    private void h_ajouter(ActionEvent event) {
-     //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    private void H_modifer(MouseEvent event) {
+        HebergementService HS = new HebergementService(); 
+     Hebergement a=  hebergement_table.getSelectionModel().getSelectedItem();
+//     java.sql.Date datestart =Date.valueOf(a_datestart.getValue());
+//     java.sql.Date dateend = Date.valueOf(a_dateend.getValue());
+//            a.setDate_start(datestart);
+//            a.setDate_end(dateend);     
+//            a.setDate_start(datestart);
+//            a.setDate_end(dateend); 
+            int nbr1=Integer.parseInt(a_nbr_detoile.getText());
+            int nbr2=Integer.parseInt(a_nbr_suite.getText());  
+            int nbr3=Integer.parseInt(a_nbr_parking.getText());  
+            int nbr4=Integer.parseInt(a_category.getText()); 
+            a.setPaye(a_paye.getText());
+            a.setAdress(a_adress.getText());
+            a.setPrix(Float.parseFloat(a_prix.getText()));
+            a.setDescription(a_description.getText());
+            a.setPhoto(a_pic.getText());
+            a.setContact(a_contact.getText());
+            a.setNbr_detoile(nbr1);
+            a.setNbr_suite(nbr2);
+            a.setNbr_parking(nbr3);
+            a.setModel_caravane(a_modele.getText());
+            a.setId_confeg(nbr4);
+     HS.modifier(a);
+     
+
+     categorie_table.getItems().clear();
+        loadTablecateg();  
+        
+//    Hebergement a = hebergement_table.getSelectionModel().getSelectedItem();
+//    HebergementService hs = new HebergementService();
+//     java.sql.Date datestart =Date.valueOf(a_datestart.getValue());
+//     java.sql.Date dateend = Date.valueOf(a_dateend.getValue());
+//     int nbr1=Integer.parseInt(a_nbr_detoile.getText());  
+//     int nbr2=Integer.parseInt(a_nbr_suite.getText());  
+//     int nbr3=Integer.parseInt(a_nbr_parking.getText());  
+//     int nbr4=Integer.parseInt(a_category.getText());
+//        System.out.println("1");
+//            a.setPaye(a_paye.getText());
+//            a.setAdress(a_adress.getText());
+//            a.setPrix(Float.parseFloat(a_prix.getText()));
+//            a.setDescription(a_description.getText());
+//            a.setPhoto(a_pic.getText());
+//            a.setDate_start(datestart);
+//            a.setDate_end(dateend);
+//            a.setContact(a_contact.getText());
+//            a.setNbr_detoile(nbr1);
+//            a.setNbr_suite(nbr2);
+//            a.setNbr_parking(nbr3);
+//            a.setModel_caravane(a_modele.getText());
+//            a.setId_confeg(nbr4);
+//            hs.modifier(a);
+//        categorie_table.getItems().clear();
+//        loadTablecateg();  
+    }//// mochkla fel changement fel date 
+
+
+    @FXML
+    private void h_ajouterlast(ActionEvent event) {
+             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
      java.sql.Date datestart =Date.valueOf(a_datestart.getValue());
      java.sql.Date dateend = Date.valueOf(a_dateend.getValue());
      int nbr1=Integer.parseInt(a_nbr_detoile.getText());  
@@ -377,10 +446,55 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         loadTableHebegement();
     }
 
+    @FXML
+    private void h_select(MouseEvent event) {
+                
+          int index = hebergement_table.getSelectionModel().getSelectedIndex();
+        Hebergement h = hebergement_table.getSelectionModel().getSelectedItem();
+        a_adress.setText(h_affiche_adress.getCellData(index));
+        a_paye.setText(h_affiche_paye.getCellData(index));
+        a_prix.setText(h_affiche_prix.getCellData(index).toString());
+        a_modele.setText((String) h_affiche_model.getCellData(index));
+        a_description.setText(h_affiche_description.getCellData(index));
+        a_pic.setText(h_affiche_pic.getCellData(index));
+       // a_datestart.setValue(h_affiche_datestart.getCellData(index));
+        // a_dateend.setValue(h_affiche_datestart.getCellData(index));
+        System.out.println("middel ");
+        
+        a_category.setText(h_affiche_categ.getCellData(index).toString());
+        a_nbr_detoile.setText(h_affiche_nbrdetoile.getCellData(index).toString());
+        a_nbr_parking.setText(h_affiche_nbrdetoile.getCellData(index).toString());
+        a_nbr_suite.setText(h_affiche_nbrsuite.getCellData(index).toString());
+        a_contact.setText(h_affiche_contact.getCellData(index));
+    }
+
+    @FXML
+    private void h_importpath(ActionEvent event) {
+        //String url = "https://media.istockphoto.com/photos/downtown-cleveland-hotel-entrance-and-waiting-taxi-cab-picture-id472899538?b=1&k=20&m=472899538&s=170667a&w=0&h=oGDM26vWKgcKA3ARp2da-H4St2dMEhJg23TTBeJgPDE=";
+        String url=a_pic.getText();
+        System.out.println(url);
+
+            Image image = new Image(url);
+            if (image.isError()) {
+                System.out.println("Error loading image from "+url);
+                
+                // image.getException().printStackTrace();
+            } else {
+                System.out.println("Successfully loaded image from " + url);
+                a_picture_kol.setImage(image);
+            }
+        
+//      JFileChooser chooser = new JFileChooser();
+//      chooser.showOpenDialog(null);
+//      File f  =chooser.getSelectedFile();
+//      String filename =f.getAbsolutePath();
+//      a_pic.setText(filename);
+//      Image getAbolutePath =null;
+//      ImageIcon icon = new ImageIcon(filename);
+      //Image image = icon.getImage().getScaledInstance(a_picture_kol.getWidth(),a_picture_kol.getHeight(),Image.);
+      
+      
+    }
     
-    
-    
-    
-    
-    
+
 }//end Function

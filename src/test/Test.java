@@ -34,8 +34,8 @@ public class Test {
     Date DateF=Date.valueOf(SDateF);
         HebergementService HS = new HebergementService(); 
         CategoryService CS = new CategoryService();
-        Category c1= new Category(3,"toktok");
-// Hebergement h= new Hebergement( "tunis", "String adress", (float) 465.54, "String description"," String photo", DateD, DateF, "tact", 84, 48, 4, "String",1 ,1);
+        //Category c1= new Category(3,"toktok");
+        Hebergement h= new Hebergement( "tunis", "ghazela", (float) 465.54, "String description"," String photo", DateD, DateF, "tact", 84, 48, 4, "String",1 ,1);
 //  String paye, String adress, float prix, String description, String photo, Date date_start, Date date_end, String contact, int nbr_detoile, int nbr_suite, int nbr_parking, String model_caravane, int id_confeg ,int offreur  
 //     Category C1 = new Category(5,"jcp");
 //CS.ajouter(C1);
@@ -50,8 +50,10 @@ System.out.println(CS.afficher());
 //        CS.getByReferanc(2);
 //        HS.getByReferanc(19);
 //CS.modifier(c1);
-System.out.println(HS.afficher());
 
+System.out.println(HS.afficher());
+HS.modifier(h);
+System.out.println(HS.afficher());
 
         
  

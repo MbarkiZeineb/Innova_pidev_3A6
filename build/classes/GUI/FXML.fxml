@@ -79,7 +79,7 @@
       </ImageView>
       <Pane layoutX="302.0" layoutY="7.0" prefHeight="725.0" prefWidth="1096.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="302.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TabPane fx:id="F_hebergement" layoutX="31.0" layoutY="147.0" prefHeight="536.0" prefWidth="1033.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="F_hebergement" layoutX="8.0" layoutY="147.0" prefHeight="536.0" prefWidth="1055.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab fx:id="ajouter_hebegement" text="Ajouter">
                   <content>
@@ -117,12 +117,12 @@
                               </TableView>
                               <Button fx:id="B_c_supprimer" layoutX="924.0" layoutY="128.0" mnemonicParsing="false" onMouseClicked="#C_suppimer" prefHeight="32.0" prefWidth="89.0" text="supprimer" />
                               <Button fx:id="B_c_modifer" layoutX="933.0" layoutY="68.0" mnemonicParsing="false" onMouseClicked="#C_modifer" prefHeight="32.0" prefWidth="71.0" text="modifer" />
-                              <Button fx:id="B_h_ajouter" layoutX="933.0" layoutY="315.0" mnemonicParsing="false" onAction="#h_ajouter" prefHeight="32.0" prefWidth="71.0" text="Ajouter" />
-                              <Button fx:id="B_import" layoutX="935.0" layoutY="364.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="68.0" text="import" />
+                              <Button fx:id="B_h_ajouter" layoutX="933.0" layoutY="315.0" mnemonicParsing="false" onAction="#h_ajouterlast" prefHeight="32.0" prefWidth="71.0" text="Ajouter" />
+                              <Button fx:id="B_import" layoutX="935.0" layoutY="364.0" mnemonicParsing="false" onAction="#h_importpath" prefHeight="32.0" prefWidth="68.0" text="import" />
                               <Label layoutX="554.0" layoutY="180.0" prefHeight="26.0" prefWidth="81.0" text="Contact : " />
-                              <TextField fx:id="a_contact" layoutX="645.0" layoutY="180.0" prefHeight="26.0" prefWidth="229.0" />
+                              <TextField fx:id="a_contact" layoutX="645.0" layoutY="180.0" prefHeight="26.0" prefWidth="194.0" />
                               <TextField fx:id="a_pic" layoutX="921.0" layoutY="420.0" prefHeight="26.0" prefWidth="95.0" />
-                              <Button fx:id="B_h_modifer" layoutX="933.0" layoutY="277.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="71.0" text="Modifer " />
+                              <Button fx:id="B_h_modifer" layoutX="933.0" layoutY="277.0" mnemonicParsing="false" onMouseClicked="#H_modifer" prefHeight="32.0" prefWidth="71.0" text="Modifer " />
                               <TextField fx:id="h_referance_modifer" layoutX="918.0" layoutY="225.0" prefHeight="26.0" prefWidth="95.0" />
                               <Label layoutX="925.0" layoutY="193.0" prefHeight="26.0" prefWidth="81.0" text="Referance : " />
                            </children>
@@ -131,9 +131,9 @@
                 </Tab>
                 <Tab text="Afficher">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1322.0">
                            <children>
-                              <TableView fx:id="hebergement_table" layoutY="14.0" prefHeight="360.0" prefWidth="1044.0" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+                              <TableView fx:id="hebergement_table" layoutY="14.0" onMouseClicked="#h_select" prefHeight="360.0" prefWidth="1044.0" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
                                 <columns>
                                   <TableColumn fx:id="h_affiche_referance" prefWidth="75.0" text="Referance" />
                                   <TableColumn fx:id="h_affiche_paye" prefWidth="57.0" text="paye" />
@@ -142,20 +142,20 @@
                                     <TableColumn fx:id="h_affiche_description" prefWidth="82.0" text="description" />
                                     <TableColumn fx:id="h_affiche_pic" prefWidth="43.0" text="photo" />
                                     <TableColumn fx:id="h_affiche_datestart" prefWidth="84.0" text="date dispo" />
-                                    <TableColumn fx:id="h_affiche_dateend" prefWidth="67.0" text="jusqu'a" />
-                                    <TableColumn fx:id="h_affiche_contact" prefWidth="53.0" text="Contact" />
-                                    <TableColumn fx:id="h_affiche_nbrdetoile" prefWidth="104.0" text="nombre d'etoile" />
-                                    <TableColumn fx:id="h_affiche_nbrsuite" prefWidth="97.0" text="nombre de suite" />
-                                    <TableColumn fx:id="h_affiche_nbrparking" prefWidth="130.0" text="nombre de place parking " />
-                                    <TableColumn minWidth="0.0" prefWidth="0.0" text="Model caravane" />
-                                    <TableColumn fx:id="h_affiche_categ" text="categorie" />
-                                    <TableColumn fx:id="h_affiche_offreur" text="ID Offreur" />
+                                    <TableColumn fx:id="h_affiche_dateend" prefWidth="50.0" text="jusqu'a" />
+                                    <TableColumn fx:id="h_affiche_contact" prefWidth="55.0" text="Contact" />
+                                    <TableColumn fx:id="h_affiche_nbrdetoile" prefWidth="101.0" text="nombre d'etoile" />
+                                    <TableColumn fx:id="h_affiche_nbrsuite" prefWidth="103.0" text="nombre de suite" />
+                                    <TableColumn fx:id="h_affiche_nbrparking" prefWidth="146.0" text="nombre de place parking " />
+                                    <TableColumn fx:id="h_affiche_model" minWidth="0.0" prefWidth="70.0" text="Model " />
+                                    <TableColumn fx:id="h_affiche_categ" minWidth="0.0" prefWidth="81.0" text="categorie" />
+                                    <TableColumn fx:id="h_affiche_offreur" minWidth="0.0" prefWidth="0.0" text="ID Offreur" />
                                 </columns>
                               </TableView>
-                              <Button fx:id="B_h_supp" layoutX="838.0" layoutY="407.0" mnemonicParsing="false" onMouseClicked="#h_hebergement" prefHeight="39.0" prefWidth="87.0" text="Supprimer" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="838.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="407.0" />
-                              <Button fx:id="B_h_recherche" layoutX="929.0" layoutY="407.0" mnemonicParsing="false" onAction="#H_recherche" prefHeight="38.0" prefWidth="96.0" text="Recherche " AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="929.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="407.0" />
-                              <TextField fx:id="h_recherche_referance" layoutX="652.0" layoutY="404.0" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="652.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="404.0" />
-                              <ComboBox fx:id="h_combo_recherche" layoutX="487.0" layoutY="411.0" prefHeight="28.0" prefWidth="159.0" promptText="Choose" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="487.0" AnchorPane.rightAnchor="407.0" AnchorPane.topAnchor="411.0" />
+                              <Button fx:id="B_h_supp" layoutX="838.0" layoutY="407.0" mnemonicParsing="false" onMouseClicked="#h_hebergement" prefHeight="39.0" prefWidth="87.0" text="Supprimer" />
+                              <Button fx:id="B_h_recherche" layoutX="929.0" layoutY="407.0" mnemonicParsing="false" onAction="#H_recherche" prefHeight="38.0" prefWidth="96.0" text="Recherche " AnchorPane.rightAnchor="28.0" />
+                              <TextField fx:id="h_recherche_referance" layoutX="652.0" layoutY="404.0" />
+                              <ComboBox fx:id="h_combo_recherche" layoutX="487.0" layoutY="411.0" prefHeight="28.0" prefWidth="159.0" promptText="Choose" />
                            </children>
                         </AnchorPane>
                   </content>

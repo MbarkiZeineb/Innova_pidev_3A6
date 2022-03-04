@@ -77,7 +77,7 @@ String req = "INSERT INTO `hebergement`(`referance`, `paye`, `adress`, `prix`, `
            pste.executeUpdate();
             int rowsUpdated = pste.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("La modification d'avion a été éffectuée avec succès ");
+                System.out.println("La modification de hebergement a été éffectuée avec succès ");
             }
         } catch (SQLException ex) {
             Logger.getLogger(HebergementService.class.getName()).log(Level.SEVERE, null, ex);     
@@ -147,6 +147,37 @@ try {
         return Hebergement;
     }
     
+    public void recherchereferance(int referance){
+    String req = "select * from hebergement where referance='"+referance+"';";
+    try {
+            ste = conn.createStatement();
+            ResultSet resultSet = ste.executeQuery(req);
+
+            if (resultSet.next()){
+                Hebergement h = new Hebergement();
+                h.setReferance(resultSet.getInt(1));
+                h.setOffreur(resultSet.getInt(15));
+                h.setPaye(resultSet.getString(2));
+                h.setAdress(resultSet.getString(3));
+                h.setPrix(resultSet.getFloat(4));
+                h.setDescription(resultSet.getString(5));
+                h.setPhoto(resultSet.getString(6));
+                h.setDate_start(resultSet.getDate(7));
+                h.setDate_end(resultSet.getDate(8));
+                h.setContact(resultSet.getString(9));
+                h.setNbr_detoile(resultSet.getInt(10));
+                h.setNbr_suite(resultSet.getInt(11));
+                h.setNbr_parking(resultSet.getInt(12));
+                h.setModel_caravane(resultSet.getString(13));
+                h.setId_confeg(resultSet.getInt(14));
+                //hebergement.add(h);
+                //System.out.println(h.toString());
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+    }
+    }
     
     public List  <Hebergement> getByReferanc (int referance) {
         List<Hebergement> hebergement = new ArrayList<>();
