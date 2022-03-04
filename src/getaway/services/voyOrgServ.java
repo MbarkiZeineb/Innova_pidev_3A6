@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import getaway.entities.voyageOrganise;
 import getaway.utils.datasource;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 /**
  *
  * @author Amal Chibani
@@ -179,24 +181,39 @@ List<voyageOrganise> voyageorganise = new ArrayList<>();
 
     }
     
-    public List<voyageOrganise> TrierParPrix()  {
-        List<voyageOrganise> list = new ArrayList<>();
-        try{
-        ste = conn.createStatement();
-        
-        ResultSet res = ste.executeQuery("select distinct * FROM `voyageorganise` ORDER BY prix ASC");
-        
-        voyageOrganise com = null;
-        while (res.next()) {
-            com = new voyageOrganise(res.getInt(1),res.getString(2), res.getString(3),res.getString(4),res.getString(5),res.getInt(6),res.getInt(7),res.getFloat(8),res.getString(9));
-            list.add(com);
-            //System.out.println(list);
-        }
-        }catch (SQLException ex) {
+    public ObservableList<voyageOrganise> TrierParPrix()  {
+        ObservableList<voyageOrganise> observ = FXCollections.observableArrayList();
+         String req = "select * FROM `voyageorganise` ORDER BY prix ASC";
+       try {
+            pste = conn.prepareStatement(req);
+            ResultSet rs = pste.executeQuery();
+            
+            
+
+            while (rs.next()) {
+               voyageOrganise vo= new voyageOrganise();
+                vo.setIdVoy(rs.getInt("IdVoy"));
+                vo.setVilleDepart(rs.getString(2));
+                vo.setVilleDest(rs.getString(3));
+                vo.setDateDepart(rs.getString(4));
+                vo.setDateArrive(rs.getString(5));
+                vo.setNbrPlace(rs.getInt("nbrPlace"));
+                vo.setIdCat(rs.getInt("IdCat"));
+                vo.setPrix(rs.getFloat("prix"));
+                vo.setDescription(rs.getString(9));
+                
+                
+                observ.add(vo);
+            }
+
+        } catch (SQLException ex) {
             Logger.getLogger(voyOrgServ.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return list;
+
+        return observ;
+
     }
+    
     
     public int stat() {
         int nb = 0;

@@ -40,7 +40,7 @@ public class Getaway {
        //vos.update(61,"tunis","hand","12/2/2022","13/2/2022",20,1,14.3f,"abedzc");
        // System.out.println(vos.FindIdVoyById(1));
         //System.out.println(vos.FindVille("italy"));
-         //System.out.println(vos.TrierParPrix());
+         System.out.println(vos.TrierParPrix());
 
     
       // vos.update(vo2);
