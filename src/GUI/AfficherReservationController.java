@@ -128,26 +128,35 @@ public class AfficherReservationController implements Initializable {
     } 
     
      @FXML
-    void agenda(ActionEvent event) throws Exception  {
-        
-        
-         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("agenda.fxml"));
-        Scene scene =new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-  
+    void agenda(ActionEvent event)   {
+  try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("agenda.fxml"));
+		Parent root = loader.load();
+		AgendaController  e = loader.getController();
+                e.setId(1);
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
         
       
     }
     
       @FXML
     void ReserverH(ActionEvent event) throws Exception {
- Stage stage = new Stage();
-         Parent root = FXMLLoader.load(getClass().getResource("ReserverHebergement.fxml"));
-        Scene scene =new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        
+        
+         try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverHebergement.fxml"));
+		Parent root = loader.load();
+		ReserverHebergementController  e = loader.getController();
+                e.setIdC(1);
+                
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+        
     }
 
     @FXML
@@ -431,7 +440,7 @@ Stage stage = new Stage();
                  
                  
              {
-                  r.setEtat(Etat.getValue());
+               r.setEtat(Etat.getValue());
               rs.modifierHeb(r);
               ps.modifierMontant(r.getId(),0);
                  tableRe.getItems().clear();

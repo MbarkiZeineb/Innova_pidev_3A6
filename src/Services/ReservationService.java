@@ -269,6 +269,28 @@ private Connection conn;
         return reservations;
     }
     
+    
+     
+    public String  NomP(int id) {
+         
+        String req = "SELECT CONCAT(`nom`,'  ',`prenom`) FROM `client` WHERE id = "+id+" " ;
+         String s="";
+        try {
+
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+              s= rs.getNString(1);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return s;
+    }
+    
     //MODIFER NBRE DES PLACES
     
     //Activite

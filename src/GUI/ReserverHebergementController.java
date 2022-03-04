@@ -33,7 +33,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -50,7 +52,7 @@ import org.controlsfx.control.Notifications;
 
 /**
  * FXML Controller class
- *
+ *b
  * @author Asus
  */
 public class ReserverHebergementController implements Initializable {
@@ -102,9 +104,18 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
     private TextField prixtotal;
        @FXML
     private ComboBox<String> modalite;
+    @FXML
+    private Button back;
 
-     
-     
+   private   int  idC;
+    
+    public void setIdC(int idC) {
+        System.out.println("aaah"+idC);
+          idc.setText(rs.NomP(idC));
+        this.idC = idC;
+    }
+   
+
      
     /**
      * Initializes the controller class.
@@ -114,7 +125,8 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         // TODO
         
     
-       
+         idc.setText(rs.NomP(idC));
+             System.out.println("IIIIIIIIIIIIIIIIIIIIII"+idC);
         loadTableHebegement();
 
    BooleanBinding bb = Bindings.createBooleanBinding(() -> {
@@ -131,11 +143,14 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         modalite.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
         DateD.valueProperty().addListener((observable, oldDate, newDate)->{ 
         DateF.setValue(DateD.getValue().plusDays(1));
+          
         
         });
      
         
-        
+   
+          
+     
         
         
         
@@ -159,7 +174,7 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         h_affiche_nbrparking.setCellValueFactory(new PropertyValueFactory<>("model_caravane"));
         
      hebergement_table.setItems(oblistH);
-  
+   idc.setText(rs.NomP(idC));
      
   
      
@@ -178,7 +193,7 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
        
            java.sql.Date datR = new java.sql.Date(Calendar.getInstance().getTime().getTime()); 
            
-         Reservation r= new Reservation(datR,0, Datedv, Dateav,0,0,0,h.getReferance(),"Approuve",1,"Hebergement");
+         Reservation r= new Reservation(datR,0, Datedv, Dateav,0,0,0,h.getReferance(),"Approuve",idC,"Hebergement");
          if(rs.testerdisponibliteH(Datedv,  Dateav,h.getReferance())&&rs.verifierDateHberg(h.getReferance(), Datedv,  Dateav))
          { rs.ajouterHeb(r);
         
@@ -211,8 +226,9 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         Hebergement h = hebergement_table.getSelectionModel().getSelectedItem();
         Adresse.setText(h_affiche_adress.getCellData(index));
         Description.setText(h_affiche_description.getCellData(index));
+         idc.setText(rs.NomP(idC));
         prix.setText(h_affiche_prix.getCellData(index).toString());
- List<LocalDate> listdd = rs.ListeDd(h.getReferance());
+       List<LocalDate> listdd = rs.ListeDd(h.getReferance());
         System.out.println(listdd);
        DateD.setDayCellFactory((DatePicker param) -> new DateCell(){
            public void updateItem(LocalDate item, boolean empty) {
@@ -274,6 +290,21 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
      prixtotal.setText("");    
      modalite.getItems().clear();
       modalite.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
+    }
+
+    @FXML
+    private void Mback(ActionEvent event) {
+        
+        
+         try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherReservation.fxml"));
+		Parent root = loader.load();
+		AfficherReservationController  e = loader.getController();
+           
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
     }
     
     
