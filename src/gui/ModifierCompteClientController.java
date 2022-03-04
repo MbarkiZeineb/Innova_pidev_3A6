@@ -17,6 +17,8 @@ import services.ClientService;
 import entities.Client;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import utilis.Connexion;
 /**
  * FXML Controller class
@@ -37,6 +39,20 @@ public class ModifierCompteClientController implements Initializable {
     private Button btnmodif;
     
     private Connection conn;
+    private int idc;
+
+    public void setIdc(int idc) {
+        
+        ClientService cs =new ClientService();
+    
+    Client c= cs.selectmodifier(idc);
+     txtnomCMod.setText(c.getNom());
+     txtprenomCMOD.setText(c.getPrenom());
+     txtemailCMOD.setText(c.getEmail());
+     txtmdpCMOD.setText(c.getPwd());
+        this.idc = idc;
+    }
+    
 
     /**
      * Initializes the controller class.
@@ -44,45 +60,22 @@ public class ModifierCompteClientController implements Initializable {
     
     
     
-    public ModifierCompteClientController() {
-          conn = Connexion.getInstance().getCnx();
-    }    
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    ClientService cs =new ClientService();
-    @FXML
-    private void modifier(ActionEvent event) {
-    
-        PreparedStatement stmt;
-
-        try {
-            stmt = conn.prepareStatement("UPDATE client SET nom=?, prenom=?, password=? WHERE email=?");
-            
-            stmt.setString(4, (txtemailCMOD.getText()));
-            stmt.setString(3, (txtmdpCMOD.getText())); 
-              
-           
-            stmt.setString(1, txtnomCMod.getText());
-            stmt.setString(2, txtprenomCMOD.getText());
-           
-            
-
-
-              int i = stmt.executeUpdate();
-
-            System.out.println(i);
-            
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-       
-       
-      
         
+        ClientService cs =new ClientService();
+    
+    Client c= cs.selectmodifier(idc);
+     txtnomCMod.setText(c.getNom());
+     txtprenomCMOD.setText(c.getPrenom());
+     
+    }  
+      @FXML
+    void modifier(ActionEvent event) {
+
     }
     
 }

@@ -71,13 +71,20 @@
                            </font>
                         </Label>
                         <PasswordField fx:id="txtmdp" layoutX="143.0" layoutY="167.0" />
-                        <Label layoutX="29.0" layoutY="413.0" text="Rechercher un administrateur : ">
+                        <Label layoutX="28.0" layoutY="465.0" text="Rechercher un administrateur : ">
                            <font>
                               <Font name="Times New Roman Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtrech" layoutX="294.0" layoutY="411.0" prefHeight="25.0" prefWidth="140.0" promptText="Entrez un nom" />
-                        <Button fx:id="btnrech" layoutX="445.0" layoutY="411.0" mnemonicParsing="false" onAction="#rechercher" text="Rechercher" />
+                        <TextField fx:id="txtrech" layoutX="286.0" layoutY="463.0" prefHeight="25.0" prefWidth="140.0" promptText="Entrez un nom" />
+                        <Button fx:id="btnrech" layoutX="437.0" layoutY="463.0" mnemonicParsing="false" onAction="#rechercher" text="Rechercher" />
+                        <Label layoutX="28.0" layoutY="421.0" text="nombre total des administrateurs :">
+                           <font>
+                              <Font name="Times New Roman Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtnbtot" layoutX="300.0" layoutY="419.0" prefHeight="25.0" prefWidth="125.0" />
+                        <Button fx:id="btnActualiser" layoutX="437.0" layoutY="419.0" mnemonicParsing="false" onAction="#Actualiser" prefHeight="25.0" prefWidth="76.0" text="Actualiser" />
                      </children>
                   </AnchorPane>
             </content>

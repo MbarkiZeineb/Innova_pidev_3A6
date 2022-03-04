@@ -30,6 +30,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import services.ClientService;
 
 /**
  * FXML Controller class
@@ -65,7 +66,7 @@ public class LoginController implements Initializable {
     void login(ActionEvent event) throws IOException  {
 String nom = txtnom.getText();
 String mdp = txtmdp.getText();
-
+ClientService cs = new ClientService();
 if(nom.equals("") && mdp.equals("")||nom.equals("")||mdp.equals(""))
 {
     JOptionPane.showMessageDialog(null, "veuillez remplir tous les champs vides");
@@ -112,14 +113,26 @@ pste.setString(2,mdp);
           txtmdp.setText("");}
        else{
                 JOptionPane.showMessageDialog(null, "client and password matched");
-                txtnom.setText("");
-                     txtmdp.setText("");
-                        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("client.fxml"));
-        Scene scene =new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        rs.getInt("id");
+//                txtnom.setText("");
+//                     txtmdp.setText("");
+                     
+                      try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("client.fxml"));
+		Parent root = loader.load();
+		clientController  e = loader.getController();
+                int i=cs.selectidC(txtnom.getText(),txtmdp.getText());
+                e.setIdc(i);
+              
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+//                        Stage stage = new Stage();
+//        Parent root = FXMLLoader.load(getClass().getResource("client.fxml"));
+//        Scene scene =new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//        rs.getInt("id");
        }      
             }else{
                     JOptionPane.showMessageDialog(null, "client and password donot matched");

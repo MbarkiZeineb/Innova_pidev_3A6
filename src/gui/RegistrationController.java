@@ -241,13 +241,19 @@ private Connection conn;
     private Button btnsuppAG;
 
     
+    @FXML
+    private Button btnActualiser;
+    
+    @FXML
+    private TextField txtnbtot;
+    
       @Override
     public void initialize(URL url, ResourceBundle rb) {
       afficherAdmin();
       afficherClient();
       afficherOffreur();
        afficherAgent();
-       
+       nbtotalAdmin();
        
         ObservableList<String> list1 = FXCollections.observableArrayList("votre premiere voiture","pays de ton reve","ton idole");
         combosecurity.setItems(list1);
@@ -267,8 +273,33 @@ private Connection conn;
     ObservableList<Admin> oblist1 = FXCollections.observableArrayList();
      AdminService as= new AdminService();
      
+        @FXML
+    void Actualiser(ActionEvent event) {
+nbtotalAdmin();
+    }
+    
+    
+    public void nbtotalAdmin(){
+    try {
+        PreparedStatement pst=conn.prepareStatement("select count(id) from admin");
+      ResultSet rs=pst.executeQuery();
+      while(rs.next())
+      {
+      int calcul = rs.getInt("count(id)");
+      txtnbtot.setText(String.valueOf(calcul));
+      }
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    
+    }
      
      
+     
+     
+    
      private void afficherAdmin() {
       List <Admin> ls =as.afficher();
       ls.forEach(e->oblist1.add(e));
@@ -317,6 +348,11 @@ afficherAdmin();}
     void modifier(ActionEvent event) {
 
        Admin a =  tvadmin.getSelectionModel().getSelectedItem();
+         if  (txtmdp.getText().length()<4||(txtmdp.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres ");
+             }
+         else{
         a.setEmail(txtemail.getText());
         a.setNom( txtnom.getText());
         a.setPrenom(txtprenom.getText());
@@ -324,7 +360,7 @@ afficherAdmin();}
         a.setPwd(txtmdp.getText());
         as.modifier(a);
         tvadmin.getItems().clear();
-        afficherAdmin();
+        afficherAdmin();}
     }
     
     
@@ -421,6 +457,15 @@ afficherClient();
     @FXML
     void modifierC(ActionEvent event) {
         Client c =  tvClient.getSelectionModel().getSelectedItem();
+           if  (txtmdpC.getText().length()<4||(txtmdpC.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres ");
+             }
+             if(!(txtrep.getText().matches("^[a-zA-Z@.]+$"))||(txtrep.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "verifier votre reponse");
+             }
+else{
         c.setEmail(txtemailC.getText());
         c.setNom( txtnomC.getText());
         c.setPrenom(txtprenomC.getText());  
@@ -429,6 +474,7 @@ afficherClient();
 cs.modifier(c);
 tvClient.getItems().clear();
 afficherClient();
+           }
     }
     
     
@@ -544,6 +590,11 @@ afficherOffreur();
     @FXML
     void modifierO(ActionEvent event) {
         Offreur o =  tvOffreur.getSelectionModel().getSelectedItem();
+         if  (txtmdpOF.getText().length()<4||(txtmdpOF.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres");
+             }
+         else{
         o.setEmail(txtemailOF.getText());
         o.setNom( txtnomOF.getText());
         o.setPrenom(txtprenomOF.getText());    
@@ -553,6 +604,7 @@ afficherOffreur();
 os.modifier(o);
 tvOffreur.getItems().clear();
 afficherOffreur();
+         }
         
     }
        @FXML
@@ -611,6 +663,11 @@ afficherAgent();
     @FXML
     void modifierAG(ActionEvent event) {
       AgentAerien ag =  tvAgent.getSelectionModel().getSelectedItem();
+         if  (txtmdpAG.getText().length()<4||(txtmdpAG.getText().length()==0)) {
+
+            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres");
+             }
+         else{
         ag.setEmail(txtemailAG.getText());
         ag.setNom( txtnomAG.getText());
         ag.setPrenom(txtprenomAG.getText());    
@@ -620,6 +677,7 @@ afficherAgent();
 ags.modifier(ag);
 tvAgent.getItems().clear();
 afficherAgent();
+         }
     }
     
         @FXML

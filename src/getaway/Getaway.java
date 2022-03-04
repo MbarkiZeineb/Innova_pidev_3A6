@@ -53,7 +53,7 @@ Client c= new Client("malek", "malloc", "12345", "malloc.ha@gmail.com");
 //cs.modifier(new Client(9,"salma", "dj", "salouma", "salma.dj@gmail.com", "france"));
 //cs.supprimer(new Client(6,"omayma", "dj", "hahah", "oma.dj@gmail.com", "canada"));
 //cs.supprimer(9);
-System.out.println(cs.afficher());
+//System.out.println(cs.afficher());
 //cs.rechercherclient("sinda");
 OffreurService os = new OffreurService();
 Offreur o = new Offreur("amal", "ch", "chou", "kkkkk",98306322);
@@ -63,6 +63,14 @@ Offreur o = new Offreur("amal", "ch", "chou", "kkkkk",98306322);
 //os.supprimer(2);
 //System.out.println(os.afficher());
 //os.rechercheroffreur("amine");
+
+ReclamationService rs = new ReclamationService();
+Reclamation r = new Reclamation(4, "hahha", "okkk");
+//rs.ajouter(r);
+//rs.modifier( new Reclamation(1,4, "probb", "okkk"));
+rs.supprimer(4);
+System.out.println(rs.afficher());
+
     }
     
 }

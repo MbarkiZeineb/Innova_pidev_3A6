@@ -25,15 +25,31 @@ public class clientController implements Initializable {
 
        @FXML
     private Button btnmodifCC;
+    private int idc;
+
+    public void setIdc(int idc) {
+        System.out.println(idc);
+        this.idc = idc;
+    }
 
     @FXML
-    void modifierCompte(ActionEvent event) throws IOException {
-          Stage stage = new Stage();
- Parent root = FXMLLoader.load(getClass().getResource("ModifierCompteClient.fxml"));
-        Scene scene =new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    void modifierCompte(ActionEvent event) {
+      
+        
+        
+           try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierCompteClient.fxml"));
+		Parent root = loader.load();
+		ModifierCompteClientController  e = loader.getController();
+               
+                e.setIdc(idc);
+              
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
     }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
