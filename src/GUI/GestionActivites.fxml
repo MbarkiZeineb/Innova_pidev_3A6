@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GestionActivitesController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../../Dark.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GestionActivitesController">
    <children>
       <TabPane prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -26,7 +26,7 @@
                               <Font name="AGA Arabesque" size="19.0" />
                            </font>
                         </Label>
-                        <Label layoutX="724.0" layoutY="105.0" prefHeight="25.0" prefWidth="101.0" text="Description:">
+                        <Label layoutX="724.0" layoutY="71.0" prefHeight="25.0" prefWidth="101.0" text="Description:">
                            <font>
                               <Font name="AGA Arabesque" size="19.0" />
                            </font>
@@ -88,6 +88,8 @@
                         <Button fx:id="btnrecherche" layoutX="623.0" layoutY="290.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="101.0" text="Rechercher" textAlignment="CENTER" />
                         <TextField fx:id="txtinput" layoutX="445.0" layoutY="293.0" onKeyReleased="#recherchek" />
                         <Button fx:id="btntri" layoutX="749.0" layoutY="290.0" mnemonicParsing="false" onAction="#trier" prefHeight="32.0" prefWidth="152.0" text="Tri Nombre de place" />
+                        <Button fx:id="btnetat" layoutX="1177.0" layoutY="18.0" mnemonicParsing="false" onAction="#help" prefHeight="32.0" prefWidth="80.0" text="Etat" />
+                        <Button fx:id="btnstat2" layoutX="1168.0" layoutY="287.0" mnemonicParsing="false" onAction="#Statact" prefHeight="32.0" prefWidth="89.0" text="Statistique" />
                      </children>
                   </AnchorPane>
             </content>

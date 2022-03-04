@@ -59,8 +59,8 @@ public class AvisService extends SendSms implements IService<Avis> {
             ste = conn.createStatement();
             ste.executeUpdate(req);
             System.out.println("Avis crée");
-//            String NumTel = this.NumTel(av);
-//            sendSms(NumTel);
+            String NumTel = this.NumTel(av);
+            sendSms(NumTel);
         } catch (SQLException ex) {
             Logger.getLogger(AvisService.class.getName()).log(Level.SEVERE, null, ex);
         }

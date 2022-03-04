@@ -134,9 +134,3 @@ String req3= "Select Message ,count(Message) from Avis where `RefActivite`=31 AN
 
     
     
-
-      
-    
-
-
-

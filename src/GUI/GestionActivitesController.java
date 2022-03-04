@@ -147,6 +147,11 @@ public class GestionActivitesController implements Initializable {
     private Connection con = Datasource.getInstance().getCnx();
     @FXML
     private Button btnstat;
+    @FXML
+    private Button btnetat;
+    @FXML
+    private Button btnstat2;
+    
     
     
     @Override
@@ -205,7 +210,7 @@ public class GestionActivitesController implements Initializable {
         clearFields();
     }
     
-    @FXML
+     @FXML
         private void stat(){
                        FXMLLoader loader=new FXMLLoader(getClass().getResource("Statisique.fxml"));
                        Parent root ;
@@ -216,7 +221,7 @@ public class GestionActivitesController implements Initializable {
             Logger.getLogger(GUI.StatisiqueController.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-               } 
+               }  
         
         
 
@@ -553,8 +558,60 @@ public class GestionActivitesController implements Initializable {
 
         tvactivite.setItems(activ);
     }
+
+    @FXML
+    private void help(ActionEvent event) {
+        int nb=0;
+        String req="Select COUNT(RefAct) from Activite";
+    PreparedStatement ste;
     
-}
+        try {
+            ste = (PreparedStatement) con.prepareStatement(req);
+            ResultSet rs = ste.executeQuery();
+         while(rs.next()){               
+             nb = rs.getInt(1);
+            } 
+         } catch (SQLException ex) {
+            Logger.getLogger(GestionActivitesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         if(nb<=5)
+         {
+             Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Alerte Activites");
+		alert.setHeaderText(null);
+		alert.setContentText("Vous Avez "+nb+" Activites, Veuillez ajouter d'autres.");
+		alert.showAndWait();
+         }
+        
+         else
+         {
+             Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Alerte Activites");
+		alert.setHeaderText(null);
+		alert.setContentText("Vous Avez "+nb+" Activites, pas d'insuffisance pour le moment");
+		alert.showAndWait();
+         }
+    }
+
+    @FXML
+    private void Statact(ActionEvent event) {
+        
+                FXMLLoader loader=new FXMLLoader(getClass().getResource("StatAct.fxml"));
+                       Parent root ;
+        try {
+            root=loader.load();
+             btnstat.getScene().setRoot(root);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.StatActController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        
+    }
+
+    
+               } 
+    
+
     
     
         

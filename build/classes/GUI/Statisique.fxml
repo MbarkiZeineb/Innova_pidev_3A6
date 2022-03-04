@@ -16,6 +16,6 @@
           <NumberAxis fx:id="y" label="Nombre" side="LEFT" />
         </yAxis>
       </BarChart>
-      <Button fx:id="btnretour" layoutX="621.0" layoutY="426.0" mnemonicParsing="false" onAction="#retour" prefHeight="34.0" prefWidth="106.0" text="Retour" />
+      <Button fx:id="btnretour" layoutX="600.0" layoutY="428.0" mnemonicParsing="false" onAction="#retour" prefHeight="34.0" prefWidth="106.0" text="Retour" />
    </children>
 </AnchorPane>
