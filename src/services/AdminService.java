@@ -178,6 +178,22 @@ private Connection conn;
         }    
     }
         
+            public void traiter(int id) 
+    {
+        String sql = "UPDATE reclamation SET etat = '"+1+"' WHERE idR ="+id+";";
+        try
+        {
+            Statement stl = conn.createStatement();
+            stl.executeUpdate(sql);
+            System.out.println("reclamation traitee");
+        } catch (SQLException ex)
+        {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }    
+    }
+        
         
     public void BanirCompteParAdmin(int id)
     {

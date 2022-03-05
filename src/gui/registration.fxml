@@ -294,6 +294,32 @@
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab text="Gestion des reclamations">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="245.0" layoutY="29.0" text="Reclamations :" textFill="#183287">
+                           <font>
+                              <Font name="Arial Black" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="41.0" layoutY="115.0" text="Liste des reclamations  :">
+                           <font>
+                              <Font name="Times New Roman Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tvRC" layoutX="41.0" layoutY="147.0" prefHeight="160.0" prefWidth="491.0">
+                           <columns>
+                              <TableColumn fx:id="colObj" prefWidth="112.0" text="Objet" />
+                              <TableColumn fx:id="colDesc" prefWidth="281.0" text="Description" />
+                              <TableColumn fx:id="colEtat" prefWidth="97.0" text="Etat" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="btnTraiter" layoutX="606.0" layoutY="164.0" mnemonicParsing="false" onAction="#traiter" prefHeight="25.0" prefWidth="84.0" text="Traiter" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

@@ -10,6 +10,7 @@ public class Reclamation {
     private int idC;
     private String objet;
     private String description;
+    private int etat=0;
 
     public Reclamation() {
     }
@@ -21,12 +22,31 @@ public class Reclamation {
         this.description = description;
     }
 
+    public Reclamation(int idR, int idC, String objet, String description, int etat) {
+        this.idR = idR;
+        this.idC = idC;
+        this.objet = objet;
+        this.description = description;
+        this.etat = etat;
+    }
+
+    public Reclamation(String objet, String description, int etat) {
+        this.objet = objet;
+        this.description = description;
+        this.etat = etat;
+    }
+    
+
     public Reclamation(int idC, String objet, String description) {
         this.idC = idC;
         this.objet = objet;
         this.description = description;
     }
-    
+     public Reclamation( String objet, String description) {
+       
+        this.objet = objet;
+        this.description = description;
+    }
 
     public int getIdR() {
         return idR;
@@ -60,9 +80,17 @@ public class Reclamation {
         this.description = description;
     }
 
+    public void setEtat(int etat) {
+        this.etat = etat;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
     @Override
     public String toString() {
-        return "Reclamation{" + "idR=" + idR + ", idC=" + idC + ", objet=" + objet + ", description=" + description + '}';
+        return "Reclamation{" + "idR=" + idR + ", idC=" + idC + ", objet=" + objet + ", description=" + description +", etat=" + etat + '}';
     }
       
 

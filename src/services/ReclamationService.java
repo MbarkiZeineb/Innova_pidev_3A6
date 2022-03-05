@@ -33,7 +33,7 @@ public class ReclamationService implements IService<Reclamation>{
  
     @Override
     public void ajouter(Reclamation r) {
-            String req = "INSERT INTO `reclamation` (`idClient`,`objet`,`description`) VALUE ('" + r.getIdC() + "','" + r.getObjet() + "','"+r.getDescription()+ "')";
+            String req = "INSERT INTO `reclamation` (`idClient`,`objet`,`description`,`etat`) VALUE ('" + r.getIdC() + "','" + r.getObjet() + "','"+r.getDescription()+ "','"+r.getEtat()+ "')";
         try {
             ste = conn.createStatement();
             ste.executeUpdate(req);
@@ -46,7 +46,7 @@ public class ReclamationService implements IService<Reclamation>{
     @Override
     public void modifier(Reclamation r) {
               String sql ="UPDATE reclamation SET idClient = '"+r.getIdC()+"',objet = '"
-                    +r.getObjet()+"',description = '"+r.getDescription()+"' WHERE idR ="+ r.getIdR()+";";
+                    +r.getObjet()+"',description = '"+r.getDescription()+"',etat = '"+r.getEtat()+"' WHERE idR ="+ r.getIdR()+";";
         
         
         try {
@@ -112,6 +112,7 @@ public class ReclamationService implements IService<Reclamation>{
                 r.setIdC(rs.getInt("idClient"));
                r.setObjet(rs.getString(3));
              r.setDescription(rs.getString(4)); 
+              r.setEtat(rs.getInt("etat")); 
 
                 reclamations.add(r);
             }
@@ -122,4 +123,72 @@ public class ReclamationService implements IService<Reclamation>{
         
         return reclamations; 
     }
+    
+  public  Reclamation selectmodifier( int idc ) {
+       String sql= " Select * from reclamation WHERE idClient= '"+idc+"' " ;
+       Reclamation r = new Reclamation();
+             try 
+        {
+            ste = conn.createStatement();
+            ResultSet rs=ste.executeQuery(sql);          
+           
+            while(rs.next())
+            {
+                
+                r.setIdC(idc);
+                r.setIdR(rs.getInt("idR"));
+                 r.setObjet(rs.getString(3));
+                r.setDescription(rs.getString(4));
+                r.setEtat(rs.getInt("etat"));
+                
+              
+                System.out.println(r.toString());                
+            }
+        } 
+        catch (SQLException ex) 
+            
+        {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+         
+
+       return r;
+      
+        
+    }
+    
+  
+  
+   public List<Reclamation> afficherParIdC(int idc)
+   {
+              List<Reclamation> reclamations = new ArrayList<>();
+        String req =  " Select * from `reclamation` WHERE idClient= '"+idc+"' ";
+        
+        try {
+           
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+                Reclamation r = new Reclamation();
+                 r.setIdR(rs.getInt("idR"));
+                r.setIdC(rs.getInt("idClient"));
+               r.setObjet(rs.getString(3));
+             r.setDescription(rs.getString(4)); 
+
+                reclamations.add(r);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ return reclamations;
+   
+   }
+    
+    
+    
+    
 }

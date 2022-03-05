@@ -8,6 +8,7 @@ package gui;
 import entities.Admin;
 import entities.Client;
 import entities.Offreur;
+import entities.Reclamation;
 import entities.*;
 import java.net.URL;
 import java.sql.Connection;
@@ -36,6 +37,7 @@ import javafx.scene.input.MouseEvent;
 import javax.swing.JOptionPane;
 import services.*;
 import services.ClientService;
+import services.ReclamationService;
 import utilis.Connexion;
 /**
  * FXML Controller class
@@ -59,8 +61,6 @@ private Connection conn;
     @FXML
     private TableView<Admin> tvadmin;
 
-    @FXML
-    private TableColumn<Admin, Integer> colid;
 
     @FXML
     private TableColumn<Admin, String> colnom;
@@ -74,8 +74,6 @@ private Connection conn;
     @FXML
     private TableColumn<Admin, String> colemail;
 
-    @FXML
-    private TableColumn<Admin, String> colmdp;
 
     @FXML
     private Button btnajout;
@@ -98,8 +96,6 @@ private Connection conn;
      @FXML
     private TextField txtnomC;
 
-    @FXML
-    private TextField txtadrC;
 
     @FXML
     private TextField txtprenomC;
@@ -247,6 +243,23 @@ private Connection conn;
     @FXML
     private TextField txtnbtot;
     
+        @FXML
+    private TableView<Reclamation> tvRC;
+
+    @FXML
+    private TableColumn<Reclamation, String> colObj;
+
+    @FXML
+    private TableColumn<Reclamation, String> colDesc;
+
+    @FXML
+    private TableColumn<Reclamation, Integer> colEtat;
+
+    @FXML
+    private Button btnTraiter;
+    
+    
+    
       @Override
     public void initialize(URL url, ResourceBundle rb) {
       afficherAdmin();
@@ -254,6 +267,7 @@ private Connection conn;
       afficherOffreur();
        afficherAgent();
        nbtotalAdmin();
+       afficherReclamation() ;
        
         ObservableList<String> list1 = FXCollections.observableArrayList("votre premiere voiture","pays de ton reve","ton idole");
         combosecurity.setItems(list1);
@@ -265,6 +279,28 @@ private Connection conn;
          conn = Connexion.getInstance().getCnx();
     }
     
+    ObservableList<Reclamation> oblist5 = FXCollections.observableArrayList();
+    ReclamationService rs =new ReclamationService();
+    
+         private void afficherReclamation() {
+      List <Reclamation> ls =rs.afficher();
+      ls.forEach(e->oblist5.add(e));
+      colObj.setCellValueFactory(new PropertyValueFactory<Reclamation,String>("objet"));
+        colDesc.setCellValueFactory(new PropertyValueFactory<Reclamation, String>("description"));
+         colEtat.setCellValueFactory(new PropertyValueFactory<Reclamation, Integer>("etat"));
+          tvRC.setItems(oblist5);    
+    }
+  
+        @FXML
+    void traiter(ActionEvent event) {
+    Reclamation r =  tvRC.getSelectionModel().getSelectedItem();
+        int idr=r.getIdR();
+as.traiter(idr);
+tvRC.getItems().clear();
+afficherReclamation();
+    }
+        
+
     
     
     
@@ -716,31 +752,11 @@ ags.supprimer(ag.getId());
 tvAgent.getItems().clear();
 afficherAgent();
     }
+
     
     
     
      
-     
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
- 
-    
-  
-
-
-  
-    
-    
     
 }

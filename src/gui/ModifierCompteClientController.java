@@ -75,7 +75,17 @@ public class ModifierCompteClientController implements Initializable {
     }  
       @FXML
     void modifier(ActionEvent event) {
+    ClientService cs =new ClientService();
+    Client c= cs.selectmodifier(idc);
+     c.setEmail(txtemailCMOD.getText());
+        c.setNom( txtnomCMod.getText());
+        c.setPrenom(txtprenomCMOD.getText());
+        c.setPwd(txtmdpCMOD.getText());
 
+   
+     cs.modifier(c);
+     
+         
     }
     
 }

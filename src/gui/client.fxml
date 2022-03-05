@@ -4,10 +4,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="507.0" prefWidth="677.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="gui.clientController">
+<AnchorPane id="AnchorPane" prefHeight="507.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.clientController">
    <children>
       <Button fx:id="btnmodifCC" layoutX="83.0" layoutY="126.0" mnemonicParsing="false" onAction="#modifierCompte" prefHeight="74.0" prefWidth="198.0" text="Modifier votre compte">
+         <font>
+            <Font name="Arial Black" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnreclamation" layoutX="83.0" layoutY="254.0" mnemonicParsing="false" onAction="#reclamation" prefHeight="74.0" prefWidth="198.0" text="Espace reclamation">
          <font>
             <Font name="Arial Black" size="14.0" />
          </font>

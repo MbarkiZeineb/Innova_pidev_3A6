@@ -23,6 +23,8 @@ import javafx.stage.Stage;
  */
 public class clientController implements Initializable {
 
+    @FXML
+    private Button btnreclamation;
        @FXML
     private Button btnmodifCC;
     private int idc;
@@ -49,6 +51,24 @@ public class clientController implements Initializable {
 			System.out.println(ex);
 		}
     }
+    
+        @FXML
+    void reclamation(ActionEvent event) {
+
+           try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Reclamation.fxml"));
+		Parent root = loader.load();
+		ReclamationController  e = loader.getController();
+               
+                e.setIdc(idc);
+              
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+    }
+    
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
