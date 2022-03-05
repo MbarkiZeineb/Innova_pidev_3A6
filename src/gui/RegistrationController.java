@@ -9,7 +9,12 @@ import entities.Admin;
 import entities.Client;
 import entities.Offreur;
 import entities.Reclamation;
+import entities.encryption;
 import entities.*;
+import static entities.encryption.ALGORITHM;
+import static entities.encryption.decrypt;
+import static entities.encryption.keyValue;
+import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,6 +39,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JOptionPane;
 import services.*;
 import services.ClientService;
@@ -348,7 +354,7 @@ nbtotalAdmin();
      
      
     @FXML
-    void ajouter(ActionEvent event) {
+    void ajouter(ActionEvent event) throws Exception {
 
    if(!(txtnom.getText().matches("^[a-zA-Z]+$"))||(txtnom.getText().length()==0)) {
 
@@ -372,7 +378,9 @@ nbtotalAdmin();
             JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres");
              }
              else{
-      Admin a= new Admin(txtnom.getText(), txtprenom.getText(), txtemail.getText(), txtadr.getText(), txtmdp.getText());
+                    String mdpcry = encryption.encrypt(txtmdp.getText(),new SecretKeySpec(keyValue, ALGORITHM));
+      Admin a= new Admin(txtnom.getText(), txtprenom.getText(), txtemail.getText(), txtadr.getText(), mdpcry);
+decrypt(mdpcry,new SecretKeySpec(keyValue, ALGORITHM));
 as.ajouter(a);
 tvadmin.getItems().clear();
 afficherAdmin();}
@@ -381,7 +389,7 @@ afficherAdmin();}
     
 
     @FXML
-    void modifier(ActionEvent event) {
+    void modifier(ActionEvent event) throws Exception {
 
        Admin a =  tvadmin.getSelectionModel().getSelectedItem();
          if  (txtmdp.getText().length()<4||(txtmdp.getText().length()==0)) {
@@ -393,7 +401,9 @@ afficherAdmin();}
         a.setNom( txtnom.getText());
         a.setPrenom(txtprenom.getText());
         a.setAdresse(txtadr.getText());
-        a.setPwd(txtmdp.getText());
+           String mdpcry = encryption.encrypt(txtmdp.getText(),new SecretKeySpec(keyValue, ALGORITHM));
+        a.setPwd(mdpcry);
+        decrypt(mdpcry,new SecretKeySpec(keyValue, ALGORITHM));
         as.modifier(a);
         tvadmin.getItems().clear();
         afficherAdmin();}
@@ -418,6 +428,7 @@ List <Admin> ls =as.rechercher(txtrech.getText());
 tvadmin.getItems().clear();
   tvadmin.getItems().addAll(ls);
     }
+
        
     
     @FXML
@@ -490,28 +501,28 @@ afficherClient();
 }
 
     
-    @FXML
-    void modifierC(ActionEvent event) {
-        Client c =  tvClient.getSelectionModel().getSelectedItem();
-           if  (txtmdpC.getText().length()<4||(txtmdpC.getText().length()==0)) {
-
-            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres ");
-             }
-             if(!(txtrep.getText().matches("^[a-zA-Z@.]+$"))||(txtrep.getText().length()==0)) {
-
-            JOptionPane.showMessageDialog(null, "verifier votre reponse");
-             }
-else{
-        c.setEmail(txtemailC.getText());
-        c.setNom( txtnomC.getText());
-        c.setPrenom(txtprenomC.getText());  
-        c.setSecurityQ(combosecurity.getSelectionModel().getSelectedItem().toString());
-        c.setAnswer(txtrep.getText());
-cs.modifier(c);
-tvClient.getItems().clear();
-afficherClient();
-           }
-    }
+//    @FXML
+//    void modifierC(ActionEvent event) {
+//        Client c =  tvClient.getSelectionModel().getSelectedItem();
+//           if  (txtmdpC.getText().length()<4||(txtmdpC.getText().length()==0)) {
+//
+//            JOptionPane.showMessageDialog(null, "votre mdp doit contenir au moins 4 characteres ");
+//             }
+//             if(!(txtrep.getText().matches("^[a-zA-Z@.]+$"))||(txtrep.getText().length()==0)) {
+//
+//            JOptionPane.showMessageDialog(null, "verifier votre reponse");
+//             }
+//else{
+//        c.setEmail(txtemailC.getText());
+//        c.setNom( txtnomC.getText());
+//        c.setPrenom(txtprenomC.getText());  
+//        c.setSecurityQ(combosecurity.getSelectionModel().getSelectedItem().toString());
+//        c.setAnswer(txtrep.getText());
+//cs.modifier(c);
+//tvClient.getItems().clear();
+//afficherClient();
+//           }
+//    }
     
     
 

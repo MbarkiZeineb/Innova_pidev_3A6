@@ -38,7 +38,6 @@ private Connection conn;
       @Override
     public void ajouter(Admin a) {  
          String req = "INSERT INTO `admin` (`nom`,`prenom`,`email`,`adresse`,`password`) VALUE ('" + a.getNom() + "','" + a.getPrenom() + "','"+a.getEmail()+ "','"+a.getAdresse()+ "','"+a.getPwd()+"')";
-    // String req = "INSERT INTO `admin` (`nom`,`prenom`,`email`,`adresse`,`password`) VALUE ('" + a.getNom() + "','" + a.getPrenom()+ "','" + a.getEmail()+ "','" + a.getAdresse() + "','" + a.getPwd() + "',)";
         try {
             ste = conn.createStatement();
             ste.executeUpdate(req);
@@ -161,6 +160,44 @@ private Connection conn;
         
        return admins ;
     }
+        
+        
+         public List<Admin> rechercherAdmin(String input) {
+        
+          List<Admin> admins=new ArrayList <Admin>();
+        
+        String req = "SELECT * FROM `admin` Where nom LIKE '%"+input+"%' OR prenom LIKE '%"+input+"%' OR email LIKE '%"+input+"%' OR adresse LIKE '%"+input+"%'";
+        try {
+            pste = conn.prepareStatement(req);
+            ResultSet rs = pste.executeQuery();
+            
+            System.out.println("recherche effectue avec succes");
+            
+            while(rs.next()){
+                 Admin a = new Admin();
+                a.setId(rs.getInt("id"));
+                a.setNom(rs.getString(2));
+                a.setPrenom(rs.getString(3));
+                a.setEmail(rs.getString(4));
+                a.setAdresse(rs.getString(5));
+                a.setPwd(rs.getString(6));
+                admins.add(a);
+                System.out.println(a.toString());  
+                
+            }
+            
+        } catch (SQLException ex) {
+         System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+   return admins ;
+}
+        
+        
+        
+        
+        
     
         public void activerCompteParAdmin(int id) 
     {

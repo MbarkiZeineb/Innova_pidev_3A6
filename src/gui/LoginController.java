@@ -53,6 +53,20 @@ public class LoginController implements Initializable {
     private ComboBox combo;
             @FXML
     private Hyperlink linkmdpoublie;
+            
+                @FXML
+    private Hyperlink linkcreerCompte;
+
+    @FXML
+    void creernvCompte(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("NvCompte.fxml"));
+  Stage stage = new Stage();
+        Scene scene =new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+            
              @FXML
     void mdpoublie(ActionEvent event) throws IOException {
  Parent root = FXMLLoader.load(getClass().getResource("mdpoub.fxml"));

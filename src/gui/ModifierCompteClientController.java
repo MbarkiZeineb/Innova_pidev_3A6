@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.scene.control.ComboBox;
 import utilis.Connexion;
 /**
  * FXML Controller class
@@ -35,6 +36,11 @@ public class ModifierCompteClientController implements Initializable {
     private TextField txtprenomCMOD;
     @FXML
     private PasswordField txtmdpCMOD;
+       @FXML
+    private TextField txtQS;
+
+    @FXML
+    private TextField txtRepCMod;
     @FXML
     private Button btnmodif;
     
@@ -50,6 +56,8 @@ public class ModifierCompteClientController implements Initializable {
      txtprenomCMOD.setText(c.getPrenom());
      txtemailCMOD.setText(c.getEmail());
      txtmdpCMOD.setText(c.getPwd());
+     txtQS.setText(c.getSecurityQ());
+      txtRepCMod.setText(c.getAnswer());
         this.idc = idc;
     }
     
@@ -71,6 +79,8 @@ public class ModifierCompteClientController implements Initializable {
     Client c= cs.selectmodifier(idc);
      txtnomCMod.setText(c.getNom());
      txtprenomCMOD.setText(c.getPrenom());
+        txtQS.setText(c.getSecurityQ());
+      txtRepCMod.setText(c.getAnswer());
      
     }  
       @FXML
@@ -81,9 +91,8 @@ public class ModifierCompteClientController implements Initializable {
         c.setNom( txtnomCMod.getText());
         c.setPrenom(txtprenomCMOD.getText());
         c.setPwd(txtmdpCMOD.getText());
-
-   
-     cs.modifier(c);
+c.setAnswer(txtRepCMod.getText());
+cs.modifier(c);
      
          
     }
