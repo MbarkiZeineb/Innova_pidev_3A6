@@ -88,15 +88,15 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
     private TextField prixtotal;
        @FXML
     private ComboBox<String> modalite;
-    @FXML
-    private Button back;
 
    private   int  idC;
     
     public void setIdC(int idC) {
         System.out.println("aaah"+idC);
-          idc.setText(rs.NomP(idC));
+       
         this.idC = idC;
+        
+           idc.setText(rs.NomP(idC));
     }
    
 
@@ -216,7 +216,7 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         Description.setText(h_affiche_description.getCellData(index));
          idc.setText(rs.NomP(idC));
 
-       List<LocalDate> listdd = rs.ListeDd(h.getReferance());
+     
      
        
        try{
@@ -233,6 +233,8 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
            System.out.println(e);
            
        }
+       
+         List<LocalDate> listdd = rs.ListeDd(h.getReferance());
        DateD.setDayCellFactory((DatePicker param) -> new DateCell(){
            public void updateItem(LocalDate item, boolean empty) {
                super.updateItem(item, empty);
@@ -295,20 +297,7 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
       modalite.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
     }
 
-    @FXML
-    private void Mback(ActionEvent event) {
-        
-        
-         try{
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherReservation.fxml"));
-		Parent root = loader.load();
-		AfficherReservationController  e = loader.getController();
-           
-		((Button) event.getSource()).getScene().setRoot(root);
-		}catch(Exception ex){
-			System.out.println(ex);
-		}
-    }
+   
     
     
     

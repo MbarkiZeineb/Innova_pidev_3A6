@@ -95,7 +95,15 @@ public class ReserverVoyageController implements Initializable {
     @FXML
     private ComboBox<String> modaliteV;
      PaiementService ps = new PaiementService();
-               
+     private int idclient;
+
+    public void setIdclient(int idclient) {
+        this.idclient = idclient;
+        
+        idc.setText(rs.NomP(idclient));
+    }
+     
+     
    
     /**
      * Initializes the controller class.

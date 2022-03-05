@@ -12,14 +12,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ClientDController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="821.0" prefWidth="1370.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ClientDController">
    <children>
-      <StackPane layoutX="258.0" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #027ebc;">
+      <StackPane layoutX="267.0" prefHeight="821.0" prefWidth="1114.0" style="-fx-background-color: #027ebc;">
          <children>
             <Pane fx:id="pnlCustomer" prefHeight="200.0" prefWidth="200.0" />
             <Pane fx:id="pnlOrders" prefHeight="200.0" prefWidth="200.0" />
             <Pane fx:id="pnlMenus" prefHeight="200.0" prefWidth="200.0" />
-            <Pane fx:id="pnlOverview" prefHeight="613.0" prefWidth="846.0" stylesheets="@style.css">
+            <Pane fx:id="pnlOverview" prefHeight="617.0" prefWidth="828.0" stylesheets="@style.css">
                <children>
                   <Label layoutX="57.0" layoutY="25.0" prefHeight="35.0" prefWidth="301.0" text="GetAway voyage " textFill="#e7e5e5">
                      <font>
@@ -30,11 +30,11 @@
             </Pane>
          </children>
       </StackPane>
-      <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="267.0" style="-fx-background-color: ffd800;" stylesheets="@style.css">
+      <VBox alignment="TOP_CENTER" prefHeight="821.0" prefWidth="267.0" style="-fx-background-color: ffd800;" stylesheets="@style.css">
          <children>
             <ImageView fitHeight="108.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@logo.png" />
+                  <Image url="@img/logo.png" />
                </image>
                <VBox.margin>
                   <Insets bottom="10.0" top="50.0" />
@@ -44,7 +44,7 @@
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons8_Person_32px.png" />
+                        <Image url="@img/icons8_Person_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -62,7 +62,7 @@
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/icons8_Open_Envelope_32px.png" />
+                        <Image url="@img/6961939.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -70,11 +70,11 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnCustomers" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver Hebergment">
+            <Button fx:id="btnCustomers" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#reserverHebergement" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver Hebergment">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/icons8_Person_32px.png" />
+                        <Image url="@img/6961939.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -82,11 +82,11 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnMenus" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver voyage organise">
+            <Button fx:id="btnMenus" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#reserverVoyageO" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver voyage organise">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/icons8_Xbox_Menu_32px.png" />
+                        <Image url="@img/6961939.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -94,11 +94,11 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnPackages" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver Activite ">
+            <Button fx:id="btnPackages" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#reserverActivite" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver Activite ">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/icons8_Box_32px.png" />
+                        <Image url="@img/6961939.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -106,7 +106,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnSettings" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Consulter  les reservations ">
+            <Button fx:id="btnSettings" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#consulterProfil" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Consulter  les reservations ">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -117,6 +117,15 @@
                <padding>
                   <Insets left="50.0" />
                </padding>
+            </Button>
+            <Button fx:id="bReclamation" mnemonicParsing="false" onAction="#reclamation" prefHeight="26.0" prefWidth="233.0" text="Reclamation">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons8_Slider__32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
             <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Sign Out">
                <graphic>

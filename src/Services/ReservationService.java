@@ -345,7 +345,7 @@ private Connection conn;
     
        //Vol 
     public void modifiernbplacevol(int id,int nb)
-{  System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"+nb);
+{  
     System.out.println("test");
     
     
@@ -387,9 +387,17 @@ private Connection conn;
        System.out.println("aaaaa"+nb);
       VolService vs = new VolService();
       List<Vol> lv= vs.afficher();
+      System.out.println(lv);
       System.out.println("aaaaa"+nb);
+      lv.forEach(e->{
+          if(e.getId_vol()==id)
+          {   System.out.println(e.getNbr_placedispo()+"nom"+e.getVille_arrivee());
+              System.out.println("nb"+nb);
+              System.out.println(e.getNbr_placedispo()-nb);
+          }
+      });
       boolean test =lv.stream().filter(v->v.getId_vol()==id).anyMatch(v -> v.getNbr_placedispo() - nb >= 0);
- 
+      System.out.println(test);
       return test;
   }
     

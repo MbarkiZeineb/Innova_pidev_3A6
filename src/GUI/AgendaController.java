@@ -49,8 +49,6 @@ public class AgendaController implements Initializable {
     @FXML
     private AnchorPane agendaA;
  
-  @FXML
-    private TextField nomC;
   
   
   
@@ -68,24 +66,29 @@ public class AgendaController implements Initializable {
     public void setId(int idc) {
         this.id = idc;
         
-      
+      int t=2;
        ReservationService rs = new ReservationService();
      List<LocalDate> ll=  rs.WeekRH(id);
         ll .forEach(e->
        agenda.appointments().add(
         new Agenda.AppointmentImpl().withDescription("Reservation Hebergement").withSummary("Reservation Hebergement")
-        .withStartTime((GregorianCalendar.from(e.atStartOfDay(ZoneId.systemDefault()).plusHours(8))))));
+        .withStartTime((GregorianCalendar.from(e.atStartOfDay(ZoneId.systemDefault()).plusHours(2))))));
         System.out.println(  rs.WeekRV(1));
          List<LocalDate> ll2=  rs.WeekRV(id);
           ll2.forEach(e->
+              
        agenda.appointments().add(
         new Agenda.AppointmentImpl().withDescription("Reservation Vol ").withSummary("Reservation Vol ")
-        .withStartTime((GregorianCalendar.from(e.atStartOfDay(ZoneId.systemDefault()).plusHours(8))))));
+        .withStartTime((GregorianCalendar.from(e.atStartOfDay(ZoneId.systemDefault()).plusHours(2))))));
          
-        rs.WeekVO(id).forEach(e->
+        rs.WeekVO(id).forEach((e)->{
+       
        agenda.appointments().add(
-        new Agenda.AppointmentImpl().withDescription("Reservation Voyage  ").withSummary("Reservation Voygae  ")
-        .withStartTime((GregorianCalendar.from(e.atStartOfDay(ZoneId.systemDefault()).plusHours(9))))));
+        new Agenda.AppointmentImpl().withDescription("Reservation voyage  ").withSummary("Reservation voyage ").withLocation("tunis")
+        .withStartTime((GregorianCalendar.from(e.atStartOfDay(ZoneId.systemDefault()).plusHours(5).withDayOfMonth(t)))));
+         
+        
+        });
     
 
        

@@ -9,7 +9,12 @@ import Entities.*;
 import Services.PaiementService;
 import Services.ReservationService;
 import Services.VolService;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import static java.lang.String.format;
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
@@ -34,11 +39,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javafx.beans.binding.BooleanBinding;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
+import org.controlsfx.control.NotificationPane;
 import org.controlsfx.control.Notifications;
 
 
@@ -95,14 +104,22 @@ public class ReserverVolController implements Initializable {
     private TextField prixTotalV;
     @FXML
     private ComboBox<String> modalite;
-    private int id=2;
+ 
+    private int idclient;
+
+    public void setIdclient(int idclient) {
+        this.idclient = idclient;
+        idCvol.setText(rs.NomP(idclient));
+    }
+    
+    ReservationService rs = new ReservationService();
+    
      @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
-         ReservationService rs = new ReservationService();
         
-        idCvol.setText( rs.NomP(id));
+     
          loadTableVol();
          BooleanBinding booleanBinding =(nbplaceRvol.textProperty().isEqualTo("0")).or(
         prixvolr.textProperty().isEqualTo("")).or(
@@ -157,13 +174,13 @@ public class ReserverVolController implements Initializable {
     nbplaceRvol.clear();
 
     prixvolr.clear();
-    idCvol.clear();
     villeDepart.clear();
     prixTotalV.clear();
     modalite.getItems().clear();
     tb_v.getItems().clear();
     loadTableVol();
   
+          modalite.getItems().addAll("Cache" ,"Cheque","Carte bancaire");
     }
 
     @FXML
@@ -187,26 +204,26 @@ public class ReserverVolController implements Initializable {
        
            System.out.println(v.getId_vol());
            
-         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"Approuve",id,"Vol");
+         Reservation r= new Reservation(datR,Integer.parseInt(nbplaceRvol.getText()), Datedv, Dateav,0,0,v.getId_vol(),0,"Approuve",idclient,"Vol");
          if(rs.verifierNbplaceVol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText())))
          { rs.ajouterVol(r);
          Paiement p = new Paiement(modalite.getValue(),Float.valueOf(prixTotalV.getText()),rs.afficher().get(rs.afficher().size()-1).getId(),datR);
          ps.ajouter(p);
           Notifications.create().title("Reservation Vol").text(" Reservation est Créé ").show();
-         rs.modifiernbplacevol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText()));
+             rs.modifiernbplacevol(v.getId_vol(),Integer.parseInt(nbplaceRvol.getText()));
         
            tb_v.refresh();
          
          }
           else
           {    
-                String s=" Nombre de place non valide il vous reste"+v.getNbr_placedispo();
+                
+           String s=" Nombre de place non valide il vous reste"+v.getNbr_placedispo();
               
               Notifications.create().title("Reservation Vol").text(s).show();
-          }
        
        }
-       
+       }
        catch(ParseException e)
        {
            System.out.println(e);

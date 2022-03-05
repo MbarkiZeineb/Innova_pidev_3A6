@@ -19,7 +19,11 @@
     -fx-background-color :  #027ebc
 
 }
-
+.Agenda
+{
+-fx-background-color : #ffd800;
+-fx-text-fill : #789FCC;
+}
 .AnchorPane
 {
     -fx-background-color :  #027ebc

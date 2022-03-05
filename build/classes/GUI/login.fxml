@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LoginController">
    <children>
       <VBox prefHeight="400.0" prefWidth="122.0">
          <children>
-            <VBox prefHeight="418.0" prefWidth="134.0" style="-fx-background-color: blue;" />
+            <VBox prefHeight="638.0" prefWidth="122.0" style="-fx-background-color: blue;" />
          </children>
       </VBox>
       <Label layoutX="259.0" layoutY="59.0" text="Se connecter">

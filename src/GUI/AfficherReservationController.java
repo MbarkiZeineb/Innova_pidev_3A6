@@ -12,6 +12,7 @@ import Services.PaiementService;
 import Services.ReservationService;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.SortEvent;
 import javafx.scene.control.TableColumn;
@@ -105,14 +107,6 @@ public class AfficherReservationController implements Initializable {
     @FXML
     private Button modifierR;
         
-      @FXML
-    private Button BVol;
-
-    @FXML
-    private Button RH;
-
-    @FXML
-    private Button ReserverV;
 
     @FXML
     private Button agenda;
@@ -147,7 +141,7 @@ public class AfficherReservationController implements Initializable {
     @FXML
     private Button btnSettings1;
     @FXML
-    private TextField nbpChange;
+    private Button modifierP;
 
     public void setIdc(int idc) {
         this.idc = idc;
@@ -187,39 +181,8 @@ public class AfficherReservationController implements Initializable {
       
     }
     
-      @FXML
-    void ReserverH(ActionEvent event) throws Exception {
-        
-        
-         try{
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverHebergement.fxml"));
-		Parent root = loader.load();
-		ReserverHebergementController  e = loader.getController();
-                e.setIdC(1);
-                
-		((Button) event.getSource()).getScene().setRoot(root);
-		}catch(Exception ex){
-			System.out.println(ex);
-		}
-        
-    }
-
-    @FXML
-    void ReserverVoyage(ActionEvent event) throws Exception {
-        
-
-         try{
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverVoyage.fxml"));
-		Parent root = loader.load();
-		ReserverVoyageController  e = loader.getController();
-           
-                
-		((Button) event.getSource()).getScene().setRoot(root);
-		}catch(Exception ex){
-			System.out.println(ex);
-		}
-
-    }
+      
+   
 
     private void loadTable(int id ) {
      
@@ -230,7 +193,7 @@ public class AfficherReservationController implements Initializable {
             // TODO
        
      
-          List <Reservation> ls =rs.afficher2(2);
+          List <Reservation> ls =rs.afficher2(idc);
        
           ls.forEach(e->{oblist.add(e);
          
@@ -249,47 +212,19 @@ public class AfficherReservationController implements Initializable {
     
        
         
-        
     }
     
-     @FXML
-    void reserverVol(ActionEvent event) throws  Exception  {
-Stage stage = new Stage();
-         Parent root = FXMLLoader.load(getClass().getResource("ReserverVol.fxml"));
-        Scene scene =new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    
-    private void loadTableP(int id ) {
-     
-       
-         
-
-
-            // TODO
-       
-    
-        
+    private void loadTableP(int id ) { 
           List <Paiement> lp =ps.afficher2(id);
-         
           lp.forEach(e->{oblistp.add(e);
          System.out.print(oblistp);
            dateP.setCellValueFactory(new PropertyValueFactory<>("date"));
           modalite.setCellValueFactory(new PropertyValueFactory<>("modalite"));
            montant.setCellValueFactory(new PropertyValueFactory<>("montant"));
-            
-           
           });
-          
-//          
-         
     paiment.setItems(oblistp);
-    
-       
-        
-        
     }
+    
     @FXML
     private void Supprimer(ActionEvent event) {
         
@@ -298,30 +233,21 @@ Stage stage = new Stage();
       Paiement p = new Paiement();
       p.setId_reservation(r.getId());
       ps.supprimer(p);
-      rs.supprimer(r);
-        
-        
-        
+      rs.supprimer(r);     
     }
 
     @FXML
-    private void UpdateTable(MouseEvent event) {
-        
-        
-       tableRe.getItems().clear();
+    private void UpdateTable(MouseEvent event) {  
+     tableRe.getItems().clear();
     loadTable(idc);
      paiment.getItems().clear();
      loadTableP(idc);
-     
     }
     
     @FXML
     private void selectP(MouseEvent event) {
              
       Reservation r=  tableRe.getSelectionModel().getSelectedItem();
-      
-      
-    
      try{
          
        tableRe.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection)->
@@ -345,8 +271,6 @@ Stage stage = new Stage();
          System.out.println(e);
          
      }
-     
-     
      if(r.getType().equals("Vol") || r.getType().equals("Voyage") || r.getType().equals("Activite"))
      {
          DD.setDisable(true);
@@ -356,13 +280,37 @@ Stage stage = new Stage();
      }
      if(r.getType().equals("Hebergement")){
         
+         
+              List<LocalDate> listdd = rs.ListeDd(r.getId_hebergement());
+       DD.setDayCellFactory((DatePicker param) -> new DateCell(){
+           public void updateItem(LocalDate item, boolean empty) {
+               super.updateItem(item, empty);
+               
+               if (!empty && item != null) {
+                   if(listdd.contains(item)) {
+                       
+                       this.setStyle("-fx-background-color: pink");
+                   }
+               }
+           }
+       });
+       
+       
+         DF.setDayCellFactory((DatePicker param) -> new DateCell(){
+           public void updateItem(LocalDate item, boolean empty) {
+               super.updateItem(item, empty);
+               
+               if (!empty && item != null) {
+                   if(listdd.contains(item)) {
+                       
+                       this.setStyle("-fx-background-color:yellow");
+                   }
+               }
+           }
+       });
          DD.setDisable(false);
          DF.setDisable(false);
-    }
-     
-    
-        
-        
+    }  
     }
     
 
@@ -440,76 +388,7 @@ Stage stage = new Stage();
                  
                  
              }
-             if(Etat.getValue().equals("Approuve") && r.getEtat().equals("Approuve") && (nbpChange.getText().matches("^[0-9]+$")))
-             {
-                 
-                  switch(r.getType())
-                  {
-             case "Vol":
-                 try{
-                     
-                     rs.modifiernbplacevol(r.getId_vol(),r.getNbr_place());
-                     int nb=  Integer.parseInt(nbpChange.getText());
-                      System.out.println("nbb"+nb);
-                     
-                 if(rs.verifierNbplaceVol(r.getId_vol(),nb)==true)
-                 {
-                     
-                     rs.modifiernbplacevol(r.getId_vol(),Integer.parseInt(nbpChange.getText()));
-                     r.setNbr_place(nb);
-                     rs.modifiervol(r);
-                     
-                 loadTableP(idc);
-                 loadTable(idc);    
-                
-                 
-                    
-                 }
-                  if(rs.verifierNbplaceVol(r.getId_vol(),nb)==false)
-                 {
-                      
-                     rs.Annulernbplacevol(r.getId_vol(), r.getNbr_place());
-                     Notifications.create().title(" Affichage  ").text("  nombre de place nom disponible   ").show();
-                 }
-                 
-                 
-                 }
-                 catch(Exception e)
-                 {
-                     
-                     
-                 }
-              break;
-        case "Voyage":
-             r.setEtat(Etat.getValue());
-              rs.modifier(r);
-              rs.Annulernbplacevoyage(r.getId_voyage(), r.getNbr_place());
-              ps.modifierMontant(r.getId(),0);
-               
-                 tableRe.getItems().clear();
-                paiment.getItems().clear();
-                 loadTableP(2);
-                 loadTable(1);
             
-           
-        case "Activite":
-            
-             r.setEtat(Etat.getValue());
-              rs.modifierAct(r);
-             rs.AnnulernbplaceA(r.getId_active(),r.getNbr_place());
-              ps.modifierMontant(r.getId(),0);
-               
-                 tableRe.getItems().clear();
-                paiment.getItems().clear();
-                 loadTableP(2);
-                 loadTable(1);
-         
-            break;        
-                 }
-
-                 
-                 
-             }
              
              
          }
@@ -540,8 +419,8 @@ Stage stage = new Stage();
                ps.modifierMontant(r.getId(),prixTT);
               tableRe.getItems().clear();
                 paiment.getItems().clear();
-                 loadTableP(2);
-                 loadTable(1);
+                 loadTableP(idc);
+                 loadTable(idc);
                       Notifications.create().title(" Affichage  ").text("  la reseravation est modifiee  ").show();
                      
                  }
@@ -567,8 +446,8 @@ Stage stage = new Stage();
               ps.modifierMontant(r.getId(),0);
                  tableRe.getItems().clear();
                 paiment.getItems().clear();
-                 loadTableP(2);
-                 loadTable(1);
+                 loadTableP(idc);
+                 loadTable(idc);
                  
                  
              }
