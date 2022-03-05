@@ -33,7 +33,7 @@ public class GestionActivites extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("GestionActivites.fxml"));
         Scene scene = new Scene(root, 1280, 720);
-        root.getStylesheets().add(getClass().getResource("Dark.css").toExternalForm());
+
         primaryStage.setTitle("GetAway");
         primaryStage.setScene(scene);
         primaryStage.show();

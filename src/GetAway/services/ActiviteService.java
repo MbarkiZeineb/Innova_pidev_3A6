@@ -67,8 +67,8 @@ public class ActiviteService implements IService<Activite> {
     public void envoyerMail(String from,String pass,List<String> to,String object,String subject) throws UnsupportedEncodingException
     {
     
-         String password ="Aymenultras123";
-        String fromEmail ="windows10y520@gmail.com";
+         String password ="getaway123";
+        String fromEmail ="getawayvoy.services@gmail.com";
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
