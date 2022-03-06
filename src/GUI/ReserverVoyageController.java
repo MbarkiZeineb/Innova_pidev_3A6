@@ -24,7 +24,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -91,11 +93,25 @@ public class ReserverVoyageController implements Initializable {
     @FXML
     private TextField prixTTV;
     @FXML
-    private TextField aaaa;
-    @FXML
     private ComboBox<String> modaliteV;
      PaiementService ps = new PaiementService();
      private int idclient;
+    @FXML
+    private Button consulterCompte;
+    @FXML
+    private Button btnOrders;
+    @FXML
+    private Button btnCustomers;
+    @FXML
+    private Button btnMenus;
+    @FXML
+    private Button btnPackages;
+    @FXML
+    private Button btnSettings;
+    @FXML
+    private Button btnSettings1;
+    @FXML
+    private Button btnSignout;
 
     public void setIdclient(int idclient) {
         this.idclient = idclient;
@@ -268,6 +284,82 @@ ReservationService rs = new ReservationService();
      tableviewVO.getItems().clear();
       loadTable();
      
+    }
+
+    @FXML
+    private void consulterCompteC(ActionEvent event) {
+    }
+
+    @FXML
+    private void reserverVol(ActionEvent event) {
+        
+         try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverVol.fxml"));
+		Parent root = loader.load();
+		ReserverVolController  e = loader.getController();
+                e.setIdclient(idclient);
+                
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+    }
+
+    @FXML
+    private void reserverVO(ActionEvent event) {
+    }
+
+    @FXML
+    private void ReserverA(ActionEvent event) {
+          try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverActivite.fxml"));
+		Parent root = loader.load();
+		ReserverActiviteController  e = loader.getController();
+                
+           
+                e.setIdclient(idclient);
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+
+
+    }
+
+    @FXML
+    private void reclamations(ActionEvent event) {
+    }
+
+    @FXML
+    private void signout(ActionEvent event) {
+    }
+
+    @FXML
+    private void reserverH(ActionEvent event) {
+         try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverHebergement.fxml"));
+		Parent root = loader.load();
+		ReserverHebergementController  e = loader.getController();
+                e.setIdC(idclient);
+                
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+    }
+
+    @FXML
+    private void consulterR(ActionEvent event) {
+     try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherReservation.fxml"));
+		Parent root = loader.load();
+		AfficherReservationController  e = loader.getController();
+                e.setIdc(idclient);
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+
     }
 }
 

@@ -112,14 +112,10 @@ public class AfficherReservationController implements Initializable {
     private Button agenda;
     
     
-  private int idc=2 ;
+  private int idc ;
   
   
   
-  //provisoire 
-  
-      @FXML
-    private Button btnOverview;
 
     @FXML
     private Button btnOrders;
@@ -142,6 +138,10 @@ public class AfficherReservationController implements Initializable {
     private Button btnSettings1;
     @FXML
     private Button modifierP;
+    @FXML
+    private Button consulterCompte;
+    @FXML
+    private Button btnSettings11;
 
     public void setIdc(int idc) {
         this.idc = idc;
@@ -498,6 +498,85 @@ public class AfficherReservationController implements Initializable {
     private void vider(MouseEvent event) {
            DD.setDisable(false);
          DF.setDisable(false);
+    }
+
+    @FXML
+    private void consulterCompteC(ActionEvent event) {
+        
+        
+    }
+
+    @FXML
+    private void reserverVol(ActionEvent event) {
+        
+        
+        
+          try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverVol.fxml"));
+		Parent root = loader.load();
+		ReserverVolController  e = loader.getController();
+                e.setIdclient(idc);
+                
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+    }
+
+
+    @FXML
+    private void reserverVO(ActionEvent event) {
+        
+          try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverVoyage.fxml"));
+		Parent root = loader.load();
+		ReserverVoyageController  e = loader.getController();
+           
+                e.setIdclient(idc);
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+    }
+
+    @FXML
+    private void ReserverA(ActionEvent event) {
+        
+         
+         try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverActivite.fxml"));
+		Parent root = loader.load();
+		ReserverActiviteController  e = loader.getController();
+                
+           
+                e.setIdclient(idc);
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+    }
+
+    @FXML
+    private void reclamations(ActionEvent event) {
+    }
+
+    @FXML
+    private void signout(ActionEvent event) {
+    }
+
+    @FXML
+    private void reserverH(ActionEvent event) {
+        
+        try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ReserverHebergement.fxml"));
+		Parent root = loader.load();
+		ReserverHebergementController  e = loader.getController();
+                e.setIdC(idc);
+                
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
     }
 
     

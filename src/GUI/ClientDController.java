@@ -64,6 +64,8 @@ public class ClientDController implements Initializable {
        private int idc; 
     @FXML
     private Button bReclamation;
+    @FXML
+    private Button btnOrders1;
     public void setIdc(int idc) {
         System.out.println(idc);
         this.idc = idc;
@@ -143,7 +145,18 @@ public class ClientDController implements Initializable {
     @FXML
     private void consulterProfil(ActionEvent event) {
         
-           try{
+          
+        
+    }
+
+    @FXML
+    private void reclamation(ActionEvent event) {
+    }
+
+    @FXML
+    private void consulterReservation(ActionEvent event) {
+        
+         try{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherReservation.fxml"));
 		Parent root = loader.load();
 		AfficherReservationController  e = loader.getController();
@@ -152,11 +165,10 @@ public class ClientDController implements Initializable {
 		}catch(Exception ex){
 			System.out.println(ex);
 		}
-        
     }
 
     @FXML
-    private void reclamation(ActionEvent event) {
+    private void avis(ActionEvent event) {
     }
     
 }

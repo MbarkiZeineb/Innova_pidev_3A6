@@ -54,7 +54,7 @@
                   <Insets bottom="10.0" top="50.0" />
                </VBox.margin>
             </ImageView>
-            <Button fx:id="btnOverview" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" style="-fx-text-fill: black;" stylesheets="@style.css" text="Consulter Profil" textFill="#e7e5e5">
+            <Button fx:id="consulterCompte" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#consulterCompteC" prefHeight="42.0" prefWidth="259.0" style="-fx-text-fill: black;" stylesheets="@style.css" text="Consulter Profil" textFill="#e7e5e5">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -72,7 +72,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnOrders" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver Vol">
+            <Button fx:id="btnOrders" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#reserverVol" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver Vol">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -84,7 +84,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnCustomers" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver Hebergment">
+            <Button fx:id="btnCustomers" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#reserverH" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver Hebergment">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -96,7 +96,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnMenus" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver voyage organise">
+            <Button fx:id="btnMenus" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#reserverVO" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver voyage organise">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -108,7 +108,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnPackages" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver Activite ">
+            <Button fx:id="btnPackages" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#ReserverA" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Reserver Activite ">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -132,7 +132,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnSettings1" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Consulter  les reclamations">
+            <Button fx:id="btnSettings1" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#reclamations" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Consulter  les reclamations">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -144,7 +144,19 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Sign Out">
+            <Button fx:id="btnSettings11" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#reclamations" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Avis">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons8_Slider__32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#signout" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Sign Out">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
