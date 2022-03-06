@@ -30,7 +30,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import services.AgentAerienService;
 import services.ClientService;
+import services.OffreurService;
 
 /**
  * FXML Controller class
@@ -81,6 +83,8 @@ public class LoginController implements Initializable {
 String nom = txtnom.getText();
 String mdp = txtmdp.getText();
 ClientService cs = new ClientService();
+AgentAerienService as= new AgentAerienService();
+        OffreurService os= new OffreurService();
 if(nom.equals("") && mdp.equals("")||nom.equals("")||mdp.equals(""))
 {
     JOptionPane.showMessageDialog(null, "veuillez remplir tous les champs vides");
@@ -161,8 +165,19 @@ pste.setString(2,mdp);
  ResultSet rs = pste.executeQuery();
    if(rs.next()){
                 JOptionPane.showMessageDialog(null, "Offreur and password matched");
-                 txtnom.setText("");
-                     txtmdp.setText("");
+//                 txtnom.setText("");
+//                     txtmdp.setText("");
+     try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierCompteOffreur.fxml"));
+		Parent root = loader.load();
+		ModifierCompteOffreurController  e = loader.getController();
+                int i=os.selectidO(txtnom.getText(),txtmdp.getText());
+                e.setIdc(i);
+              
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
                
             }else{
                     JOptionPane.showMessageDialog(null, "Offreur and password donot matched");
@@ -177,9 +192,19 @@ pste.setString(2,mdp);
  ResultSet rs = pste.executeQuery();
    if(rs.next()){
                 JOptionPane.showMessageDialog(null, "agent-aerien and password matched");
-                 txtnom.setText("");
-                     txtmdp.setText("");
-               
+//                 txtnom.setText("");
+//                     txtmdp.setText("");
+                    try{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierCompteAgent.fxml"));
+		Parent root = loader.load();
+		ModifierCompteAgentController  e = loader.getController();
+                int i=as.selectidA(txtnom.getText(),txtmdp.getText());
+                e.setIdc(i);
+              
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
             }else{
                     JOptionPane.showMessageDialog(null, "agent-aerien and password donot matched");
                     txtnom.setText("");

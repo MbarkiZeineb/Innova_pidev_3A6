@@ -15,11 +15,16 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import services.ClientService;
 import entities.Client;
+import entities.encryption;
+import static entities.encryption.ALGORITHM;
+import static entities.encryption.decrypt;
+import static entities.encryption.keyValue;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.scene.control.ComboBox;
+import javax.crypto.spec.SecretKeySpec;
 import utilis.Connexion;
 /**
  * FXML Controller class
@@ -84,13 +89,16 @@ public class ModifierCompteClientController implements Initializable {
      
     }  
       @FXML
-    void modifier(ActionEvent event) {
+    void modifier(ActionEvent event) throws Exception {
     ClientService cs =new ClientService();
     Client c= cs.selectmodifier(idc);
      c.setEmail(txtemailCMOD.getText());
         c.setNom( txtnomCMod.getText());
         c.setPrenom(txtprenomCMOD.getText());
-        c.setPwd(txtmdpCMOD.getText());
+              String mdpcry = encryption.encrypt(txtmdpCMOD.getText(),new SecretKeySpec(keyValue, ALGORITHM));      
+       c.setPwd(mdpcry);
+         decrypt(mdpcry,new SecretKeySpec(keyValue, ALGORITHM));
+       
 c.setAnswer(txtRepCMod.getText());
 cs.modifier(c);
      
