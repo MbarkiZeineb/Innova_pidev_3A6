@@ -88,6 +88,10 @@ public class ReserverActiviteController implements Initializable {
                ReservationService rs = new ReservationService();
        PaiementService ps = new PaiementService();
         private int idclient;
+    @FXML
+    private JFXButton F31;
+    @FXML
+    private JFXButton F311;
 
     public void setIdclient(int idclient) {
         this.idclient = idclient;
@@ -251,7 +255,7 @@ public class ReserverActiviteController implements Initializable {
     private void selecteAct(MouseEvent event) {
              
           int  index = tvactivite.getSelectionModel().getSelectedIndex();
-          nomA.setText(colnom.getCellData(index).toString());
+          nomA.setText(colnom.getCellData(index));
          prixA.setText(colprix.getCellData(index).toString());
          DateA.setText(coldate.getCellData(index));
          

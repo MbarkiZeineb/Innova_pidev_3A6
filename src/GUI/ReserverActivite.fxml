@@ -13,20 +13,20 @@
 
 <AnchorPane id="AnchorPane" prefHeight="845.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReserverActiviteController">
    <children>
-      <Label layoutX="87.0" layoutY="142.0" prefHeight="21.0" prefWidth="104.0" text="Nom" />
-      <Label layoutX="118.0" layoutY="195.0" prefHeight="21.0" prefWidth="57.0" text="Prix" />
-      <Label layoutX="107.0" layoutY="299.0" text="Nombre de place" />
-      <TextField fx:id="nomA" editable="false" layoutX="170.0" layoutY="142.0" />
-      <TextField fx:id="prixA" editable="false" layoutX="170.0" layoutY="190.0" />
-      <TextField fx:id="nbpA" layoutX="235.0" layoutY="294.0" onKeyTyped="#calculerPT" />
-      <TextField fx:id="DateA" editable="false" layoutX="211.0" layoutY="242.0" />
-      <Label layoutX="118.0" layoutY="247.0" prefHeight="21.0" prefWidth="68.0" text="Date" />
-      <Label layoutX="106.0" layoutY="354.0" prefHeight="21.0" prefWidth="82.0" text="prix total" />
-      <TextField fx:id="prixtotal" editable="false" layoutX="235.0" layoutY="349.0" />
-      <Button fx:id="ReserverA" layoutX="73.0" layoutY="608.0" mnemonicParsing="false" onAction="#addact" onMouseReleased="#vider" prefHeight="31.0" prefWidth="115.0" text="Reserver" />
-      <Label layoutX="101.0" layoutY="426.0" text="Nom Client" />
-      <TextField fx:id="idc" layoutX="235.0" layoutY="421.0" />
-      <TableView fx:id="tvactivite" layoutX="508.0" layoutY="104.0" onMouseClicked="#selecteAct" prefHeight="348.0" prefWidth="787.0">
+      <Label layoutX="566.0" layoutY="330.0" prefHeight="21.0" prefWidth="104.0" text="Nom" />
+      <Label layoutX="538.0" layoutY="378.0" prefHeight="21.0" prefWidth="57.0" text="Prix" />
+      <Label layoutX="843.0" layoutY="378.0" text="Nombre de place" />
+      <TextField fx:id="nomA" editable="false" layoutX="613.0" layoutY="325.0" />
+      <TextField fx:id="prixA" editable="false" layoutX="613.0" layoutY="373.0" />
+      <TextField fx:id="nbpA" layoutX="967.0" layoutY="373.0" onKeyTyped="#calculerPT" />
+      <TextField fx:id="DateA" editable="false" layoutX="959.0" layoutY="323.0" />
+      <Label layoutX="866.0" layoutY="328.0" prefHeight="21.0" prefWidth="68.0" text="Date" />
+      <Label layoutX="536.0" layoutY="428.0" prefHeight="21.0" prefWidth="82.0" text="prix total" />
+      <TextField fx:id="prixtotal" editable="false" layoutX="613.0" layoutY="423.0" />
+      <Button fx:id="ReserverA" layoutX="903.0" layoutY="491.0" mnemonicParsing="false" onAction="#addact" onMouseReleased="#vider" prefHeight="31.0" prefWidth="115.0" text="Reserver" />
+      <Label layoutX="536.0" layoutY="485.0" text="Nom Client" />
+      <TextField fx:id="idc" layoutX="624.0" layoutY="480.0" />
+      <TableView fx:id="tvactivite" layoutX="536.0" layoutY="84.0" onMouseClicked="#selecteAct" prefHeight="224.0" prefWidth="798.0">
         <columns>
            <TableColumn fx:id="colnom" prefWidth="140.0" text="Nom" />
             <TableColumn fx:id="colduree" prefWidth="97.0" text="Durée" />
@@ -38,8 +38,8 @@
             <TableColumn fx:id="coldesc" prefWidth="316.0" text="Description" />
         </columns>
       </TableView>
-      <ComboBox fx:id="modalite" layoutX="264.0" layoutY="493.0" prefWidth="150.0" />
-      <Label layoutX="79.0" layoutY="498.0" text="Modalite de paiement" />
+      <ComboBox fx:id="modalite" layoutX="997.0" layoutY="423.0" prefWidth="150.0" />
+      <Label layoutX="827.0" layoutY="428.0" text="Modalite de paiement" />
       <JFXButton fx:id="E1" buttonType="RAISED" layoutX="574.0" layoutY="554.0" prefHeight="40.0" prefWidth="50.0" style="-fx-background-color: #8EA6B4; -fx-background-radius: 7;" text="1" textFill="WHITE">
          <font>
             <Font size="18.0" />
@@ -193,6 +193,22 @@
          </cursor>
       </JFXButton>
       <JFXButton fx:id="F10" buttonType="RAISED" layoutX="1245.0" layoutY="622.0" prefHeight="40.0" prefWidth="50.0" style="-fx-background-color: #8EA6B4; -fx-background-radius: 7;" text="20" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="F31" buttonType="RAISED" layoutX="779.0" layoutY="717.0" prefHeight="40.0" prefWidth="128.0" ripplerFill="WHITE" style="-fx-background-color: #4A772F; -fx-background-radius: 7;" text="disponible" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="F311" buttonType="RAISED" layoutX="1010.0" layoutY="717.0" prefHeight="40.0" prefWidth="150.0" ripplerFill="WHITE" style="-fx-background-color: #C40018; -fx-background-radius: 7;" text="non disponible" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>

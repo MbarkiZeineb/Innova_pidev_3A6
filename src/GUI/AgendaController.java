@@ -65,7 +65,7 @@ public class AgendaController implements Initializable {
       
     public void setId(int idc) {
         this.id = idc;
-        
+        System.out.println("to agenda"+id);
       int t=2;
        ReservationService rs = new ReservationService();
      List<LocalDate> ll=  rs.WeekRH(id);
@@ -118,6 +118,8 @@ public class AgendaController implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherReservation.fxml"));
 		Parent root = loader.load();
 		AfficherReservationController  e = loader.getController();
+                System.out.println("back to consulter "+id);
+                e.setIdc(id);
                 
 		((Button) event.getSource()).getScene().setRoot(root);
 		}catch(Exception ex){

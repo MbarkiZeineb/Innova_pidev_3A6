@@ -172,7 +172,7 @@ public class AfficherReservationController implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("agenda.fxml"));
 		Parent root = loader.load();
 		AgendaController  e = loader.getController();
-                e.setId(2);
+                e.setId(idc);
 		((Button) event.getSource()).getScene().setRoot(root);
 		}catch(Exception ex){
 			System.out.println(ex);
@@ -232,15 +232,35 @@ public class AfficherReservationController implements Initializable {
       Reservation r=  tableRe.getSelectionModel().getSelectedItem();
       Paiement p = new Paiement();
       p.setId_reservation(r.getId());
-      ps.supprimer(p);
-      rs.supprimer(r);     
+        
+      if(r.getEtat().equals("Vol") || r.getEtat().equals("Voyage") || r.getEtat().equals("Activite") && r.getEtat().equals("Annule"))
+      {
+       ps.supprimer(p);
+      rs.supprimer(r);  
+      }
+      else if (r.getType().equals("Hebergement") && r.getEtat().equals("Annule") )
+      {
+            ps.supprimer(p);
+           rs.supprimer(r);  
+          
+      }
+      else 
+      {
+            Notifications.create().title(" Affichage  ").text("   suppression impoosible   ").show();
+      }
+      
+           tableRe.getItems().clear();
+     paiment.getItems().clear();
+     loadTable(idc);
+     loadTableP(idc);   
+      
     }
 
     @FXML
     private void UpdateTable(MouseEvent event) {  
      tableRe.getItems().clear();
-    loadTable(idc);
      paiment.getItems().clear();
+     loadTable(idc);
      loadTableP(idc);
     }
     
@@ -331,10 +351,21 @@ public class AfficherReservationController implements Initializable {
     private void modifierR(ActionEvent event) {
          Reservation r=  tableRe.getSelectionModel().getSelectedItem();
          
-         
+         System.out.println("test1 ");
          if(r.getType().equals("Vol") || r.getType().equals("Voyage") || r.getType().equals("Voyage"))
-         {
-             if(Etat.getValue().equals("Annule") && !r.getEtat().equals("Annule"))
+         {   
+               
+             
+              if(r.getEtat().equals("Annule")&&Etat.getValue().equals("Approuve"))
+                 
+             {
+                  Notifications.create().title(" Affichage  ").text("  lmodification imposible  ").show();
+                 
+                 
+             }
+
+             
+             else if(Etat.getValue().equals("Annule") && !r .getEtat().equals("Annule"))
                  
              {
                  switch(r.getType())
@@ -346,7 +377,7 @@ public class AfficherReservationController implements Initializable {
                rs.modifiervol(r);
               rs.Annulernbplacevol(r.getId_vol(), r.getNbr_place());
               ps.modifierMontant(r.getId(),0);
-               
+               Notifications.create().title(" Affichage  ").text("  la reservation est annulee   ").show();
                  tableRe.getItems().clear();
                 paiment.getItems().clear();
                   loadTableP(idc);
@@ -357,9 +388,10 @@ public class AfficherReservationController implements Initializable {
               rs.modifier(r);
               rs.Annulernbplacevoyage(r.getId_voyage(), r.getNbr_place());
               ps.modifierMontant(r.getId(),0);
-               
+               Notifications.create().title(" Affichage  ").text("  la reservation est annulee   ").show();
                  tableRe.getItems().clear();
                 paiment.getItems().clear();
+                
             loadTableP(idc);
                  loadTable(idc);  
             
@@ -370,7 +402,7 @@ public class AfficherReservationController implements Initializable {
               rs.modifierAct(r);
              rs.AnnulernbplaceA(r.getId_active(),r.getNbr_place());
               ps.modifierMontant(r.getId(),0);
-               
+               Notifications.create().title(" Affichage  ").text("  la reservation est annulee   ").show();
                  tableRe.getItems().clear();
                 paiment.getItems().clear();
                   loadTableP(idc);
@@ -381,14 +413,14 @@ public class AfficherReservationController implements Initializable {
                   
              }
              
-             if(Etat.getValue().equals("Annule"))
+             else if(Etat.getValue().equals("Annule"))
                  
              {
                   Notifications.create().title(" Affichage  ").text("  la reseravation est deja annule  ").show();
                  
                  
              }
-            
+                         
              
              
          }
