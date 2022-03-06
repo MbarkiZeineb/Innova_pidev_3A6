@@ -45,7 +45,7 @@ public class AvionService implements IService<Avion>{
             pste.executeUpdate();
             System.out.println("Avion créée");
         } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AvionService.class.getName()).log(Level.SEVERE, null, ex);
         }}
     
     @Override
@@ -64,7 +64,7 @@ public class AvionService implements IService<Avion>{
                 System.out.println("La modification d'avion a été éffectuée avec succès ");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AvionService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -81,7 +81,7 @@ public class AvionService implements IService<Avion>{
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AvionService.class.getName()).log(Level.SEVERE, null, ex);
         }
 }
 
@@ -111,7 +111,32 @@ public class AvionService implements IService<Avion>{
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AvionService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Avions;
+    }
+    
+
+    public List<Avion> afficher2(int id) {
+          List<Avion> Avions = new ArrayList<>();
+        String req = "SELECT * FROM `avion` where id_agence='"+id+"' ";
+        
+        try {
+            
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+                Avion a = new Avion();
+                a.setId_avion(rs.getInt("id_avion"));
+                a.setNbr_place(rs.getInt("nbr_place"));
+                a.setId_agence(rs.getInt("id_agence"));
+                a.setNom_avion(rs.getString("nom_avion"));
+                Avions.add(a);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AvionService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Avions;
     }
@@ -137,7 +162,7 @@ public class AvionService implements IService<Avion>{
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AvionService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return a;
@@ -169,6 +194,28 @@ public class AvionService implements IService<Avion>{
         return null;
     
 }
+     
+     public String  NomA(int id) {
+         
+        String req = "SELECT CONCAT(`nom`,'  ',`prenom`) FROM `agent-aerien` WHERE id = "+id+" " ;
+         String s="";
+        try {
+
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+              s= rs.getNString(1);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AvionService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return s;
+    }
+
+     
   
    
 }

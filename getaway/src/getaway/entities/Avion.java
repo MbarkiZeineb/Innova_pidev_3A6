@@ -5,6 +5,8 @@
  */
 package getaway.entities;
 
+import java.util.Objects;
+
 /**
  *
  * @author Malek
@@ -75,6 +77,31 @@ public class Avion {
     @Override
     public String toString() {
         return "Avion{" + "id_avion=" + id_avion + ", nbr_place=" + nbr_place + ", id_agence=" + id_agence + ", nom_avion=" + nom_avion + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.nom_avion);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Avion other = (Avion) obj;
+        if (!Objects.equals(this.nom_avion, other.nom_avion)) {
+            return false;
+        }
+        return true;
     }
 
    

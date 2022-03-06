@@ -4,9 +4,13 @@
  * and open the template in the editor.
  */
 package getaway.services;
+import GUI.AjouterVolController;
+import static com.itextpdf.text.pdf.security.LtvTimestamp.timestamp;
 import getaway.entities.Vol;
 import getaway.utilis.Datasource;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -17,7 +21,6 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-
 /**
  *
  * @author Malek
@@ -132,6 +135,36 @@ public class VolService implements IService<Vol> {
     public List<Vol> afficher() {
          List<Vol> Vols = new ArrayList<>();
         String req = "SELECT * FROM `vol` ";
+        
+        try {
+            
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+                Vol v = new Vol();
+                v.setId_vol(rs.getInt("id_vol"));
+                v.setDate_depart(rs.getTimestamp("date_depart"));
+                v.setDate_arrivee(rs.getTimestamp("date_arrivee"));
+                v.setVille_depart(rs.getString("ville_depart"));
+                v.setVille_arrivee(rs.getString("ville_arrivee"));
+                v.setNbr_placedispo(rs.getInt("nbr_placedispo"));
+                v.setId_avion(rs.getInt("id_avion"));
+                v.setPrix(rs.getFloat("prix"));
+                Vols.add(v);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(VolService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return Vols;
+    }
+    
+   
+    public List<Vol> afficher2(int id) {
+         List<Vol> Vols = new ArrayList<>();
+        String req = "SELECT * FROM `vol` where id_avion in ( select id_avion from avion where id_agence='"+id+"' )";
         
         try {
             

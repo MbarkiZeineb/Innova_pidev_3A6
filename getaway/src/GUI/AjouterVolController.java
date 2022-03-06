@@ -52,6 +52,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import static java.lang.System.in;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.FilteredList;
@@ -69,6 +73,8 @@ public class AjouterVolController implements Initializable {
 
     @FXML
     private Button id_button;
+    @FXML
+    private TextField nomagent ;
     @FXML
     private TextField date_depart;
     @FXML
@@ -117,6 +123,8 @@ public class AjouterVolController implements Initializable {
     private Button r_id;
     @FXML
     private Button stat;
+    @FXML
+    private Button meteo;
    
     
     //tabavion
@@ -158,16 +166,32 @@ public class AjouterVolController implements Initializable {
     int index= -1;
   ObservableList<Vol> oblist = FXCollections.observableArrayList();
     ObservableList<Avion> oblist1 = FXCollections.observableArrayList();
+    
+    AvionService as = new AvionService();
+    
+    private int ida;
+    public void setIdagent(int ida)
+    {
+        this.ida=ida;
+        nomagent.setText(as.NomA(ida));
+        afficher(ida);
+        afficher1(ida);
+        getida(ida);
+        getidagence(ida);
+        
+        
+    }
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-      afficher1();
-     afficher();
-     getidagence();
-     getida();
+      afficher1(ida);
+     afficher(ida);
+     getidagence(ida);
+     getida(ida);
      Vol v = tb_v.getSelectionModel().getSelectedItem();
     // supp1.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
     // supp.disableProperty().bind(Bindings.isEmpty(tb_a.getSelectionModel().getSelectedItems()));
@@ -181,10 +205,12 @@ public class AjouterVolController implements Initializable {
     }    
     
     //****************************************tabVol******************************************************
-    public void getida()
+    
+    
+    public void getida(int id)
     {
         
-        String req ="SELECT id_avion from avion";
+        String req ="SELECT id_avion from avion where id_agence='"+id+"'";
          try {
             Connection conn = getConnection();
              Statement ste;
@@ -202,11 +228,11 @@ public class AjouterVolController implements Initializable {
         
     }
     
-    public void afficher()
+    public void afficher(int id)
     {
          VolService vs = new VolService();
          
-        List<Vol> ls = vs.afficher();
+        List<Vol> ls = vs.afficher2(id);
           
           ls.forEach(e->oblist.add(e));
           System.out.print(oblist);
@@ -217,7 +243,7 @@ public class AjouterVolController implements Initializable {
         tb_villearrivee.setCellValueFactory(new PropertyValueFactory<>("ville_arrivee"));
         //tb_avion.setCellValueFactory(new PropertyValueFactory<>("id_avion"));
         tb_place.setCellValueFactory(new PropertyValueFactory<>("nbr_placedispo"));
-        tb_nomavion.setCellValueFactory(new PropertyValueFactory<>("nom_avion"));
+        //tb_nomavion.setCellValueFactory(new PropertyValueFactory<>("nom_avion"));
         tb_v.setItems(oblist);
         
       
@@ -225,12 +251,62 @@ public class AjouterVolController implements Initializable {
     }   
    
 
+  
+   public boolean verifierDate ()
+    {
+          java.sql.Timestamp Date_debut= java.sql.Timestamp.valueOf(date_depart.getText());
+          java.sql.Timestamp Date_fin= java.sql.Timestamp.valueOf(date_arrivee.getText());
+        
+        if (Date_fin.before(Date_debut))
+        
+    {
+        
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+    alert.setTitle("Valider Les Champs");
+    alert.setHeaderText(null);
+    alert.setContentText("Verifier La Date ");
+    alert.showAndWait();
+    return false;
+    }
+   
+   return true;
+    }
+
    @FXML
     void ajouter(ActionEvent event) throws Exception {
        VolService ps= new VolService();
         Vol p =new Vol();
          Vol v = tb_v.getSelectionModel().getSelectedItem();
+         if (Float.parseFloat(prix.getText())<=0)
+         {
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Le prix doit etre positive!");
+            alert.show();
          
+         }
+         else if(!Pattern.matches("[a-zA-Z]+", ville_depart.getText()))
+        
+        {
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("La ville doit contenir des alphabets seulement!");
+            alert.show();
+        }
+          else if(!Pattern.matches("[a-zA-Z]+", ville_arrivee.getText()) )
+        {
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("La ville doit contenir des alphabets seulement!");
+            alert.show();
+        }
+          
+         else if (verifierDate()==false)
+         {System.out.println("error");}
+         else{ 
        if(isEmpty())
        {return;
         } else {
@@ -261,7 +337,7 @@ public class AjouterVolController implements Initializable {
       
        ps.ajouter(p);
        tb_v.getItems().clear();
-       afficher();
+       afficher(ida);
        //System.out.println("ajout avec succés");
        //Notifications.create().title("Vol").text(" Vol est Créé ").show();
          
@@ -275,7 +351,7 @@ public class AjouterVolController implements Initializable {
     alert.setContentText("ajout avec succes!");
     alert.showAndWait();
     } }
-       }
+       }}
     
        
 
@@ -288,7 +364,7 @@ public class AjouterVolController implements Initializable {
       VolService vs = new VolService();
       vs.supprimer(r);
       tb_v.getItems().clear();
-       afficher();
+       afficher(ida);
        Alert alert = new Alert(AlertType.INFORMATION);
         
 alert.setTitle("intformation");
@@ -318,7 +394,7 @@ alert.showAndWait();
       vs.modifier(p);
       
     tb_v.getItems().clear();
-    afficher();
+    afficher(ida);
     Alert alert = new Alert(AlertType.INFORMATION);
         
 alert.setTitle("intformation");
@@ -496,6 +572,19 @@ alert.showAndWait();
        
     }
     
+    @FXML
+    private void meteo(ActionEvent event) {
+        FXMLLoader loader=new FXMLLoader(getClass().getResource("primary.fxml"));
+                       Parent root ;
+        try {
+            root=loader.load();
+             meteo.getScene().setRoot(root);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.StatController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+    
      @FXML
     private void selectP(MouseEvent event) {
              
@@ -508,7 +597,7 @@ alert.showAndWait();
        tb_a.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection)->
      {
       
-        Vol v = vs.afficher().stream().filter(e->e.getId_avion()==newSelection.getId_avion()).findFirst().get();
+        Vol v = vs.afficher2(ida).stream().filter(e->e.getId_avion()==newSelection.getId_avion()).findFirst().get();
         
        
    int a=  IntStream.range(0,tb_v.getItems().size())
@@ -557,8 +646,9 @@ alert.showAndWait();
     date_arrivee.clear();
     prix.clear();
     nbr_placedispo.clear();
+    //id_avion.getItems().clear();
     tb_v.getItems().clear();
-    afficher();
+    afficher(ida);
   
     }
     
@@ -663,10 +753,10 @@ alert.showAndWait();
      
         //****************************************tabavion******************************************************
 
-    public void afficher1()
+    public void afficher1(int id)
     {
          AvionService as = new AvionService();
-        List<Avion> ls = as.afficher();
+        List<Avion> ls = as.afficher2(ida);
          ls.forEach(e->oblist1.add(e));
           System.out.print(oblist1);
         tb_nomavion.setCellValueFactory(new PropertyValueFactory<>("nom_avion"));
@@ -676,10 +766,10 @@ alert.showAndWait();
        
     }   
     
-     public void getidagence()
+     public void getidagence(int id)
     {
         
-        String req ="SELECT id FROM `agent-aerien` ";
+        String req ="SELECT id FROM `agent-aerien` where id='"+id+"'";
          try {
             Connection conn = getConnection();
              Statement ste;
@@ -701,7 +791,16 @@ alert.showAndWait();
     void ajouter1(ActionEvent event)  {
         AvionService as = new AvionService();
         Avion p =new Avion();
-       
+      
+           if(!Pattern.matches("[a-zA-Z]+", nom_avion.getText()))
+        {
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Le nom doit contenir des alphabets seulement!");
+            alert.show();
+        }
+       else{
        if(isEmpty1())
        {return;
         } else {
@@ -711,7 +810,7 @@ alert.showAndWait();
        as.ajouter(p);
          
        tb_a.getItems().clear();
-       afficher1();
+       afficher1(ida);
        Alert alert = new Alert(AlertType.INFORMATION);
         
     alert.setTitle("information");
@@ -719,7 +818,7 @@ alert.showAndWait();
     alert.setContentText("ajout avec succes!");
     alert.showAndWait();
     }  }
-    
+}
     
      
 
@@ -746,7 +845,7 @@ alert.showAndWait();
      @FXML
     private void supprimer1(ActionEvent event) {
         
-       //Vol v = new Vol();
+       
        Avion a = new Avion();
        
       Avion r=  tb_a.getSelectionModel().getSelectedItem();
@@ -755,7 +854,7 @@ alert.showAndWait();
       as.supprimer(r);
       tb_a.getItems().clear();
       tb_v.getItems().clear();
-       afficher1();
+       afficher1(ida);
 //       Alert alert = new Alert(AlertType.INFORMATION);
 //        
 //alert.setTitle("intformation");
@@ -783,7 +882,7 @@ alert.showAndWait();
       vs.modifier(p);
       
     tb_a.getItems().clear();
-    afficher1();
+    afficher1(ida);
     Alert alert = new Alert(AlertType.INFORMATION);
         
 alert.setTitle("intformation");
@@ -854,7 +953,10 @@ alert.showAndWait();
            
    nom_avion.clear();
     nbr_place.clear();
-    afficher();
+   id_agence.getItems().clear();
+    afficher(ida);
+    id_agence.getItems().clear();
+    
   
     }
     
