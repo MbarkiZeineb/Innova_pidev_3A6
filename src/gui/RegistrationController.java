@@ -15,6 +15,7 @@ import static entities.encryption.ALGORITHM;
 import static entities.encryption.decrypt;
 import static entities.encryption.keyValue;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +31,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
@@ -39,6 +43,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JOptionPane;
 import services.*;
@@ -264,7 +269,20 @@ private Connection conn;
     @FXML
     private Button btnTraiter;
     
-    
+     @FXML
+    private Button btngestU;
+
+    @FXML
+    private Button btngestVo;
+
+    @FXML
+    private Button btngestActv;
+
+    @FXML
+    private Button btnStat;
+
+    @FXML
+    private Button btnlogout;
     
       @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -798,6 +816,42 @@ AgentAerien ag =  tvAgent.getSelectionModel().getSelectedItem();
 ags.supprimer(ag.getId());
 tvAgent.getItems().clear();
 afficherAgent();
+    }
+    
+    
+    //bar
+      @FXML
+    void GestionU(ActionEvent event) throws IOException {
+
+    }
+    
+     @FXML
+    void gestAct(ActionEvent event) {
+
+    }
+
+    @FXML
+    void gestVo(ActionEvent event) {
+
+    }
+
+    @FXML
+    void logout(ActionEvent event) throws IOException {
+             try{
+		 FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+		Parent root = loader.load();
+		LoginController  e = loader.getController();
+               
+              
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+    }
+    
+    @FXML
+    void statistique(ActionEvent event) {
+
     }
 
     

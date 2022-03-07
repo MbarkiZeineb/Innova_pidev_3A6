@@ -135,9 +135,9 @@ pste.setString(2,mdp);
 //                     txtmdp.setText("");
                      
                       try{
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("client.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierCompteClient.fxml"));
 		Parent root = loader.load();
-		clientController  e = loader.getController();
+		ModifierCompteClientController  e = loader.getController();
                 int i=cs.selectidC(txtnom.getText(),txtmdp.getText());
                 e.setIdc(i);
               

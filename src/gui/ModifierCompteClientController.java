@@ -19,11 +19,16 @@ import entities.encryption;
 import static entities.encryption.ALGORITHM;
 import static entities.encryption.decrypt;
 import static entities.encryption.keyValue;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.stage.Stage;
 import javax.crypto.spec.SecretKeySpec;
 import utilis.Connexion;
 /**
@@ -104,5 +109,83 @@ cs.modifier(c);
      
          
     }
+    
+    
+    
+        @FXML
+    void reclamation(ActionEvent event) throws IOException {
+        Stage stage =new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("Reclamation.fxml"));
+        Scene scene =new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    void reserverActivite(ActionEvent event) {
+
+    }
+
+    @FXML
+    void reserverHebergement(ActionEvent event) {
+
+    }
+
+    @FXML
+    void reserverVol(ActionEvent event) {
+
+    }
+
+    @FXML
+    void reserverVoyageO(ActionEvent event) {
+
+    }
+    
+        @FXML
+    void avis(ActionEvent event) {
+
+    }
+
+    @FXML
+    void consulterProfil(ActionEvent event) throws IOException {
+
+    }
+
+    @FXML
+    void consulterReservation(ActionEvent event) {
+
+    }
+    
+       @FXML
+    void logout(ActionEvent event) throws IOException {
+//  Stage stage = new Stage();
+ 
+//        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+//        Scene scene =new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+
+    
+                      try{
+		 FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+		Parent root = loader.load();
+		LoginController  e = loader.getController();
+               
+              
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
