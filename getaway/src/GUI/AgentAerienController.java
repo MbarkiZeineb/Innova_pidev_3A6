@@ -351,7 +351,7 @@ public class AgentAerienController implements Initializable {
     public void nbtotalAvion(int id){
         String req="select COUNT(id_avion) FROM avion where id_agence='"+id+"' ";
      
-    try {
+   try {
          Connection conn = getConnection();
              Statement ste;
             ste = conn.createStatement();
@@ -365,6 +365,8 @@ public class AgentAerienController implements Initializable {
     } catch (SQLException ex) {
         Logger.getLogger(AgentAerienController.class.getName()).log(Level.SEVERE, null, ex);
     }
+        
+    
     
     }
     @FXML
@@ -791,15 +793,18 @@ alert.showAndWait();
 
     @FXML
     private void statistique(ActionEvent event) {
+        try{
          FXMLLoader loader=new FXMLLoader(getClass().getResource("Stat.fxml"));
-                       Parent root ;
-        try {
-            root=loader.load();
-             stat.getScene().setRoot(root);
-        } catch (IOException ex) {
-            Logger.getLogger(GUI.StatController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                      Parent root = loader.load();
+		StatController  e = loader.getController();
+                e.setIdagent(ida);
+                
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
     }
+    	
 
      public Connection getConnection(){
     Connection conn;

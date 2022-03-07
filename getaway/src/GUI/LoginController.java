@@ -67,7 +67,6 @@ public class LoginController implements Initializable {
 String nom = txtnom.getText();
 String mdp = txtmdp.getText();
 //ClientService cs = new ClientService();
-AgentAerienService as = new AgentAerienService();
 if(nom.equals("") && mdp.equals("")||nom.equals("")||mdp.equals(""))
 {
     JOptionPane.showMessageDialog(null, "veuillez remplir tous les champs vides");
@@ -123,7 +122,7 @@ pste.setString(2,mdp);
 		//ClientDController  ee = loader.getController();
                 
                // int i=cs.selectidC(txtnom.getText(),txtmdp.getText());
-               // ee.setIdc(i);
+                //ee.setIdc(i);
               
 		((Button) event.getSource()).getScene().setRoot(root);
 		}catch(Exception ex){
@@ -151,8 +150,7 @@ pste.setString(2,mdp);
                 JOptionPane.showMessageDialog(null, "Offreur and password matched");
                  txtnom.setText("");
                      txtmdp.setText("");
-                     
-                    
+               
             }else{
                     JOptionPane.showMessageDialog(null, "Offreur and password donot matched");
                     txtnom.setText("");
@@ -164,16 +162,17 @@ PreparedStatement pste=conn.prepareStatement(sql);
 pste.setString(1,nom);
 pste.setString(2,mdp);
  ResultSet rs = pste.executeQuery();
+ 
    if(rs.next()){
                 JOptionPane.showMessageDialog(null, "agent-aerien and password matched");
 //                 txtnom.setText("");
 //                     txtmdp.setText("");
-                      
-                      try{
+
+ try{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Agentaerien.fxml"));
 		Parent root = loader.load();
 		 AgentAerienController  ee = loader.getController();
-                
+                AgentAerienService as = new AgentAerienService();
                 int i=as.selectidA(txtnom.getText(),txtmdp.getText());
                 ee.setIdagent(i);
                 
@@ -182,7 +181,6 @@ pste.setString(2,mdp);
 		}catch(Exception ex){
 			System.out.println(ex);
 		}
-               
                
             }else{
                     JOptionPane.showMessageDialog(null, "agent-aerien and password donot matched");
@@ -217,11 +215,6 @@ pste.setString(2,mdp);
         combo.setItems(list);
     
     }
-//
-//public int getIdClientConn()
-//{
-//
-//}
     
     
 }
