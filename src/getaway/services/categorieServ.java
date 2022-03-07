@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -44,6 +46,7 @@ public class categorieServ implements serv<categorie>{
     @Override
     public List<categorie> afficher() {
 List<categorie> categ = new ArrayList<>();
+
         String req = "SELECT * FROM `categorievoy`";
         
         try {
