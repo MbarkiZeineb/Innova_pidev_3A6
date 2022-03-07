@@ -197,7 +197,7 @@ public class ReserverActiviteController implements Initializable {
      
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
        
-          if(nbpA.getText().matches("^[0-9]+$"))  
+          if(nbpA.getText().matches("^[0-9]+$")&& ! ( modalite.getValue()==null)  )  
           {
               
           
@@ -245,7 +245,7 @@ public class ReserverActiviteController implements Initializable {
     else
     {
         
-        Notifications.create().title("Reservation Activite ").text("  Verifier le champs nombre de place   ").show();
+        Notifications.create().title("Reservation Activite ").text("  Verifier vos champs  ").show();
         
     }}
     

@@ -210,7 +210,7 @@ public class ReserverVolController implements Initializable {
      
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
        
-       if(nbplaceRvol.getText().matches("^[0-9]+$"))
+       if(nbplaceRvol.getText().matches("^[0-9]+$") &&  ! ( modalite.getValue()==null)  )
        {
        try
        { Vol v = tb_v.getSelectionModel().getSelectedItem();
@@ -251,7 +251,7 @@ public class ReserverVolController implements Initializable {
        {
            
            
-                       Notifications.create().title("Reservation voyage organise ").text(" verifier le champs nbre de place " ) .show();
+                       Notifications.create().title("Reservation voyage organise ").text(" verifier les champs  " ) .show();
                        
                        
        }

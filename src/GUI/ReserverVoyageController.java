@@ -151,7 +151,7 @@ ReservationService rs = new ReservationService();
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
        
        
-       if(nbp.getText().matches("^[0-9]+$"))
+       if(nbp.getText().matches("^[0-9]+$") && ! (  modaliteV.getValue()==null) )
        {
        try
        { voyageOrganise v = tableviewVO.getSelectionModel().getSelectedItem();
@@ -195,7 +195,7 @@ ReservationService rs = new ReservationService();
        {
           
             
-            Notifications.create().title("Reservation voyage organise ").text(" verifier le champs nbre de place " ) .show();
+            Notifications.create().title("Reservation voyage organise ").text(" verifier vos champs  " ) .show();
            
            
        }

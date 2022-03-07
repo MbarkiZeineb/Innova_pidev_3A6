@@ -132,8 +132,6 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
    BooleanBinding bb = Bindings.createBooleanBinding(() -> {
     LocalDate from = DateD.getValue();
     LocalDate to = DateF.getValue();
-
-    // disable, if one selection is missing or from is not smaller than to
     return (from == null || to == null || (from.compareTo(to) >= 0));   
 }, 
  DateD.valueProperty(), DateF.valueProperty());
@@ -186,7 +184,10 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
           PaiementService ps = new PaiementService();
       Hebergement h = hebergement_table.getSelectionModel().getSelectedItem();
       
-          
+          if(!( modalite.getValue()==null))
+          {
+              
+         
         try
 
         {     
@@ -217,7 +218,12 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
        catch(Exception e)
        {
            System.out.println(e);
-       }
+       }}
+        else
+          {
+              Notifications.create().title("Reservation Hebergement ").text(" verifier vos champs    ").show();
+              
+          }
         
     }
     
