@@ -142,9 +142,9 @@ public class AvionService implements IService<Avion>{
     }
 
     
-    public Avion findAvionParnom(String nom_avion) {
+    public Avion findAvionParnom(String nom_avion,int id) {
 
-        String req = "SELECT * FROM `avion` WHERE `nom_avion`= ? ";
+        String req = "SELECT * FROM `avion` WHERE `nom_avion`= ? and `id_agence`='"+id+"'";
         Avion a = new Avion();
         try {
             
@@ -182,18 +182,29 @@ public class AvionService implements IService<Avion>{
     }
      
      
-     public ResultSet tri_avion() {
-         
-       try {
-            PreparedStatement req = conn.prepareStatement("SELECT * FROM avion ORDER BY nbr_place");
-            ResultSet rs = req.executeQuery();
-            return rs;
+     public List<Avion> tri_avion(int id) {
+          List<Avion> Avions = new ArrayList<>();
+      String req=   "SELECT * FROM avion where id_agence='"+id+"'  ORDER BY nbr_place  ";
+        try {
+            
+            ste = conn.createStatement();
+            ResultSet rs = ste.executeQuery(req);
+            
+            while(rs.next()){
+                Avion a = new Avion();
+                a.setId_avion(rs.getInt("id_avion"));
+                a.setNbr_place(rs.getInt("nbr_place"));
+                a.setId_agence(rs.getInt("id_agence"));
+                a.setNom_avion(rs.getString("nom_avion"));
+                Avions.add(a);
+            }
+            
         } catch (SQLException ex) {
-            System.out.println(ex);
+            Logger.getLogger(AvionService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
-    
-}
+        return Avions;
+     }
+
      
      public String  NomA(int id) {
          

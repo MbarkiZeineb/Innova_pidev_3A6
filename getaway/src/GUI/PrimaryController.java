@@ -6,6 +6,7 @@
 package GUI;
 
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -14,6 +15,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -22,6 +28,8 @@ import java.net.MalformedURLException;
  */
 public class PrimaryController  {
 
+    @FXML
+    private Button retourm;
      @FXML
     private TextField cityInput;
 
@@ -61,5 +69,34 @@ public class PrimaryController  {
         JSONArray weatherArray = (JSONArray) weatherJSONObject.get("consolidated_weather");
 
         return  (JSONObject) weatherArray.get(0);
+    }
+    
+    @FXML
+    private void retour(ActionEvent event) {
+       
+        
+        
+          try{
+		 FXMLLoader loader=new FXMLLoader(getClass().getResource("Agentaerien.fxml"));
+		Parent root = loader.load();
+		AgentAerienController  e = loader.getController();
+                e.setIdagent(ida);
+                
+		((Button) event.getSource()).getScene().setRoot(root);
+		}catch(Exception ex){
+			System.out.println(ex);
+		}
+          
+    } 
+    
+     private int ida;
+    public void setIdagent(int ida)
+    {
+        System.out.println(ida);
+        this.ida=ida;
+        
+        
+        
+        
     }
 }

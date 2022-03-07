@@ -172,10 +172,10 @@ pste.setString(2,mdp);
                       try{
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Agentaerien.fxml"));
 		Parent root = loader.load();
-		AgentAerienController  ee = loader.getController();
+		 AgentAerienController  ee = loader.getController();
                 
                 int i=as.selectidA(txtnom.getText(),txtmdp.getText());
-                ee.setIdA(i);
+                ee.setIdagent(i);
                 
               
 		((Button) event.getSource()).getScene().setRoot(root);
