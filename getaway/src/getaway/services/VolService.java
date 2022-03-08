@@ -4,10 +4,20 @@
  * and open the template in the editor.
  */
 package getaway.services;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import static com.itextpdf.text.pdf.security.LtvTimestamp.timestamp;
 import getaway.entities.Vol;
 import getaway.utilis.Datasource;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -521,7 +531,7 @@ public class VolService implements IService<Vol> {
   return( endDateTime.equals(endDateTimeBD) || endDateTime.after(endDateTimeBD));
 }
              
-    public ObservableList<Vol> rechercherVol(String input,int id) {//Rechercher le contenu du input
+public ObservableList<Vol> rechercherVol(String input,int id) {//Rechercher le contenu du input
         
         ObservableList<Vol> OVol = FXCollections.observableArrayList();
         
@@ -550,9 +560,7 @@ public class VolService implements IService<Vol> {
         }
         return OVol;
 }
-           
-    
+
      
-      
      
 }

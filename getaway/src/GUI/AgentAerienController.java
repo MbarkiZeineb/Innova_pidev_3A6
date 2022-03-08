@@ -8,14 +8,18 @@ package GUI;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 import getaway.entities.Avion;
 import getaway.entities.Vol;
 import getaway.services.AvionService;
 import getaway.services.VolService;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,6 +44,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -53,6 +59,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -284,6 +292,15 @@ public class AgentAerienController implements Initializable {
             alert.setContentText("Le nom doit contenir des alphabets seulement!");
             alert.show();
         }
+            else if (Integer.parseInt(nbr_place.getText())<=0)
+         {
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Le nombre de place doit etre positive!");
+            alert.show();
+         
+         }
        else{
       
         p.setNom_avion(nom_avion.getText());
@@ -420,7 +437,6 @@ alert.showAndWait();
      
       as.supprimer(r);
       tb_a.getItems().clear();
-      tb_v.getItems().clear();
        afficher1(ida);
     }
 
@@ -546,6 +562,15 @@ alert.showAndWait();
             alert.show();
          
          }
+         else if (Integer.parseInt(nbr_placedispo.getText())<=0)
+         {
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Le nombre de place doit etre positive!");
+            alert.show();
+         
+         }
          else if(!Pattern.matches("[a-zA-Z]+", ville_depart.getText()))
         
         {
@@ -605,6 +630,8 @@ alert.showAndWait();
     } }
        }
     }
+    
+    
       @FXML
      private void supprimer(ActionEvent event) {
         
@@ -739,6 +766,9 @@ alert.showAndWait();
 		}
        
     }
+     
+    
+    
 
     @FXML
     private void telechargerVol(ActionEvent event) throws IOException,FileNotFoundException, SQLException{
@@ -790,6 +820,8 @@ alert.showAndWait();
         }
         JOptionPane.showMessageDialog(null,"PDF téléchargé ");
     }
+   
+     
 
     @FXML
     private void statistique(ActionEvent event) {
