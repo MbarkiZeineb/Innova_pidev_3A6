@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,6 +28,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,6 +48,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
@@ -57,6 +61,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
+import org.controlsfx.control.Rating;
 
 /**
  * FXML Controller class
@@ -67,54 +73,24 @@ public class GestionActivitesController implements Initializable {
     
     
 
-    @FXML
-    private Button btnajouter;
-    @FXML
     private TextField txtnom;
-    @FXML
     private TextField txtduree;
-    @FXML
     private TextField txtnbrp;
-    @FXML
     private TableView<Activite> tvactivite;
-    @FXML
     private TextArea textdescrip;
-    @FXML
     private TextField txttype;
-    @FXML
     private DatePicker txtdate;
-    @FXML
     private TextField txtprix;
-    @FXML
     private TextField txtloc;
-    @FXML
-    private Button btnmodifier;
-    @FXML
-    private Button btnsupprimer;
-    @FXML
     private TableColumn<Activite, String> colnom;
-    @FXML
     private TableColumn<Activite, String> colduree;
-    @FXML
     private TableColumn<Activite, Integer> colnbrp;
-    @FXML
     private TableColumn<Activite, String> coldate;
-    @FXML
     private TableColumn<Activite, String> coltype;
-    @FXML
     private TableColumn<Activite, String> colloc;
-    @FXML
     private TableColumn<Activite, Float> colprix;
-    @FXML
     private TableColumn<Activite, String> coldesc;
-    @FXML
-    private Button btnvider;
-    @FXML
-    private Button btnrecherche;
-    @FXML
     private TextField txtinput;
-    @FXML
-    private Button btntri;
     @FXML
     private TableView<Activite> tvavisa;
     @FXML
@@ -124,7 +100,7 @@ public class GestionActivitesController implements Initializable {
     @FXML
     private TableColumn<Activite, String> coldescripac;
     @FXML
-     TextField txtnoma;
+    private TextField txtnoma;
     @FXML
     private ComboBox<String> txtcomment;
     @FXML
@@ -144,18 +120,39 @@ public class GestionActivitesController implements Initializable {
     @FXML
     private Button btnajouterav;    
 
-    private Connection con = Datasource.getInstance().getCnx();
+    
     @FXML
     private Button btnstat;
+    
+    
+    private Connection con = Datasource.getInstance().getCnx();
     @FXML
-    private Button btnetat;
+    private Rating rate;
     @FXML
-    private Button btnstat2;
-    
-    
-    
+    private Label total;
+    @FXML
+    private Button btnOverview;
+    @FXML
+    private Button btnOrders;
+    @FXML
+    private Button btnCustomers;
+    @FXML
+    private Button btnMenus;
+    @FXML
+    private Button btnPackages;
+    @FXML
+    private Button btnSettings;
+    @FXML
+    private Button bReclamation;
+    @FXML
+    private Button btnOrders1;
+    @FXML
+    private Button btnSignout;
+    @FXML
+    private TableColumn<Avis, Float> colrating;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
       affichage();
       affichageAv();
       AffActAv();
@@ -169,7 +166,14 @@ public class GestionActivitesController implements Initializable {
       txtcomment.setItems(list);
       
       
-             
+             rate.ratingProperty().addListener(new ChangeListener<Number>(){
+            
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                total.setText(newValue.toString());
+            }
+            
+        
+        });
  
     }
     
@@ -178,11 +182,47 @@ public class GestionActivitesController implements Initializable {
          
         ObservableList<Activite> oblist = FXCollections.observableArrayList();
         ObservableList<Avis> oblistav = FXCollections.observableArrayList();
-        
-     
-    @FXML
+
+      @FXML
     void ajouter(ActionEvent event) throws Exception {
-       { Activite a =new Activite();
+       { 
+           
+           
+         if ((txtnom.getText().length()==0)|| (txtduree.getText().length()==0)||(txtnbrp.getText().length()==0) ||(txttype.getText().length()==0)||(txtloc.getText().length()==0)||(txtprix.getText().length()==0)||(textdescrip.getText().length()==0))
+           JOptionPane.showMessageDialog(null, "Il y'a un champ vide, verifier! "); 
+        
+         else if ((txtdate.getValue()==null))
+         {
+             JOptionPane.showMessageDialog(null, "Date Vide "); 
+         }
+
+           else if(!(txtnom.getText().matches("^[a-zA-Z]+$"))) {
+
+            JOptionPane.showMessageDialog(null, "Verifier le nom (Pas de chiffres)");
+             }
+           else if(!(txtduree.getText().matches("^[0-9][hH][0-9]+$"))) {
+
+            JOptionPane.showMessageDialog(null, "Exemple de durée: 1h30 OU 1H30");
+             }
+           else if(!(txtnbrp.getText().matches("[0-9]+$"))) {
+
+            JOptionPane.showMessageDialog(null, "Nombre de place doit etre un nombre");
+             }
+           else if(!(txttype.getText().matches("^[a-zA-Z]+$"))) {
+
+            JOptionPane.showMessageDialog(null, "Verifier le type (Pas de chiffres)");
+             }
+           else if(!(txtloc.getText().matches("^[a-zA-Z]+$"))) {
+
+            JOptionPane.showMessageDialog(null, "Verifier la localisation (Pas de chiffres)");
+             }
+           else if(Float.parseFloat(txtprix.getText())<=0) {
+
+            JOptionPane.showMessageDialog(null, "Prix doit être positif");
+             }
+           else
+           {
+           Activite a =new Activite();
          String date = txtdate.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
          
         a.setNom(txtnom.getText());
@@ -203,9 +243,8 @@ public class GestionActivitesController implements Initializable {
 
     }
        }
-    
-    
-     @FXML
+    }
+    @FXML
     private void vider(ActionEvent event) {
         clearFields();
     }
@@ -224,9 +263,44 @@ public class GestionActivitesController implements Initializable {
                }  
         
         
-
-    @FXML
+@FXML
     private void modifier(ActionEvent event) {
+        
+        if ((txtnom.getText().length()==0)|| (txtduree.getText().length()==0)||(txtnbrp.getText().length()==0) ||(txttype.getText().length()==0)||(txtloc.getText().length()==0)||(txtprix.getText().length()==0)||(textdescrip.getText().length()==0))
+           JOptionPane.showMessageDialog(null, "Il y'a un champ vide, verifier! "); 
+        
+         else if ((txtdate.getValue()==null))
+         {
+             JOptionPane.showMessageDialog(null, "Date Vide "); 
+         }
+
+           else if(!(txtnom.getText().matches("^[a-zA-Z]+$"))) {
+
+            JOptionPane.showMessageDialog(null, "Verifier le nom (Pas de chiffres)");
+             }
+           else if(!(txtduree.getText().matches("^[0-9][hH][0-9]+$"))) {
+
+            JOptionPane.showMessageDialog(null, "Exemple de durée: 1h30 OU 1H30");
+             }
+           else if(!(txtnbrp.getText().matches("[0-9]+$"))) {
+
+            JOptionPane.showMessageDialog(null, "Nombre de place doit etre un nombre");
+             }
+           else if(!(txttype.getText().matches("^[a-zA-Z]+$"))) {
+
+            JOptionPane.showMessageDialog(null, "Verifier le type (Pas de chiffres)");
+             }
+           else if(!(txtloc.getText().matches("^[a-zA-Z]+$"))) {
+
+            JOptionPane.showMessageDialog(null, "Verifier la localisation (Pas de chiffres)");
+             }
+           else if(Float.parseFloat(txtprix.getText())<=0) {
+
+            JOptionPane.showMessageDialog(null, "Prix doit être positif");
+             }
+           else
+           {
+        
         
          Activite a=  tvactivite.getSelectionModel().getSelectedItem();
       
@@ -246,11 +320,10 @@ public class GestionActivitesController implements Initializable {
     tvactivite.getItems().clear();
     affichage();
   
-   
+           }
     }
 
-   
-    @FXML
+   @FXML
     private void supprimer(ActionEvent event) {
         
         Activite a =  tvactivite.getSelectionModel().getSelectedItem();  
@@ -266,7 +339,7 @@ public class GestionActivitesController implements Initializable {
 
     }
     
-    
+    @FXML
     public void affichage() {
         List<Activite> activites = as.afficher();
         activites.forEach(e->oblist.add(e));
@@ -355,8 +428,7 @@ public class GestionActivitesController implements Initializable {
                 txtloc.clear();
 		
 	}
-
-    @FXML
+@FXML
     private void trier(ActionEvent event) {
         ActiviteService as = new ActiviteService();
         
@@ -375,8 +447,7 @@ public class GestionActivitesController implements Initializable {
         tvactivite.setItems(activites);
     }
 
-   
-    @FXML
+   @FXML
     private void selectAll(javafx.scene.input.MouseEvent event) {
     int index= -1;
     index = tvactivite.getSelectionModel().getSelectedIndex();
@@ -397,7 +468,7 @@ public class GestionActivitesController implements Initializable {
    /************************************************Avis**********************************************
     */
     
-    
+    @FXML
     public void affichageAv() {
         List<Avis> avis = avs.afficher();
         avis.forEach(e->oblistav.add(e));
@@ -405,8 +476,8 @@ public class GestionActivitesController implements Initializable {
 
         colmessage.setCellValueFactory(new PropertyValueFactory<>("Message"));
         coldateav.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        colnomcl.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        colnomact.setCellValueFactory(new PropertyValueFactory<>("RefActivite"));
+        colnomcl.setCellValueFactory(new PropertyValueFactory<>("NomClient"));
+        colnomact.setCellValueFactory(new PropertyValueFactory<>("NomAct"));
         
         
         tvavis.setItems(oblistav);
@@ -416,12 +487,29 @@ public class GestionActivitesController implements Initializable {
 
     @FXML
     private void ajouterav(ActionEvent event) {
-        Avis av =new Avis();
         
+        if ((txtcomment.getValue()==null))
+           JOptionPane.showMessageDialog(null, " Choisir un commentaire avant! "); 
+        
+        
+           else if(txtnoma.getText().length()==0) {
+
+            JOptionPane.showMessageDialog(null, "Selectionner une activité");
+             }
+           else if(rate.getRating()==0) {
+
+            JOptionPane.showMessageDialog(null, "Evaluer l'activité");
+             }
+           else
+           {
+        Avis av =new Avis();       
         int ref = recupRefact();
+        
         av.setMessage(txtcomment.getSelectionModel().getSelectedItem());
         av.setRefActivite(ref);
+        av.setRating(Float.parseFloat(total.getText()));
         avs.ajouter(av);
+        
         
         Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Notification d'ajout.");
@@ -434,14 +522,23 @@ public class GestionActivitesController implements Initializable {
         
     }
     
-    
+    }
     
     @FXML
     private void modifierAv(ActionEvent event) {
+         if ((txtcomment.getValue()==null))
+           JOptionPane.showMessageDialog(null, " Choisir un commentaire avant! "); 
         
+           else if(rate.getRating()==0) {
+
+            JOptionPane.showMessageDialog(null, "Evaluer l'activité");
+             }
+           else
+           {
          Avis av=  tvavis.getSelectionModel().getSelectedItem();
+         System.out.println(av.getRefActivite());
       av.setMessage(txtcomment.getSelectionModel().getSelectedItem().toString());
-      
+        System.out.println(txtcomment.getSelectionModel().getSelectedItem().toString());
      avs.modifier(av);
      
      Alert alert = new Alert(AlertType.INFORMATION);
@@ -452,7 +549,7 @@ public class GestionActivitesController implements Initializable {
      
     tvavis.getItems().clear();
     affichageAv();
-
+           }
     
 }
     @FXML
@@ -489,13 +586,17 @@ public class GestionActivitesController implements Initializable {
      recupRefact();
      
     }
-
+ 
     public void AffActAv() {
         List<Activite> activites = as.afficher();
-//        activites.forEach(e->oblist.add(e));
+        //activites.forEach(e->oblist.add(e));
+        
         
         colnomac.setCellValueFactory(new PropertyValueFactory<>("Nom"));
         coldescripac.setCellValueFactory(new PropertyValueFactory<>("Descrip"));
+       
+       
+        
         
 
         tvavisa.setItems(oblist);
@@ -539,8 +640,7 @@ public class GestionActivitesController implements Initializable {
     }
 
     
-
-    @FXML
+@FXML
     private void recherchek(KeyEvent event) {
               ActiviteService as = new ActiviteService();
          Activite a=new Activite ();
@@ -558,8 +658,7 @@ public class GestionActivitesController implements Initializable {
 
         tvactivite.setItems(activ);
     }
-
-    @FXML
+@FXML
     private void help(ActionEvent event) {
         int nb=0;
         String req="Select COUNT(RefAct) from Activite";
@@ -592,8 +691,7 @@ public class GestionActivitesController implements Initializable {
 		alert.showAndWait();
          }
     }
-
-    @FXML
+@FXML
     private void Statact(ActionEvent event) {
         
                 FXMLLoader loader=new FXMLLoader(getClass().getResource("StatAct.fxml"));
@@ -608,42 +706,16 @@ public class GestionActivitesController implements Initializable {
         
     }
 
-    
-               } 
-    
 
-    
-    
-        
-//    private List<Activite> recupNomAct() 
-//    {
-//        
-//        int ref = recupRefact();
-//                List<Activite> nom = new ArrayList<>();
-//
-//    String req="SELECT Nom from activite INNER JOIN avis WHERE activite.RefAct=avis.RefActivite";
-//    PreparedStatement ste;
-//    
-//        try {
-//            ste = (PreparedStatement) con.prepareStatement(req);
-//            ResultSet rs = ste.executeQuery();
-//         while(rs.next()){
-//                Activite a = new Activite();
-//            rs.getString(1);
-//             nom.add(rs);
-//            } 
-//        } catch (SQLException ex) {
-//            Logger.getLogger(GestionActivitesController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//         System.out.println(nom);
-//return nom; 
-//    }
+
+
+
+
+
+}
 
     
 
-
- 
-
-
-
-
+    
+    
+               

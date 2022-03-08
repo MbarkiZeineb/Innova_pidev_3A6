@@ -31,8 +31,8 @@ public class GestionActivites extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("GestionActivites.fxml"));
-        Scene scene = new Scene(root, 1280, 720);
+        Parent root = FXMLLoader.load(getClass().getResource("Avis.fxml"));
+        Scene scene = new Scene(root, 1300, 720);
 
         primaryStage.setTitle("GetAway");
         primaryStage.setScene(scene);

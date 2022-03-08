@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import GetAway.entities.Activite;
+import GetAway.entities.Avis;
 import GetAway.utilis.Datasource;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
@@ -122,11 +123,11 @@ public class ActiviteService implements IService<Activite> {
         } catch (SQLException ex) {
             Logger.getLogger(ActiviteService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            this.envoyerMail("Hey", "Aymenultras123",this.recupAdrM() ,"Détails:"+a.toString()+"" ,"Nouvelle activite: "+a.getNom()+"");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(ActiviteService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            this.envoyerMail("Hey", "Aymenultras123",this.recupAdrM() ,"Détails:"+a.toString()+"" ,"Nouvelle activite: "+a.getNom()+"");
+//        } catch (UnsupportedEncodingException ex) {
+//            Logger.getLogger(ActiviteService.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
     
     @Override
@@ -163,6 +164,7 @@ public class ActiviteService implements IService<Activite> {
             pste = conn.prepareStatement(req);
             ResultSet rs = pste.executeQuery();
             
+            
 //            ste = conn.createStatement();
 //            ResultSet rs = ste.executeQuery(req);
             
@@ -179,6 +181,8 @@ public class ActiviteService implements IService<Activite> {
                 a.setType(rs.getString(7));
                 a.setLocation(rs.getString(8));
                 a.setPrix(rs.getFloat(9));
+                a.setRating(this.getRatingFromActivite(a));
+                
                 
                 activites.add(a);
                 
@@ -328,7 +332,44 @@ public class ActiviteService implements IService<Activite> {
         return OActivite;
 
     }
-    }
+     
+     
+     
+     private float getRatingFromActivite(Activite activite)
+     {  float rating=0;
+         
+         AvisService avisService=new AvisService();
+          int nbrAvis=avisService.avisListStat(activite.getRefAct(),null).size();
+     int somme=0;
+        for (Avis avis : avisService.avisListStat(activite.getRefAct(),null)) {
+            
+            somme+=avis.getRating();
+            
+            
+            }
+        if(nbrAvis!=0)
+        {
+         rating=(float)somme/nbrAvis;
+        
+        }
+        return rating;
+         
+     }
+     
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+}
+
     
      
 

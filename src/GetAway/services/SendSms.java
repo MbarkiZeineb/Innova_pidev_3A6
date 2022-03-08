@@ -27,17 +27,17 @@ public class SendSms {
 
     public void sendSms(String NumTel){
 
-   String AUTH_TOKEN = "";
-    String ACCOUNT_SID = "";
+   String AUTH_TOKEN = "a0ca08cb134930e08143ff7a553109b7";
+    String ACCOUNT_SID = "AC13598b9ef19843484e05b1b5c80fcb84";
 
 
-   Twilio.init(ACCOUNT_SID, AUTH_TOKEN); 
+Twilio.init(ACCOUNT_SID, AUTH_TOKEN); 
         Message message = Message.creator( 
                 new com.twilio.type.PhoneNumber(NumTel),  
-                "MG4e4c868d325676b1f95825ce57d03329", 
+                "MGc06bdd8c09ace9dce27024abaf59c03e", 
                 "Votre avis à été bien ajouter. Merci ! ")      
             .create(); 
  
-        System.out.println(message.getSid()); 
+        System.out.println(message.getSid());  
 }
 }

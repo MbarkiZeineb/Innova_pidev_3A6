@@ -61,7 +61,7 @@ public class GetAway {
        // System.out.println(as.afficher());
         //System.out.println("**********************************************************************************************************************************");
         // Afficher Avis
-        //System.out.println(avs.afficher());
+        System.out.println(avs.afficher());
         //System.out.println(as.recupAdrM());
         //System.out.println(as.rechercherActiviteRef(4));
        /// System.out.println(as.rechercherActivite("1"));
