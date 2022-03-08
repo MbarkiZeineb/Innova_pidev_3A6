@@ -109,7 +109,7 @@
                               <TextField fx:id="a_nbr_detoile" layoutX="791.0" layoutY="238.0" prefHeight="26.0" prefWidth="80.0" />
                               <ImageView fx:id="a_picture_kol" fitHeight="142.0" fitWidth="151.0" layoutX="743.0" layoutY="293.0" onDragDetected="#Import" pickOnBounds="true" preserveRatio="true" />
                               <Button fx:id="B_c_ajouter" layoutX="933.0" layoutY="14.0" mnemonicParsing="false" onAction="#C_ajouter" prefHeight="32.0" prefWidth="71.0" stylesheets="@fxml.css" text="Ajouter" />
-                              <TableView fx:id="categorie_table" layoutX="564.0" layoutY="14.0" prefHeight="146.0" prefWidth="302.0">
+                              <TableView fx:id="categorie_table" layoutX="593.0" layoutY="14.0" prefHeight="146.0" prefWidth="273.0">
                                 <columns>
                                   <TableColumn fx:id="c_id" prefWidth="107.0" text="Numero categorie" />
                                   <TableColumn fx:id="c_nom" minWidth="0.0" prefWidth="104.0" text="Nom categorie" />
@@ -154,8 +154,11 @@
                               </TableView>
                               <Button fx:id="B_h_supp" layoutX="838.0" layoutY="407.0" mnemonicParsing="false" onMouseClicked="#h_hebergement" prefHeight="39.0" prefWidth="87.0" text="Supprimer" />
                               <Button fx:id="B_h_recherche" layoutX="929.0" layoutY="407.0" mnemonicParsing="false" onAction="#H_recherche" prefHeight="38.0" prefWidth="96.0" text="Recherche " AnchorPane.rightAnchor="28.0" />
-                              <TextField fx:id="h_recherche_referance" layoutX="652.0" layoutY="404.0" />
-                              <ComboBox fx:id="h_combo_recherche" layoutX="487.0" layoutY="411.0" prefHeight="28.0" prefWidth="159.0" promptText="Choose" />
+                              <TextField fx:id="h_recherche_referance" layoutX="528.0" layoutY="412.0" prefHeight="35.0" prefWidth="152.0" />
+                              <ComboBox fx:id="h_combo_recherche" layoutX="356.0" layoutY="412.0" prefHeight="36.0" prefWidth="159.0" promptText="Choose" />
+                              <Button fx:id="h_share_qr" layoutX="689.0" layoutY="407.0" mnemonicParsing="false" onAction="#h_share_qr" prefHeight="38.0" prefWidth="134.0" text="Share" />
+                              <Button fx:id="b_h_promo" layoutX="197.0" layoutY="412.0" mnemonicParsing="false" onAction="#h_promositon" prefHeight="34.0" prefWidth="148.0" text="Add promotion " />
+                              <ComboBox fx:id="h_combo_promo" layoutX="94.0" layoutY="414.0" prefHeight="31.0" prefWidth="87.0" />
                            </children>
                         </AnchorPane>
                   </content>

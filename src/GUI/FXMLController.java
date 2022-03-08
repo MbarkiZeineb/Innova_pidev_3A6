@@ -10,7 +10,9 @@ import Services.CategoryService;
 import Services.HebergementService;
 import entities.Category;
 import entities.Hebergement;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -41,6 +43,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
 
 /**
  * FXML Controller class
@@ -165,6 +170,12 @@ public class FXMLController implements Initializable {
     private ComboBox<String> h_combo_recherche;
     @FXML
     private TableColumn<?, ?> h_affiche_model;
+    @FXML
+    private Button h_share_qr;
+    @FXML
+    private ComboBox<?> h_combo_promo;
+    @FXML
+    private Button b_h_promo;
 
 
     /**
@@ -208,6 +219,9 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
      
      
     private void loadTableHebegement() {// hebergement affiche
+        
+        
+
          List <Hebergement> ls =hs.afficher();
         ls.forEach(e->oblistH.add(e));
         System.out.println(oblist);
@@ -228,8 +242,8 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
         h_affiche_offreur.setCellValueFactory(new PropertyValueFactory<>("offreur"));
 
      hebergement_table.setItems(oblistH);
-     
-    }
+        }
+    
   
 
     @FXML
@@ -433,18 +447,24 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
 
     @FXML
     private void h_ajouterlast(ActionEvent event) {
-             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        if(a_adress.getText().equals("") || a_category.getText().equals("")||a_paye.getText().equals("")||a_contact.getText().equals("")){ 
+            JOptionPane.showMessageDialog(null, "veuillez remplir tous le minimum des champs (Adress , paye,contact, category)");
+        }else {
+     //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
      java.sql.Date datestart =Date.valueOf(a_datestart.getValue());
      java.sql.Date dateend = Date.valueOf(a_dateend.getValue());
+     if (datestart.compareTo(dateend) > 0){JOptionPane.showMessageDialog(null,"veuiller remplir avec parametre reel");}else{
      int nbr1=Integer.parseInt(a_nbr_detoile.getText());  
      int nbr2=Integer.parseInt(a_nbr_suite.getText());  
      int nbr3=Integer.parseInt(a_nbr_parking.getText());  
      int nbr4=Integer.parseInt(a_category.getText()); 
-     Hebergement h= new Hebergement(a_paye.getText(),a_adress.getText(),Float.parseFloat(a_prix.getText()),a_description.getText(),a_pic.getText(),datestart,dateend,a_contact.getText(),nbr1 ,nbr2,nbr3,a_modele.getText(),nbr4,1);
+     float nbr5 = Float.parseFloat(a_prix.getText());
+     // prix >0 
+     Hebergement h= new Hebergement(a_paye.getText(),a_adress.getText(),nbr5,a_description.getText(),a_pic.getText(),datestart,dateend,a_contact.getText(),nbr1 ,nbr2,nbr3,a_modele.getText(),nbr4,1);
      hs.ajouter(h); 
         hebergement_table.getItems().clear();
         loadTableHebegement();
-    }
+    }}}
 
     @FXML
     private void h_select(MouseEvent event) {
@@ -494,6 +514,30 @@ ObservableList<Hebergement> oblistH = FXCollections.observableArrayList();
       //Image image = icon.getImage().getScaledInstance(a_picture_kol.getWidth(),a_picture_kol.getHeight(),Image.);
       
       
+    }
+
+   
+    @FXML
+    private void h_share_qr (ActionEvent event){
+        try {
+            
+            String details =h_recherche_referance.getText(); /* toString(hs.getByReferanc(Integer.parseInt(h_recherche_referance.getText())))*/ 
+            ByteArrayOutputStream out =QRCode.from(hs.taktak(Integer.parseInt(h_recherche_referance.getText()))).to(ImageType.PNG).stream();
+            String f_name = h_recherche_referance.getText();
+            String Path_name="C:\\Users\\USER\\Desktop\\rayen\\getaway\\src\\image\\";//******************************************
+            FileOutputStream fout = new FileOutputStream(new File(Path_name +(f_name +".PNG")));
+                    fout.write(out.toByteArray());
+                    fout.flush();
+                                    System.out.println("qrcode success");
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    @FXML
+    private void h_promositon(ActionEvent event) {
+        
     }
     
 
