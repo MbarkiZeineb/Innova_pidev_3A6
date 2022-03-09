@@ -125,8 +125,6 @@ public class GestionactadminController implements Initializable {
     private Button btnStat;
     @FXML
     private Button btnlogout;
-    @FXML
-    private PieChart statActivite;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -310,16 +308,25 @@ public class GestionactadminController implements Initializable {
     }
 
     @FXML
-    private void supprimer(ActionEvent event) {
+    private void supprimer(ActionEvent event) throws SQLException {
+        
         Activite a = tvactivite.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Notification de Confirmation");
         alert.setHeaderText(null);
         alert.setContentText("Vous confirmer la suppression ?");
         Optional<ButtonType> action = alert.showAndWait();
+        
+        if(as.verif(a)==true)
+        {
+            JOptionPane.showMessageDialog(null, "L'activite à des avis, pas de suppression");
+        }
+        else
+        {
         as.supprimer(a);
         tvactivite.getItems().clear();
         affichage();
+    }
     }
 
     @FXML

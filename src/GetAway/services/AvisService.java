@@ -54,8 +54,9 @@ public class AvisService extends SendSms implements IService<Avis> {
 
     @Override
     public void ajouter(Avis av) {
-//        String req = "INSERT INTO `Avis` (`Message`,`Date`,`Id`) VALUE ('" + av.getMessage() + "',NOW(), '" + av.getId() +"')";
-        String req = "INSERT INTO `Avis` (`Message`,`Date`,RefActivite,Rating) VALUE ('" + av.getMessage() + "',NOW(),'" + av.getRefActivite() + "','" + av.getRating() + "')";
+
+        //String req = "INSERT INTO `Avis` (`Message`,`Date`,Id,RefActivite,Rating) VALUE ('" + av.getMessage() + "',NOW()'"+av.getId()+"','"+ av.getRefActivite() + "','" + av.getRating() + "')";
+        String req = "INSERT INTO `Avis` (`Message`,`Date`,RefActivite,Rating) VALUE ('" + av.getMessage() + "',NOW(),'"+ av.getRefActivite() + "','" + av.getRating() + "')";
         try {
             ste = conn.createStatement();
             ste.executeUpdate(req);

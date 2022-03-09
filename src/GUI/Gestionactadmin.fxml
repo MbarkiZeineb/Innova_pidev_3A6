@@ -24,30 +24,30 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="AnchorPane">
                      <children>
-                        <Label layoutX="37.0" layoutY="57.0" prefHeight="25.0" prefWidth="79.0" text="Nom:">
+                        <Label layoutX="96.0" layoutY="57.0" prefHeight="25.0" prefWidth="79.0" text="Nom:">
                            <font>
                               <Font name="Roboto" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="284.0" layoutY="201.0" prefHeight="25.0" prefWidth="101.0" text="Description:">
+                        <Label layoutX="717.0" layoutY="92.0" prefHeight="25.0" prefWidth="101.0" text="Description:">
                            <font>
                               <Font name="Roboto" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="25.0" layoutY="120.0" prefHeight="25.0" prefWidth="79.0" text="Durée:">
+                        <Label layoutX="91.0" layoutY="121.0" prefHeight="25.0" prefWidth="79.0" text="Durée:">
                            <font>
                               <Font name="Roboto" size="14.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btnajouter" layoutX="951.0" layoutY="507.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="32.0" prefWidth="79.0" text="Ajouter" />
-                        <Label layoutX="22.0" layoutY="188.0" prefHeight="25.0" prefWidth="164.0" text="Nombre de Place:">
+                        <Button fx:id="btnajouter" layoutX="66.0" layoutY="236.0" mnemonicParsing="false" onAction="#ajouter" prefHeight="32.0" prefWidth="79.0" text="Ajouter" />
+                        <Label layoutX="23.0" layoutY="174.0" prefHeight="25.0" prefWidth="164.0" text="Nombre de Place:">
                            <font>
                               <Font name="Roboto" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtnom" layoutX="104.0" layoutY="57.0" />
-                        <TextField fx:id="txtduree" layoutX="104.0" layoutY="120.0" prefHeight="26.0" prefWidth="65.0" />
-                        <TextField fx:id="txtnbrp" layoutX="186.0" layoutY="183.0" prefHeight="26.0" prefWidth="59.0" />
+                        <TextField fx:id="txtnom" layoutX="147.0" layoutY="57.0" prefHeight="25.0" prefWidth="103.0" />
+                        <TextField fx:id="txtduree" layoutX="147.0" layoutY="120.0" prefHeight="26.0" prefWidth="65.0" />
+                        <TextField fx:id="txtnbrp" layoutX="150.0" layoutY="174.0" prefHeight="26.0" prefWidth="59.0" />
                         <TableView fx:id="tvactivite" layoutX="10.0" layoutY="367.0" onMouseClicked="#selectAll" prefHeight="279.0" prefWidth="934.0">
                           <columns>
                             <TableColumn fx:id="colnom" prefWidth="140.0" text="Nom" />
@@ -60,7 +60,7 @@
                               <TableColumn fx:id="coldesc" prefWidth="316.0" text="Description" />
                           </columns>
                         </TableView>
-                        <TextArea fx:id="textdescrip" layoutX="398.0" layoutY="169.0" prefHeight="81.0" prefWidth="196.0" />
+                        <TextArea fx:id="textdescrip" layoutX="823.0" layoutY="64.0" prefHeight="81.0" prefWidth="159.0" />
                         <Label layoutX="388.0" layoutY="54.0" prefHeight="25.0" prefWidth="79.0" text="Type:">
                            <font>
                               <Font name="Roboto" size="14.0" />
@@ -71,28 +71,28 @@
                               <Font name="Roboto" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txttype" layoutX="453.0" layoutY="54.0" />
-                        <DatePicker fx:id="txtdate" layoutX="79.0" layoutY="234.0" />
-                        <Label layoutX="20.0" layoutY="234.0" prefHeight="25.0" prefWidth="79.0" text="Date:">
+                        <TextField fx:id="txttype" layoutX="443.0" layoutY="54.0" prefHeight="25.0" prefWidth="110.0" />
+                        <DatePicker fx:id="txtdate" layoutX="823.0" layoutY="171.0" />
+                        <Label layoutX="741.0" layoutY="170.0" prefHeight="25.0" prefWidth="79.0" text="Date:">
                            <font>
                               <Font name="Roboto" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtprix" layoutX="78.0" layoutY="275.0" prefHeight="26.0" prefWidth="79.0" />
-                        <TextField fx:id="txtloc" layoutX="485.0" layoutY="120.0" prefHeight="26.0" prefWidth="109.0" />
-                        <Button fx:id="btnmodifier" layoutX="951.0" layoutY="552.0" mnemonicParsing="false" onAction="#modifier" prefHeight="32.0" prefWidth="79.0" text="Modifier" />
+                        <TextField fx:id="txtprix" layoutX="443.0" layoutY="173.0" prefHeight="26.0" prefWidth="79.0" />
+                        <TextField fx:id="txtloc" layoutX="443.0" layoutY="120.0" prefHeight="26.0" prefWidth="109.0" />
+                        <Button fx:id="btnmodifier" layoutX="66.0" layoutY="282.0" mnemonicParsing="false" onAction="#modifier" prefHeight="32.0" prefWidth="79.0" text="Modifier" />
                         <Button fx:id="btnsupprimer" layoutX="951.0" layoutY="600.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="32.0" prefWidth="79.0" text="Supprimer" />
-                        <Button fx:id="btnvider" layoutX="951.0" layoutY="393.0" mnemonicParsing="false" onAction="#vider" prefHeight="32.0" prefWidth="79.0" text="Vider" />
-                        <Label layoutX="20.0" layoutY="281.0" prefHeight="25.0" prefWidth="79.0" text="Prix:">
+                        <Button fx:id="btnvider" layoutX="173.0" layoutY="282.0" mnemonicParsing="false" onAction="#vider" prefHeight="32.0" prefWidth="79.0" text="Vider" />
+                        <Label layoutX="381.0" layoutY="174.0" prefHeight="25.0" prefWidth="79.0" text="Prix:">
                            <font>
                               <Font name="Roboto" size="14.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btnrecherche" layoutX="820.0" layoutY="327.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="101.0" text="Rechercher" textAlignment="CENTER" />
-                        <TextField fx:id="txtinput" layoutX="642.0" layoutY="330.0" onKeyReleased="#recherchek" />
-                        <Button fx:id="btntri" layoutX="520.0" layoutY="327.0" mnemonicParsing="false" onAction="#trier" prefHeight="32.0" prefWidth="82.0" text="Trier" />
-                        <Button fx:id="btnetat" layoutX="951.0" layoutY="451.0" mnemonicParsing="false" onAction="#help" prefHeight="32.0" prefWidth="80.0" text="Etat" />
-                        <Button fx:id="btnstat2" layoutX="947.0" layoutY="327.0" mnemonicParsing="false" onAction="#Statact" prefHeight="32.0" prefWidth="89.0" text="Statistique" />
+                        <Button fx:id="btnrecherche" layoutX="597.0" layoutY="295.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="101.0" text="Rechercher" textAlignment="CENTER" />
+                        <TextField fx:id="txtinput" layoutX="419.0" layoutY="298.0" onKeyReleased="#recherchek" />
+                        <Button fx:id="btntri" layoutX="717.0" layoutY="295.0" mnemonicParsing="false" onAction="#trier" prefHeight="32.0" prefWidth="82.0" text="Trier" />
+                        <Button fx:id="btnetat" layoutX="939.0" layoutY="14.0" mnemonicParsing="false" onAction="#help" prefHeight="32.0" prefWidth="80.0" text="Etat" />
+                        <Button fx:id="btnstat2" layoutX="823.0" layoutY="295.0" mnemonicParsing="false" onAction="#Statact" prefHeight="32.0" prefWidth="89.0" text="Statistique" />
                      </children>
                   </AnchorPane>
             </content>

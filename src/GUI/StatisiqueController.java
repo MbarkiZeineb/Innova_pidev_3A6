@@ -30,6 +30,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javax.activation.DataSource;
@@ -65,12 +66,12 @@ public class StatisiqueController extends GestionActivitesController implements 
         public void initializeFxml(int idStat) {
 
 
-        statact(idStat);
+        statav(idStat);
         }
         
         
     @SuppressWarnings("empty-statement")
-            public void statact(int idStat) {
+            public void statav(int idStat) {
 
         AvisService avisService = new AvisService();
 
@@ -89,6 +90,7 @@ public class StatisiqueController extends GestionActivitesController implements 
         int all = message1Size + message2Size + message3Size + message4Size;
                 ObservableList<PieChart.Data> list_stat;
 
+        
         
         
         if(message1Size==all)
@@ -132,10 +134,10 @@ public class StatisiqueController extends GestionActivitesController implements 
         );
           
           }
-
         statActivite.setData(list_stat);
+        }
 
-    }
+    
 
         
         

@@ -73,23 +73,41 @@ public class GestionActivitesController implements Initializable {
     
     
 
+    @FXML
     private TextField txtnom;
+    @FXML
     private TextField txtduree;
+    @FXML
     private TextField txtnbrp;
+    @FXML
     private TableView<Activite> tvactivite;
+    @FXML
     private TextArea textdescrip;
+    @FXML
     private TextField txttype;
+    @FXML
     private DatePicker txtdate;
+    @FXML
     private TextField txtprix;
+    @FXML
     private TextField txtloc;
+    @FXML
     private TableColumn<Activite, String> colnom;
+    @FXML
     private TableColumn<Activite, String> colduree;
+    @FXML
     private TableColumn<Activite, Integer> colnbrp;
+    @FXML
     private TableColumn<Activite, String> coldate;
+    @FXML
     private TableColumn<Activite, String> coltype;
+    @FXML
     private TableColumn<Activite, String> colloc;
+    @FXML
     private TableColumn<Activite, Float> colprix;
+    @FXML
     private TableColumn<Activite, String> coldesc;
+    @FXML
     private TextField txtinput;
     @FXML
     private TableView<Activite> tvavisa;
@@ -149,7 +167,23 @@ public class GestionActivitesController implements Initializable {
     @FXML
     private Button btnSignout;
     @FXML
-    private TableColumn<Avis, Float> colrating;
+    private Button btnajouter;
+    @FXML
+    private Button btnmodifier;
+    @FXML
+    private Button btnsupprimer;
+    @FXML
+    private Button btnvider;
+    @FXML
+    private Button btnrecherche;
+    @FXML
+    private Button btntri;
+    @FXML
+    private Button btnetat;
+    @FXML
+    private Button btnstat2;
+    @FXML
+    private TableColumn<?, ?> coldrating;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -339,7 +373,6 @@ public class GestionActivitesController implements Initializable {
 
     }
     
-    @FXML
     public void affichage() {
         List<Activite> activites = as.afficher();
         activites.forEach(e->oblist.add(e));
@@ -468,7 +501,6 @@ public class GestionActivitesController implements Initializable {
    /************************************************Avis**********************************************
     */
     
-    @FXML
     public void affichageAv() {
         List<Avis> avis = avs.afficher();
         avis.forEach(e->oblistav.add(e));

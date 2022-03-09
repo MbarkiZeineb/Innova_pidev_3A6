@@ -39,6 +39,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javax.swing.JOptionPane;
@@ -68,7 +69,7 @@ public class AvisController implements Initializable {
     @FXML
     private TableColumn<Activite, String> colnomcl;
     @FXML
-    private TableColumn<?, ?> colnomact;
+    private TableColumn<Activite, String> colnomact;
     @FXML
     private Button btnmodifierav;
     @FXML
@@ -111,40 +112,33 @@ public class AvisController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       affichageAv();
-      AffActAv();
-      btnstat.setVisible(false);
-      
-      
-      ObservableList<String> list = FXCollections.observableArrayList("Très satisfait", "Satisfait", "Neutre", "Très déçu");
-      txtcomment.setItems(list);
-      
-      
-       rate.ratingProperty().addListener(new ChangeListener<Number>(){
-            
+        affichageAv();
+        AffActAv();
+        btnstat.setVisible(false);
+
+        ObservableList<String> list = FXCollections.observableArrayList("Très satisfait", "Satisfait", "Neutre", "Très déçu");
+        txtcomment.setItems(list);
+
+        rate.ratingProperty().addListener(new ChangeListener<Number>() {
+
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 total.setText(newValue.toString());
             }
-            
-        
+
         });
-    }    
-    
+    }
+
     private Connection con = Datasource.getInstance().getCnx();
-AvisService avs = new AvisService();
-ActiviteService as = new ActiviteService();
+    AvisService avs = new AvisService();
+    ActiviteService as = new ActiviteService();
 
-ObservableList<Avis> oblistav = FXCollections.observableArrayList();
-ObservableList<Activite> oblist = FXCollections.observableArrayList();
+    ObservableList<Avis> oblistav = FXCollections.observableArrayList();
+    ObservableList<Activite> oblist = FXCollections.observableArrayList();
 
-
-    
-    
-       
     public void affichageAv() {
         List<Avis> avis = avs.afficher();
-        avis.forEach(e->oblistav.add(e));
-        Activite a = new Activite ();
+        avis.forEach(e -> oblistav.add(e));
+        Activite a = new Activite();
 
         colmessage.setCellValueFactory(new PropertyValueFactory<>("Message"));
         coldateav.setCellValueFactory(new PropertyValueFactory<>("Date"));
@@ -152,207 +146,175 @@ ObservableList<Activite> oblist = FXCollections.observableArrayList();
         colnomact.setCellValueFactory(new PropertyValueFactory<>("NomAct"));
         colrating.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
-        
-        
         tvavis.setItems(oblistav);
-    
-    
-    
-    
+
     }
 
     @FXML
-   private void ajouterav(ActionEvent event) {
-        
-        if ((txtcomment.getValue()==null))
-           JOptionPane.showMessageDialog(null, " Choisir un commentaire avant! "); 
-        
-        
-           else if(txtnoma.getText().length()==0) {
+    private void ajouterav(ActionEvent event) {
+
+        if ((txtcomment.getValue() == null)) {
+            JOptionPane.showMessageDialog(null, " Choisir un commentaire avant! ");
+        } else if (txtnoma.getText().length() == 0) {
 
             JOptionPane.showMessageDialog(null, "Selectionner une activité");
-             }
-           else if(rate.getRating()==0) {
+        } else if (rate.getRating() == 0) {
 
             JOptionPane.showMessageDialog(null, "Evaluer l'activité");
-             }
-           else
-           {
-        Avis av =new Avis();       
-        int ref = recupRefact();
-        
-        av.setMessage(txtcomment.getSelectionModel().getSelectedItem());
-        av.setRefActivite(ref);
-        av.setRating(Float.parseFloat(total.getText()));
-        avs.ajouter(av);
-        
-        
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Notification d'ajout.");
-		alert.setHeaderText(null);
-		alert.setContentText("Votre avis est ajouter avec succées");
-		alert.showAndWait();
-                
-        tvavis.getItems().clear();
-        affichageAv();
-        
+        } else {
+            Avis av = new Avis();
+            int ref = recupRefact();
+
+            av.setMessage(txtcomment.getSelectionModel().getSelectedItem());
+            av.setRefActivite(ref);
+            av.setRating(Float.parseFloat(total.getText()));
+            avs.ajouter(av);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Notification d'ajout.");
+            alert.setHeaderText(null);
+            alert.setContentText("Votre avis est ajouter avec succées");
+            alert.showAndWait();
+
+            tvavis.getItems().clear();
+            affichageAv();
+            tvavisa.getItems().clear();
+            AffActAv();
+            
+        }
+
     }
-    
-    }
-    
+
     @FXML
     private void modifierAv(ActionEvent event) {
-         if ((txtcomment.getValue()==null))
-           JOptionPane.showMessageDialog(null, " Choisir un commentaire avant! "); 
-        
-           else if(rate.getRating()==0) {
+        if ((txtcomment.getValue() == null)) {
+            JOptionPane.showMessageDialog(null, " Choisir un commentaire avant! ");
+        } else if (rate.getRating() == 0) {
 
             JOptionPane.showMessageDialog(null, "Evaluer l'activité");
-             }
-           else
-           {
-         Avis av=  tvavis.getSelectionModel().getSelectedItem();
-         System.out.println(av.getRefActivite());
-      av.setMessage(txtcomment.getSelectionModel().getSelectedItem().toString());
-        System.out.println(txtcomment.getSelectionModel().getSelectedItem().toString());
-     avs.modifier(av);
-     
-     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Notification de modification.");
-		alert.setHeaderText(null);
-		alert.setContentText("L'avis est modifier avec succees");
-		alert.showAndWait();
-     
-    tvavis.getItems().clear();
-    affichageAv();
-           }
-    
-}
+        } else {
+            Avis av = tvavis.getSelectionModel().getSelectedItem();
+            System.out.println(av.getRefActivite());
+            av.setMessage(txtcomment.getSelectionModel().getSelectedItem().toString());
+            System.out.println(txtcomment.getSelectionModel().getSelectedItem().toString());
+            avs.modifier(av);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Notification de modification.");
+            alert.setHeaderText(null);
+            alert.setContentText("L'avis est modifier avec succees");
+            alert.showAndWait();
+
+            tvavis.getItems().clear();
+            affichageAv();
+        }
+
+    }
+
     @FXML
-     private void supprimerav(ActionEvent event) {
-        
-        Avis av =  tvavis.getSelectionModel().getSelectedItem();  
+    private void supprimerav(ActionEvent event) {
+
+        Avis av = tvavis.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Notification de Confirmation");
-		alert.setHeaderText(null);
-		alert.setContentText("Vous confirmer la suppression ?");
-		Optional<ButtonType> action = alert.showAndWait();
+        alert.setTitle("Notification de Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Vous confirmer la suppression ?");
+        Optional<ButtonType> action = alert.showAndWait();
         avs.supprimer(av);
         tvavis.getItems().clear();
         affichageAv();
-     
 
     }
-     
+
     @FXML
-   private void selectAllav(javafx.scene.input.MouseEvent event) {
-    int index= -1;
-    index = tvavis.getSelectionModel().getSelectedIndex();
-     txtcomment.setValue(""+colmessage.getCellData(index));
-     
+    private void selectAllav(javafx.scene.input.MouseEvent event) {
+        int index = -1;
+        index = tvavis.getSelectionModel().getSelectedIndex();
+        txtcomment.setValue("" + colmessage.getCellData(index));
+
     }
-    
-    
-    
+
     @FXML
     private void selectNom(javafx.scene.input.MouseEvent event) {
-    int index= -1;
-    index = tvavisa.getSelectionModel().getSelectedIndex();
-    
-     txtnoma.setText(""+colnomac.getCellData(index));
-     recupRefact();
-     AvisService avisService=new AvisService();
-     
-    Activite activite = tvavisa.getSelectionModel().getSelectedItem();
+        int index = -1;
+        index = tvavisa.getSelectionModel().getSelectedIndex();
 
-     
-     if(avisService.avisListStat(activite.getRefAct(),null).size()!=0)
-     {
-     
-          btnstat.setVisible(true);
+        txtnoma.setText("" + colnomac.getCellData(index));
+        recupRefact();
+        AvisService avisService = new AvisService();
 
-     }
-     else{
-                   btnstat.setVisible(false);
+        Activite activite = tvavisa.getSelectionModel().getSelectedItem();
 
-     }
-     
-    
-        
+        if (avisService.avisListStat(activite.getRefAct(), null).size() != 0) {
 
-     
-     
+            btnstat.setVisible(true);
 
-     
-     
-     
-     
+        } else {
+            btnstat.setVisible(false);
+
+        }
+
     }
 
     public void AffActAv() {
         List<Activite> activites = as.afficher();
-        activites.forEach(e->oblist.add(e));
-        
+        activites.forEach(e -> oblist.add(e));
+
         colnomac.setCellValueFactory(new PropertyValueFactory<>("Nom"));
         coldescripac.setCellValueFactory(new PropertyValueFactory<>("Descrip"));
-        
 
         tvavisa.setItems(oblist);
 
     }
 
-    
     private void clearFieldsAv() {
-		txtcomment.getSelectionModel().clearSelection();
-		txtnoma.clear();
-	}
-    
+        txtcomment.getSelectionModel().clearSelection();
+        txtnoma.clear();
+    }
+
     @FXML
     private void viderAv(ActionEvent event) {
         clearFieldsAv();
-        
+
     }
 
+    private int recupRefact() {
+        int ref = 0;
 
+        String req = "Select RefAct from Activite where Nom='" + txtnoma.getText() + "'";
+        PreparedStatement ste;
 
-    private int recupRefact() 
-    {
-    int ref = 0;    
-    
-    String req="Select RefAct from Activite where Nom='"+txtnoma.getText()+"'";
-    PreparedStatement ste;
-    
         try {
             ste = (PreparedStatement) con.prepareStatement(req);
             ResultSet rs = ste.executeQuery();
-         while(rs.next()){
-                
-             ref = rs.getInt(1);
-            } 
+            while (rs.next()) {
+
+                ref = rs.getInt(1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(GestionActivitesController.class.getName()).log(Level.SEVERE, null, ex);
         }
-         System.out.println(ref);
- return ref;
- 
+        System.out.println(ref);
+        return ref;
+
     }
 
- @FXML
-        private void stat() throws IOException{
-            
-                Activite activite = tvavisa.getSelectionModel().getSelectedItem();
+    @FXML
+    private void stat() throws IOException {
 
-            
-                       FXMLLoader loader=new FXMLLoader(getClass().getResource("Statisique.fxml"));
-                       Parent root ;
+        Activite activite = tvavisa.getSelectionModel().getSelectedItem();
 
-            root=loader.load();
-            StatisiqueController cntl=loader.getController();
-          cntl.initializeFxml(activite.getRefAct());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Statisique.fxml"));
+        Parent root;
 
-            
-             btnstat.getScene().setRoot(root);
-        } 
-       
-               }  
+        root = loader.load();
+        StatisiqueController cntl = loader.getController();
+        cntl.initializeFxml(activite.getRefAct());
+        
+        btnstat.getScene().setRoot(root);
+    }
 
+     
+   
+ 
+}
